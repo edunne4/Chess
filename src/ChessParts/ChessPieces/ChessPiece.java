@@ -21,11 +21,18 @@ package ChessParts.ChessPieces;
 import ChessParts.Team;
 
 public abstract class ChessPiece {
+    //The x and y movement capabilities of a chess piece
     protected int[] movement;
+    //Says if the chess piece can only move laterally
     protected boolean lateralMovementOnly;
-    protected boolean canExtrapolateMovement;
+    //Says if the chess piece can only move diagonally
     protected boolean diagonalMovementOnly;
+    //Says if the x and y capabilities can be made bigger, i.e. the piece can move more than 1 square in
+    //that direction
+    protected boolean canExtrapolateMovement;
+    //Stores the team of the chess piece
     protected Team team;
+
     public ChessPiece() {
     }
 
