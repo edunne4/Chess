@@ -36,6 +36,12 @@ public class King extends ChessPiece{
         super(team);
     }
 
+    /**
+     * Will return an ArrayList with integer arrays of all the possible x y coordinates that
+     * a specific chess piece is allowed to move to
+     * @param Position, the position the chess piece is on the board
+     * @return ArrayList of all the possible moves
+     */
     @Override
     public List<int[]> getMoves(int[] Position) {
         ArrayList<int[]> moves = new ArrayList<>(DIRECTIONS);

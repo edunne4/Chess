@@ -34,9 +34,34 @@ public class Rooke extends ChessPiece {
         super(team);
     }
 
+    /**
+     * Will return an ArrayList with integer arrays of all the possible x y coordinates that
+     * a specific chess piece is allowed to move to
+     * @param Position, the position the chess piece is on the board
+     * @return ArrayList of all the possible moves
+     */
     @Override
     public List<int[]> getMoves(int[] Position) {
-        return null;
+        int xCoordinate = Position[0];
+        int yCoordinate = Position[1];
+        ArrayList<int[]> moves = new ArrayList<>(DIRECTIONS);
+        for (int i = 0; i < DIRECTIONS - xCoordinate; i ++){
+            int[] option = {Position[0] + i, Position[1]};
+            moves.add(option);
+            }
+        for (int j = 0; j < xCoordinate; j ++){
+            int[] option = {Position[0] - j, Position[1]};
+            moves.add(option);
+        }
+        for (int k = 0; k < DIRECTIONS - yCoordinate; k ++){
+            int[] option = {Position[0], Position[1] + k};
+            moves.add(option);
+        }
+        for (int l = 0; l < yCoordinate; l ++){
+            int[] option = {Position[0], Position[1] - l};
+            moves.add(option);
+        }
+        return moves;
     }
 
     @Override
