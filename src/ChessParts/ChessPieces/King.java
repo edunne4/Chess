@@ -18,7 +18,11 @@
  */
 package ChessParts.ChessPieces;
 
-public class King {
+import ChessParts.Team;
+
+import java.util.List;
+
+public class King extends ChessPiece{
     //How much the King can move on the chess Board
     private int[] movement = {1,1};
     //Says if the King can move anything more special than laterally
@@ -27,6 +31,17 @@ public class King {
     private boolean canExtrapolateMovement = false;
     private boolean diagonalMovementOnly = false;
 
-    public King() {
+    public King(Team team) {
+        super(team);
+    }
+
+    @Override
+    public List<int[]> getLegalMoves(int[] Position) {
+        return null;
+    }
+
+    @Override
+    public String toString() {
+        return "K";
     }
 }

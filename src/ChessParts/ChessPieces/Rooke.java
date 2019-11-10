@@ -10,20 +10,37 @@
  *
  * Project: CSCI205FinalProject
  * Package: ChessParts
- * Class: Castle
+ * Class: Rooke
  *
  * Description:
- *
+ * A rooke piece that is allowed to move in 4 lateral directions as many spaces as it wants
  * ****************************************
  */
 package ChessParts.ChessPieces;
 
+import ChessParts.Team;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Rooke extends ChessPiece {
     private int[] movement = {1,1};
     private boolean lateralMovementOnly = true;
-    private boolean canExtrapolateMovement = true;
     private boolean diagonalMovementOnly = false;
+    private boolean canExtrapolateMovement = true;
+    private static final int POSSIBLEMOVES = 8;
 
-    public Rooke() {
+    public Rooke(Team team) {
+        super(team);
+    }
+
+    @Override
+    public List<int[]> getLegalMoves(int[] Position) {
+        return null;
+    }
+
+    @Override
+    public String toString() {
+        return "R";
     }
 }

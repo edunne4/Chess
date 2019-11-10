@@ -20,6 +20,9 @@ package ChessParts.ChessPieces;
 
 import ChessParts.Team;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class ChessPiece {
     //The x and y movement capabilities of a chess piece
     protected int[] movement;
@@ -32,9 +35,13 @@ public abstract class ChessPiece {
     protected boolean canExtrapolateMovement;
     //Stores the team of the chess piece
     protected Team team;
-
-    public ChessPiece() {
+    //All possible directions on a Chess Board
+    protected static final int DIRECTIONS = 8;
+    public ChessPiece(Team team) {
+        this.team = team;
     }
+
+    public abstract List<int[]> getLegalMoves(int[] Position);
 
     public int[] getMovement() {
         return movement;

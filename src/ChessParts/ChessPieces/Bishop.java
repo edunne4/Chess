@@ -18,5 +18,23 @@
  */
 package ChessParts.ChessPieces;
 
-public class Bishop {
+import ChessParts.Team;
+
+import java.util.List;
+
+public class Bishop extends ChessPiece{
+
+    public Bishop(Team team) {
+        super(team);
+    }
+
+    @Override
+    public List<int[]> getLegalMoves(int[] Position) {
+        return null;
+    }
+
+    @Override
+    public String toString() {
+        return "Bishop{}";
+    }
 }

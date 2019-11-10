@@ -18,10 +18,27 @@
  */
 package ChessParts.ChessPieces;
 
-public class Pawn {
+import ChessParts.Team;
+
+import java.util.List;
+
+public class Pawn extends ChessPiece{
     private int[] movement = {1,1};
     private boolean lateralMovementOnly = true;
     private boolean canExtrapolateMovement = true;
     private boolean diagonalMovementOnly = false;
 
+    public Pawn(Team team) {
+        super(team);
+    }
+
+    @Override
+    public List<int[]> getLegalMoves(int[] Position) {
+        return null;
+    }
+
+    @Override
+    public String toString() {
+        return "P";
+    }
 }
