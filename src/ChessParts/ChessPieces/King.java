@@ -3,17 +3,17 @@
  * Fall 2019
  * Instructor: Prof. Brian King
  *
- * Name: YOUR NAME
- * Section: YOUR SECTION
+ * Name: James Campbell
+ * Section: 11 am
  * Date: 11/10/19
  * Time: 12:10 PM
  *
  * Project: CSCI205FinalProject
  * Package: ChessParts
- * Class: KIng
+ * Class: King
  *
  * Description:
- *
+ * A king piece implementation, the king can move to any adjacent block, any of the 8 directions.
  * ****************************************
  */
 package ChessParts.ChessPieces;

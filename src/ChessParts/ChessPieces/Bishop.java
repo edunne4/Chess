@@ -3,8 +3,8 @@
  * Fall 2019
  * Instructor: Prof. Brian King
  *
- * Name: YOUR NAME
- * Section: YOUR SECTION
+ * Name: James Campbell
+ * Section: 11 am
  * Date: 11/10/19
  * Time: 12:11 PM
  *
@@ -13,7 +13,7 @@
  * Class: Bishop
  *
  * Description:
- *
+ * A bishop implementation, can move in any 4 of the diagonal directions as many places as it wants
  * ****************************************
  */
 package ChessParts.ChessPieces;

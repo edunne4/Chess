@@ -13,7 +13,7 @@
  * Class: Knight
  *
  * Description:
- *
+ * A Knight implementation, can move in an L shape around the board
  * ****************************************
  */
 package ChessParts.ChessPieces;

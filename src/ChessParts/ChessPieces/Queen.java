@@ -3,8 +3,8 @@
  * Fall 2019
  * Instructor: Prof. Brian King
  *
- * Name: YOUR NAME
- * Section: YOUR SECTION
+ * Name: James Campbell
+ * Section: 11 am
  * Date: 11/10/19
  * Time: 1:42 PM
  *
@@ -13,7 +13,8 @@
  * Class: Queen
  *
  * Description:
- *
+ * A Queen piece class that holds the team of queen and can calculate the moves. Queen can move diagnolly as many pieces
+ * and horizontally or vertically as many pieces.
  * ****************************************
  */
 package ChessParts.ChessPieces;

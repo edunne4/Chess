@@ -3,8 +3,8 @@
  * Fall 2019
  * Instructor: Prof. Brian King
  *
- * Name: YOUR NAME
- * Section: YOUR SECTION
+ * Name: James Campbell
+ * Section: 11 am
  * Date: 11/10/19
  * Time: 12:10 PM
  *
@@ -13,7 +13,9 @@
  * Class: Pawn
  *
  * Description:
- *
+ * A pawn implementation, will hold the team its on, and whether or not it has moved,
+ * It has 4 movement types. Forward 1, its default moevement, forward 2 if it has not moved, and
+ * it can move 1 diagonal forward if there is a chess piece it can kill.
  * ****************************************
  */
 package ChessParts.ChessPieces;
@@ -24,10 +26,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Pawn extends ChessPiece{
-    private int[] movement = {1,1};
-    private boolean lateralMovementOnly = true;
-    private boolean canExtrapolateMovement = true;
-    private boolean diagonalMovementOnly = false;
+
+    private boolean hasMoved = false;
 
     public Pawn(Team team) {
         super(team);
@@ -44,6 +44,10 @@ public class Pawn extends ChessPiece{
         int[] option1 = {Position[0], Position[1] + 1};
         int[] option2 = {Position[0] + 1, Position[1] + 1};
         int[] option3 = {Position[0] - 1, Position[1] + 1};
+        if (!hasMoved) {
+            int[] option4 = {Position[0], Position[1] + 2};
+            moves.add(option4);
+        }
         moves.add(option1);
         moves.add(option2);
         moves.add(option3);
