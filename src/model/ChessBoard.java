@@ -22,5 +22,21 @@ public class ChessBoard {
     int BOARD_WIDTH = 8;
     int BOARD_HEIGHT = 8;
 
-    Square[][] positions = new Square[BOARD_HEIGHT][BOARD_WIDTH];
+    private final Square[][] positions;
+
+    public ChessBoard() {
+        //create board
+        positions = new Square[BOARD_HEIGHT][BOARD_WIDTH];
+        for (int row = 0; row < BOARD_HEIGHT; row++) {
+            for (int col = 0; col < BOARD_WIDTH; col++) {
+                positions[row][col] = new Square(row, col);
+            }
+        }
+
+        //set up pieces in starting position
+    }
+
+    private void initPieces(){
+
+    }
 }

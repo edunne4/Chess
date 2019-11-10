@@ -18,7 +18,37 @@
  */
 package model;
 
+/**
+ * Representation of a single space on a chess board
+ */
 public class Square {
 
-    ChessPiece currentPiece;
+    private ChessPiece currentPiece;
+    private int xPos = 0;
+    private int yPos = 0;
+
+    public Square(int xPos, int yPos) {
+        this.xPos = xPos;
+        this.yPos = yPos;
+    }
+
+    public ChessPiece getCurrentPiece() {
+        return currentPiece;
+    }
+    public void setCurrentPiece(ChessPiece currentPiece) {
+        this.currentPiece = currentPiece;
+    }
+
+    public int getXPos() {
+        return xPos;
+    }
+    public int getYPos() {
+        return yPos;
+    }
+
+    @Override
+    public String toString() {
+        //TODO change 97
+        return String.format("%c%d", (char)xPos+97, yPos+1);
+    }
 }
