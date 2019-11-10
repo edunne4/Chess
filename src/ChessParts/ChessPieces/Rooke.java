@@ -36,7 +36,26 @@ public class Rooke extends ChessPiece {
 
     @Override
     public List<int[]> getMoves(int[] Position) {
-        return null;
+        int xCoordinate = Position[0];
+        int yCoordinate = Position[1];
+        ArrayList<int[]> moves = new ArrayList<>(DIRECTIONS);
+        for (int i = 0; i < DIRECTIONS - xCoordinate; i ++){
+            int[] option = {Position[0] + i, Position[1]};
+            moves.add(option);
+            }
+        for (int j = 0; j < xCoordinate; j ++){
+            int[] option = {Position[0] - j, Position[1]};
+            moves.add(option);
+        }
+        for (int k = 0; k < DIRECTIONS - yCoordinate; k ++){
+            int[] option = {Position[0], Position[1] + k};
+            moves.add(option);
+        }
+        for (int l = 0; l < yCoordinate; l ++){
+            int[] option = {Position[0], Position[1] - l};
+            moves.add(option);
+        }
+        return moves;
     }
 
     @Override
