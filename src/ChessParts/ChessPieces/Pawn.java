@@ -20,6 +20,7 @@ package ChessParts.ChessPieces;
 
 import ChessParts.Team;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Pawn extends ChessPiece{
@@ -33,12 +34,19 @@ public class Pawn extends ChessPiece{
     }
 
     @Override
-    public List<int[]> getLegalMoves(int[] Position) {
-        return null;
+    public List<int[]> getMoves(int[] Position) {
+        ArrayList<int[]> moves = new ArrayList<>(DIRECTIONS);
+        int[] option1 = {Position[0], Position[1] + 1};
+        int[] option2 = {Position[0] + 1, Position[1] + 1};
+        int[] option3 = {Position[0] - 1, Position[1] + 1};
+        moves.add(option1);
+        moves.add(option2);
+        moves.add(option3);
+        return moves;
     }
 
     @Override
     public String toString() {
-        return "P";
+        return "P" + team.toString().substring(0,1);
     }
 }

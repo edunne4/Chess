@@ -28,12 +28,12 @@ public class Queen extends ChessPiece {
     }
 
     @Override
-    public List<int[]> getLegalMoves(int[] Position) {
+    public List<int[]> getMoves(int[] Position) {
         return null;
     }
 
     @Override
     public String toString() {
-        return "Q";
+        return "Q" + team.toString().substring(0,1);
     }
 }
