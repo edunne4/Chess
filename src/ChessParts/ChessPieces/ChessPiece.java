@@ -41,6 +41,12 @@ public abstract class ChessPiece {
         this.team = team;
     }
 
+    /**
+     * Will return an ArrayList with integer arrays of all the possible x y coordinates that
+     * a specific chess piece is allowed to move to
+     * @param Position, the position the chess piece is on the board
+     * @return ArrayList of all the possible moves
+     */
     public abstract List<int[]> getLegalMoves(int[] Position);
 
     public int[] getMovement() {
