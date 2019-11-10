@@ -29,12 +29,13 @@ public class Bishop extends ChessPiece{
     }
 
     @Override
-    public List<int[]> getLegalMoves(int[] Position) {
+    public List<int[]> getMoves(int[] Position) {
         return null;
     }
 
     @Override
     public String toString() {
-        return "Bishop{}";
+
+        return "B" + team.toString().substring(0,1);
     }
 }

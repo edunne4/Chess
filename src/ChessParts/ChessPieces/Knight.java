@@ -38,8 +38,8 @@ public class Knight extends ChessPiece{
      * @param Position, the Position of the Chess Piece on the chess board.
      * @return, legalMoves, and array list with all the possible values for its moves
      */
-    public List<int[]> getLegalMoves(int[] Position){
-        ArrayList<int[]> legalMoves = new ArrayList<>(DIRECTIONS);
+    public List<int[]> getMoves(int[] Position){
+        ArrayList<int[]> moves = new ArrayList<>(DIRECTIONS);
         int[] option1 = {Position[0] + 1, Position[1] + 2};
         int[] option2 = {Position[0] + 2, Position[1] + 1};
         int[] option3 = {Position[0] + 1, Position[1] - 2};
@@ -48,19 +48,19 @@ public class Knight extends ChessPiece{
         int[] option6 = {Position[0] - 2, Position[1] + 1};
         int[] option7 = {Position[0] - 1, Position[1] - 2};
         int[] option8 = {Position[0] - 2, Position[1] - 1};
-        legalMoves.add(option1);
-        legalMoves.add(option2);
-        legalMoves.add(option3);
-        legalMoves.add(option4);
-        legalMoves.add(option5);
-        legalMoves.add(option6);
-        legalMoves.add(option7);
-        legalMoves.add(option8);
-        return  legalMoves;
+        moves.add(option1);
+        moves.add(option2);
+        moves.add(option3);
+        moves.add(option4);
+        moves.add(option5);
+        moves.add(option6);
+        moves.add(option7);
+        moves.add(option8);
+        return  moves;
     }
 
     @Override
     public String toString() {
-        return "N";
+        return "N" + team.toString().substring(0,1);
     }
 }

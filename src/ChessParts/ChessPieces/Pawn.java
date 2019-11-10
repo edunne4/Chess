@@ -33,12 +33,12 @@ public class Pawn extends ChessPiece{
     }
 
     @Override
-    public List<int[]> getLegalMoves(int[] Position) {
+    public List<int[]> getMoves(int[] Position) {
         return null;
     }
 
     @Override
     public String toString() {
-        return "P";
+        return "P" + team.toString().substring(0,1);
     }
 }

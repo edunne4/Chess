@@ -47,7 +47,7 @@ public abstract class ChessPiece {
      * @param Position, the position the chess piece is on the board
      * @return ArrayList of all the possible moves
      */
-    public abstract List<int[]> getLegalMoves(int[] Position);
+    public abstract List<int[]> getMoves(int[] Position);
 
     public int[] getMovement() {
         return movement;
