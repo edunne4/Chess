@@ -26,12 +26,12 @@ import ChessParts.ChessPieces.ChessPiece;
 public class Square {
 
     private ChessPiece currentPiece;
-    private int xPos = 0;
-    private int yPos = 0;
+    private int row = 0;
+    private int col = 0;
 
-    public Square(int xPos, int yPos) {
-        this.xPos = xPos;
-        this.yPos = yPos;
+    public Square(int row, int col) {
+        this.row = row;
+        this.col = col;
     }
 
     public ChessPiece getCurrentPiece() {
@@ -41,17 +41,17 @@ public class Square {
         this.currentPiece = currentPiece;
     }
 
-    public int getXPos() {
-        return xPos;
+    public int getRow() {
+        return row;
     }
-    public int getYPos() {
-        return yPos;
+    public int getCol() {
+        return col;
     }
 
     @Override
     public String toString() {
-        //TODO change 97
-        return String.format("%c%d", (char)xPos+97, yPos+1);
+        final int ASCII_a_OFFSET = 97;
+        return String.format("%c%d", (char) col +ASCII_a_OFFSET, row +1);
     }
 
     public String getStringPiece(){
