@@ -38,6 +38,7 @@ public class ChessBoard {
         }
 
         //set up pieces in starting position
+        initPieces();
     }
 
     private void initPieces(){
@@ -88,7 +89,7 @@ public class ChessBoard {
     @Override
     public String toString() {
         String strRep = "  a  b  c  d  e  f  g  h \n";
-        for (int row = 0; row < BOARD_HEIGHT; row++) {
+        for (int row = BOARD_HEIGHT-1; row >= 0; row--) {
             strRep += String.valueOf(row+1);
             for (int col = 0; col < BOARD_WIDTH; col++) {
                 strRep += " ";

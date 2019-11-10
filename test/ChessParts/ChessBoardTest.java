@@ -8,8 +8,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ChessBoardTest {
 
+    private ChessBoard board;
+
     @BeforeEach
     void setUp() {
+        board = new ChessBoard();
     }
 
     @AfterEach
@@ -18,7 +21,11 @@ class ChessBoardTest {
 
     @Test
     void testToString() {
-        ChessBoard board = new ChessBoard();
         System.out.println(board.toString());
+    }
+
+    @Test
+    void testGetSquareAt() {
+        System.out.println(board.getSquareAt(1, 1).getCurrentPiece());
     }
 }
