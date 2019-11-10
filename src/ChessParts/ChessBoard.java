@@ -16,7 +16,7 @@
  *
  * ****************************************
  */
-package model;
+package ChessParts;
 
 public class ChessBoard {
     int BOARD_WIDTH = 8;
