@@ -20,14 +20,19 @@ package ChessParts;
 
 import ChessParts.ChessPieces.*;
 
-import java.util.Arrays;
-
+/**
+ * Represents a chess board
+ */
 public class ChessBoard {
     int BOARD_WIDTH = 8;
     int BOARD_HEIGHT = 8;
 
+    /** 2D array of squares representing positions that chess pieces can be at */
     private final Square[][] positions;
 
+    /**
+     * Explicit constructor to initialize the squares array and set up the starting positions of the game pieces
+     */
     public ChessBoard() {
         //create board
         positions = new Square[BOARD_HEIGHT][BOARD_WIDTH];
@@ -41,6 +46,9 @@ public class ChessBoard {
         initPieces();
     }
 
+    /**
+     * Create and set up positions of chess pieces
+     */
     private void initPieces(){
 
         //set up white team
@@ -72,20 +80,31 @@ public class ChessBoard {
         for (int col = 0; col < BOARD_WIDTH; col++) {
             putPiece(new Pawn(Team.BLACK), BLACK_PAWN_ROW, col);
         }
-
-
-
-
     }
 
+    /**
+     * Place a specific Chess Piece in a specified location
+     * @param newPiece the ChessPiece to put there
+     * @param row the row to put it in
+     * @param col the column to put it in
+     */
     public void putPiece(ChessPiece newPiece, int row, int col){
         positions[row][col].setCurrentPiece(newPiece);
     }
 
+    /**
+     * Get the square at the specified location
+     * @param row the row
+     * @param col the column
+     * @return the Square object, which may or may not contain a ChessPiece
+     */
     public Square getSquareAt(int row, int col){
         return positions[row][col];
     }
 
+    /**
+     * @return a string representation of the board
+     */
     @Override
     public String toString() {
         String strRep = "  a  b  c  d  e  f  g  h \n";

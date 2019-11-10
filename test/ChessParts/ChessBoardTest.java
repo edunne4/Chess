@@ -19,13 +19,12 @@ class ChessBoardTest {
     void tearDown() {
     }
 
+    /**
+     * Just test to see if the board prints out correctly
+     */
     @Test
     void testToString() {
         System.out.println(board.toString());
     }
 
-    @Test
-    void testGetSquareAt() {
-        System.out.println(board.getSquareAt(1, 1).getCurrentPiece());
-    }
 }
