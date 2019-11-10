@@ -19,5 +19,5 @@
 package ChessParts.ChessPieces;
 
 public class Knight {
-    private
+    //private
 }

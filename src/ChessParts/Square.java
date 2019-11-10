@@ -50,6 +50,9 @@ public class Square {
 
     @Override
     public String toString() {
+        if (currentPiece != null){
+            return currentPiece.toString();
+        }
         //TODO change 97
         return String.format("%c%d", (char)xPos+97, yPos+1);
     }
