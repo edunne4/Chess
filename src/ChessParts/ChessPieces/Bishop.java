@@ -35,6 +35,6 @@ public class Bishop extends ChessPiece{
 
     @Override
     public String toString() {
-        return "Bishop{}";
+        return "B";
     }
 }
