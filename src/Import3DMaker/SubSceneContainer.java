@@ -1,3 +1,5 @@
+//Code taken from http://www.interactivemesh.org/models/jfx3dimporter.html
+
 package Import3DMaker;
 
 import javafx.scene.SubScene;

@@ -1,3 +1,4 @@
+//Code taken from http://www.interactivemesh.org/models/jfx3dimporter.html
 package Import3DMaker;
 
 import com.interactivemesh.jfx.importer.ModelImporter;

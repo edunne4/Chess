@@ -1,3 +1,5 @@
+//Code taken from http://www.interactivemesh.org/models/jfx3dimporter.html
+
 package Import3DMaker;
 
 import com.interactivemesh.jfx.importer.ImportException;
@@ -5,16 +7,18 @@ import com.interactivemesh.jfx.importer.stl.StlMeshImporter;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.geometry.Point3D;
 import javafx.geometry.Pos;
 import javafx.scene.*;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.PickResult;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
-import javafx.scene.shape.DrawMode;
-import javafx.scene.shape.MeshView;
-import javafx.scene.shape.TriangleMesh;
-import javafx.scene.shape.VertexFormat;
+import javafx.scene.shape.*;
+import javafx.scene.transform.Rotate;
+import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -28,13 +32,30 @@ import java.net.URL;
  */
 public class JavaFX3DsImporter extends Application {
 
+    private PerspectiveCamera camera;
+    private final double sceneWidth = 800;
+    private final double sceneHeight = 600;
+
+    private double mousePosX;
+    private double mousePosY;
+    private double mouseOldX;
+    private double mouseOldY;
+    private final Rotate rotateX = new Rotate(-20, Rotate.X_AXIS);
+    private final Rotate rotateY = new Rotate(-20, Rotate.Y_AXIS);
+
+    private volatile boolean isPicking=false;
+    private Point3D vecIni, vecPos;
+    private double distance;
+    private Sphere s;
+    private Scene scene;
+
     @Override
     public void start(Stage stage) throws IOException {
         StlMeshImporter stlImporter = new StlMeshImporter();
 
         try {
             //stlImporter.read(this.getClass().getResource("Support_Sphere_V2.stl"));
-            stlImporter.read(this.getClass().getResource("Knight.stl"));
+            stlImporter.read(this.getClass().getResource("king.stl"));
         }
         catch (ImportException e) {
             System.out.println("Error!");
@@ -56,48 +77,98 @@ public class JavaFX3DsImporter extends Application {
         meshView.setScaleX(10);
         meshView.setScaleY(10);
         meshView.setScaleZ(10);
+
+        meshView.setRotationAxis(Rotate.X_AXIS);
+        meshView.setRotate(90);
+
+
         root.getChildren().add(meshView);
         root.setPadding(new Insets(20));
         root.setAlignment(Pos.CENTER);
 
 
-        TriangleMesh pyramidMesh = new TriangleMesh();
-        pyramidMesh.getTexCoords().addAll(0,0);
-        float h = 150;                    // Height
-        float s = 300;                    // Side
-        pyramidMesh.getPoints().addAll(
-                0,    0,    0,            // Point 0 - Top
-                0,    h,    -s/2,         // Point 1 - Front
-                -s/2, h,    0,            // Point 2 - Left
-                s/2,  h,    0,            // Point 3 - Back
-                0,    h,    s/2           // Point 4 - Right
-        );
+        scene = new Scene(root, 1024, 800);
+        camera = new PerspectiveCamera(true);
+        camera.setVerticalFieldOfView(false);
 
-        pyramidMesh.getFaces().addAll(
-                0,0,  2,0,  1,0,          // Front left face
-                0,0,  1,0,  3,0,          // Front right face
-                0,0,  3,0,  4,0,          // Back right face
-                0,0,  4,0,  2,0,          // Back left face
-                4,0,  1,0,  2,0,          // Bottom rear face
-                4,0,  3,0,  1,0           // Bottom front face
-        );
+        camera.setNearClip(0.1);
+        camera.setFarClip(100000.0);
+        camera.getTransforms().addAll (rotateX, rotateY, new Translate(0, 0, -3000));
 
-        MeshView pyramid = new MeshView(pyramidMesh);
-        pyramid.setDrawMode(DrawMode.FILL);
-        pyramid.setMaterial(new PhongMaterial(Color.RED));
-        pyramid.setTranslateX(200);
-        pyramid.setTranslateY(100);
-        pyramid.setTranslateZ(200);
-        //root.getChildren().add(pyramid);
+//        PointLight light = new PointLight(Color.GAINSBORO);
+//        root.getChildren().add(light);
+//        root.getChildren().add(new AmbientLight(Color.WHITE));
 
-        Scene scene = new Scene(root, 1024, 800);
-        Camera camera = new PerspectiveCamera();
         scene.setCamera(camera);
+
+        eventHandlers();
+
         stage.setScene(scene);
         stage.show();
 
-
     }
+
+    public void eventHandlers() {
+        scene.setOnMousePressed((MouseEvent me) -> {
+            mousePosX = me.getSceneX();
+            mousePosY = me.getSceneY();
+            PickResult pr = me.getPickResult();
+            if(pr!=null && pr.getIntersectedNode() != null && pr.getIntersectedNode() instanceof Sphere){
+                distance=pr.getIntersectedDistance();
+                s = (Sphere) pr.getIntersectedNode();
+                isPicking=true;
+                vecIni = unProjectDirection(mousePosX, mousePosY, scene.getWidth(),scene.getHeight());
+            }
+        });
+        scene.setOnMouseDragged((MouseEvent me) -> {
+            mousePosX = me.getSceneX();
+            mousePosY = me.getSceneY();
+            if(isPicking){
+                vecPos = unProjectDirection(mousePosX, mousePosY, scene.getWidth(),scene.getHeight());
+                Point3D p=vecPos.subtract(vecIni).multiply(distance);
+                s.getTransforms().add(new Translate(p.getX(),p.getY(),p.getZ()));
+                vecIni=vecPos;
+                PickResult pr = me.getPickResult();
+                if(pr!=null && pr.getIntersectedNode() != null && pr.getIntersectedNode()==s){
+                    distance=pr.getIntersectedDistance();
+                } else {
+                    isPicking=false;
+                }
+            } else {
+                rotateX.setAngle(rotateX.getAngle()-(mousePosY - mouseOldY));
+                rotateY.setAngle(rotateY.getAngle()+(mousePosX - mouseOldX));
+                mouseOldX = mousePosX;
+                mouseOldY = mousePosY;
+            }
+        });
+        scene.setOnMouseReleased((MouseEvent me)->{
+            if(isPicking){
+                isPicking=false;
+            }
+        });
+    }
+
+    public Point3D unProjectDirection(double sceneX, double sceneY, double sWidth, double sHeight) {
+        double tanHFov = Math.tan(Math.toRadians(camera.getFieldOfView()) * 0.5f);
+        Point3D vMouse = new Point3D(tanHFov*(2*sceneX/sWidth-1), tanHFov*(2*sceneY/sWidth-sHeight/sWidth), 1);
+
+        Point3D result = localToSceneDirection(vMouse);
+        return result.normalize();
+    }
+
+    public Point3D localToScene(Point3D pt) {
+        Point3D res = camera.localToParentTransformProperty().get().transform(pt);
+        if (camera.getParent() != null) {
+            res = camera.getParent().localToSceneTransformProperty().get().transform(res);
+        }
+        return res;
+    }
+
+    public Point3D localToSceneDirection(Point3D dir) {
+        Point3D res = localToScene(dir);
+        return res.subtract(localToScene(new Point3D(0, 0, 0)));
+    }
+
 
     public static void main(String[] args) {
         launch(args);
