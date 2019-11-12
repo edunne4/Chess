@@ -48,41 +48,19 @@ public class JavaFX3DsImporter extends Application {
     private double distance;
     private Sphere s;
     private Scene scene;
+    private HBox root;
 
     @Override
     public void start(Stage stage) throws IOException {
-        StlMeshImporter stlImporter = new StlMeshImporter();
 
-        try {
-            //stlImporter.read(this.getClass().getResource("Support_Sphere_V2.stl"));
-            stlImporter.read(this.getClass().getResource("king.stl"));
-        }
-        catch (ImportException e) {
-            System.out.println("Error!");
-            e.printStackTrace();
-            return;
-        }
+        root = new HBox();
+        root.setSpacing(300);
 
-        HBox root = new HBox();
-
-        stlImporter.getImport();
-        System.out.println(stlImporter.getImport());
-        TriangleMesh mesh = stlImporter.getImport();
-        stlImporter.close();
-        MeshView meshView = new MeshView(mesh);
-
-        meshView.setMaterial(new PhongMaterial(Color.RED));
-        meshView.setDrawMode(DrawMode.FILL);
-        meshView.setVisible(true);
-        meshView.setScaleX(10);
-        meshView.setScaleY(10);
-        meshView.setScaleZ(10);
-
-        meshView.setRotationAxis(Rotate.X_AXIS);
-        meshView.setRotate(90);
+        MeshView piece1 = createChessPiece("king.stl",Color.RED);
+        MeshView piece2 = createChessPiece("king.stl",Color.BLUE);
 
 
-        root.getChildren().add(meshView);
+        root.getChildren().addAll(piece1,piece2);
         root.setPadding(new Insets(20));
         root.setAlignment(Pos.CENTER);
 
@@ -108,18 +86,50 @@ public class JavaFX3DsImporter extends Application {
 
     }
 
+    private MeshView createChessPiece(String filename, Color color) {
+        StlMeshImporter stlImporter = new StlMeshImporter();
+
+        try {
+            //stlImporter.read(this.getClass().getResource("Support_Sphere_V2.stl"));
+            stlImporter.read(this.getClass().getResource(filename));
+        }
+        catch (ImportException e) {
+            System.out.println("Error!");
+            e.printStackTrace();
+            return null;
+        }
+
+
+        stlImporter.getImport();
+        System.out.println(stlImporter.getImport());
+        TriangleMesh mesh = stlImporter.getImport();
+        stlImporter.close();
+        MeshView meshView = new MeshView(mesh);
+
+        meshView.setMaterial(new PhongMaterial(color));
+        meshView.setDrawMode(DrawMode.FILL);
+        meshView.setVisible(true);
+        meshView.setScaleX(10);
+        meshView.setScaleY(10);
+        meshView.setScaleZ(10);
+
+        meshView.setRotationAxis(Rotate.X_AXIS);
+        meshView.setRotate(90);
+        return meshView;
+    }
+
     public void eventHandlers() {
-        scene.setOnMousePressed((MouseEvent me) -> {
-            mousePosX = me.getSceneX();
-            mousePosY = me.getSceneY();
-            PickResult pr = me.getPickResult();
-            if(pr!=null && pr.getIntersectedNode() != null && pr.getIntersectedNode() instanceof Sphere){
-                distance=pr.getIntersectedDistance();
-                s = (Sphere) pr.getIntersectedNode();
-                isPicking=true;
-                vecIni = unProjectDirection(mousePosX, mousePosY, scene.getWidth(),scene.getHeight());
-            }
-        });
+//        scene.setOnMousePressed((MouseEvent me) -> {
+//            mousePosX = me.getSceneX();
+//            mousePosY = me.getSceneY();
+//            PickResult pr = me.getPickResult();
+//            if(pr!=null && pr.getIntersectedNode() != null && pr.getIntersectedNode() instanceof Sphere){
+//                distance=pr.getIntersectedDistance();
+//                s = (Sphere) pr.getIntersectedNode();
+//                isPicking=true;
+//                vecIni = unProjectDirection(mousePosX, mousePosY, scene.getWidth(),scene.getHeight());
+//            }
+//        });
         scene.setOnMouseDragged((MouseEvent me) -> {
             mousePosX = me.getSceneX();
             mousePosY = me.getSceneY();
