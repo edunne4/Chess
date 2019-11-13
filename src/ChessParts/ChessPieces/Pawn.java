@@ -41,16 +41,29 @@ public class Pawn extends ChessPiece{
     @Override
     public List<int[]> getMoves(int[] Position) {
         ArrayList<int[]> moves = new ArrayList<>(DIRECTIONS);
-        int[] option1 = {Position[0], Position[1] + 1};
-        int[] option2 = {Position[0] + 1, Position[1] + 1};
-        int[] option3 = {Position[0] - 1, Position[1] + 1};
-        if (!hasMoved) {
-            int[] option4 = {Position[0], Position[1] + 2};
-            moves.add(option4);
+        if (this.team == team.WHITE) {
+            int[] option1 = {Position[0], Position[1] + 1};
+            int[] option2 = {Position[0] + 1, Position[1] + 1};
+            int[] option3 = {Position[0] - 1, Position[1] + 1};
+            moves.add(option1);
+            moves.add(option2);
+            moves.add(option3);
+            if (!hasMoved) {
+                int[] option4 = {Position[0], Position[1] + 2};
+                moves.add(option4);
+            }
+        } else {
+            int[] option5 = {Position[0], Position[1] - 1};
+            int[] option6 = {Position[0] + 1, Position[1] - 1};
+            int[] option7 = {Position[0] - 1, Position[1] - 1};
+            if (!hasMoved) {
+                int[] option8 = {Position[0], Position[1] - 2};
+                moves.add(option8);
+            }
+            moves.add(option5);
+            moves.add(option6);
+            moves.add(option7);
         }
-        moves.add(option1);
-        moves.add(option2);
-        moves.add(option3);
         return moves;
     }
 
