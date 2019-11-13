@@ -18,7 +18,7 @@ public class BoardView extends Application {
 
     private int windowHeight = 640;
     private int windowWidth = 840;
-    private final int SIDE_LENGTH = 8;
+    public static final int SIDE_LENGTH = 8;
     private final String LIGHT_COLOR_HEX = "#ede8da";
     private final String DARK_COLOR_HEX = "#949085";
 
@@ -115,5 +115,9 @@ public class BoardView extends Application {
         }
         //TODO bind board height to root window height - in controller?
         //TODO bind board width to board height - in controller?
+    }
+
+    public int getWindowHeight() {
+        return windowHeight;
     }
 }

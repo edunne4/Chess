@@ -22,12 +22,18 @@ import javafx.scene.image.ImageView;
 
 public class PieceView {
 
-    public PieceView(String imageFile) {
+    ImageView view;
+
+    public PieceView(String imageFile, BoardView) {
         // load the image
         Image image = new Image(imageFile);
         //make the imageview
-        ImageView rookView = new ImageView(image);
-        rookView.setFitHeight(windowHeight / SIDE_LENGTH);
-        rookView.setFitWidth(windowHeight / SIDE_LENGTH);
+        ImageView view = new ImageView(image);
+        view.setFitHeight(BoardView.getWindowHeight() / BoardView.SIDE_LENGTH);
+        view.setFitWidth(BoardView.getWindowHeight() / BoardView.SIDE_LENGTH);
+    }
+
+    public ImageView getView() {
+        return view;
     }
 }
