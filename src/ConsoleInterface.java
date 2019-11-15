@@ -36,14 +36,14 @@ public class ConsoleInterface {
             //print the board
             System.out.println(gm.getBoard().toString());
 
-            System.out.printf("It is %s team's turn", gm.getCurrentTurn().toString());
+            System.out.printf("It is %s team's turn\n", gm.getCurrentTurn().toString());
 
 
 
             while (true) {
                 try {
                     //get position of piece to move
-                    System.out.println("Name the position of the piece you would like to move (such as f5)");
+                    System.out.println("Specify the position of the piece you would like to move (such as f5)");
                     String posToMove = in.next();
                     Square squareToMoveFrom = gm.getBoard().getSquareAt(posToMove);
 
