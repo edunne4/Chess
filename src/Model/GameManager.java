@@ -56,7 +56,9 @@ public class GameManager {
         currentLocation.setCurrentPiece(null);
 
         //add killed piece to pieces captured
-        board.capturePiece(pieceKilled);
+        if(pieceKilled != null) {
+            board.capturePiece(pieceKilled);
+        }
 
         switchTurn();
         return pieceKilled;
