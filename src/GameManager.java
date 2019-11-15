@@ -30,6 +30,10 @@ public class GameManager {
     /** Current board being played on */
     private ChessBoard board;
 
+    public GameManager() {
+        this.board = new ChessBoard();
+    }
+
     /**
      * Move a game piece from its current location to a new location
      * @param currentLocation the Square where the piece that should be moved is located
@@ -49,6 +53,10 @@ public class GameManager {
         return pieceKilled;
     }
 
+    /**
+     * helprer function to toggle whose turn it is
+     * @return the team whose turn it is
+     */
     private Team switchTurn(){
         if (currentTurn == Team.WHITE){
             currentTurn = Team.BLACK;
