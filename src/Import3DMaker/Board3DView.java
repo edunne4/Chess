@@ -51,11 +51,12 @@ public class Board3DView extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-        //initialize the root
+        //initialize the board
         board = new VBox(SQUARE_SIZE *0.05);
         board.setPadding(new Insets(20));
         board.setAlignment(Pos.CENTER);
 
+        //add all of the squares to the board
         for (int i = 0; i < 8 ; i++) {
             HBox row = new HBox(SQUARE_SIZE *0.05);
             row.setAlignment(Pos.CENTER);
@@ -79,7 +80,7 @@ public class Board3DView extends Application {
         //pieces.setPadding(new Insets(20));
         redPieces1.setAlignment(Pos.CENTER);
 
-        //create red pieces
+        //create red (team 1) pieces on the back row
         MeshView kingR = createChessPiece("stl/king.stl",Color.RED);
         MeshView queenR = createChessPiece("stl/queen.stl",Color.RED);
         MeshView rookR1 = createChessPiece("stl/rook.stl",Color.RED);
@@ -90,24 +91,24 @@ public class Board3DView extends Application {
         MeshView bishopR2 = createChessPiece("stl/bishop.stl",Color.RED);
 
         redPieces1.getChildren().addAll(rookR1,knightR1,bishopR1,queenR,kingR,bishopR2,knightR2,rookR2);
-        //redPieces1.setAlignment(Pos.CENTER);
+        redPieces1.setAlignment(Pos.CENTER);
 
+        //create red (team 1) row of pawns)
         HBox redPieces2 = new HBox(SQUARE_SIZE*.85);
         redPieces2.setAlignment(Pos.CENTER);
         for (int i = 0; i < 8; i++) {
             redPieces2.getChildren().add(createChessPiece("stl/pawn.stl",Color.RED));
         }
 
+        //add all of the pieces
         pieces = new VBox(SQUARE_SIZE*.85);
-        //pieces.setPadding(new Insets(20));
         pieces.setAlignment(Pos.CENTER);
         pieces.getChildren().addAll(redPieces2,redPieces1);
         pieces.setTranslateY(230);
 
+        //add the board and the pieces to the root
         root = new StackPane();
         root.getChildren().addAll(board,pieces);
-
-
 
         //create lighting scheme
 //        PointLight light = new PointLight(Color.GAINSBORO);
@@ -124,9 +125,6 @@ public class Board3DView extends Application {
         //initialize the scene, and set the camera to the scene
         scene = new Scene(root);
         scene.setCamera(camera);
-
-        //initialize all of the event handlers to deal with moving the camera
-        //moveCameraEvents();
 
         //show the scene to the user
         stage.setScene(scene);
@@ -163,14 +161,11 @@ public class Board3DView extends Application {
         meshView.setDrawMode(DrawMode.FILL);
         meshView.setVisible(true);
 
+        //scale the pieces appropriately
         int scale = 3;
         meshView.setScaleX(scale);
         meshView.setScaleY(scale);
         meshView.setScaleZ(scale);
-
-        //rotate the mesh
-        //meshView.setRotationAxis(Rotate.X_AXIS);
-        //meshView.setRotate(90);
 
         return meshView;
     }

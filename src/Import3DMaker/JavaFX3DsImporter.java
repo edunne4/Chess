@@ -50,9 +50,9 @@ public class JavaFX3DsImporter extends Application {
         root.setAlignment(Pos.CENTER);
 
         //create three pieces
-        MeshView piece1 = createChessPiece("king.stl",Color.RED);
-        MeshView piece2 = createChessPiece("king.stl",Color.BLUE);
-        MeshView piece3 = createChessPiece("Knight.stl",Color.GREEN);
+        MeshView piece1 = createChessPiece("stl/king.stl",Color.RED);
+        MeshView piece2 = createChessPiece("stl/king.stl",Color.BLUE);
+        MeshView piece3 = createChessPiece("stl/knight.stl",Color.GREEN);
 
         //move piece1 to create some 3D perspective
         piece1.setTranslateX(100);
@@ -109,9 +109,11 @@ public class JavaFX3DsImporter extends Application {
         meshView.setMaterial(new PhongMaterial(color));
         meshView.setDrawMode(DrawMode.FILL);
         meshView.setVisible(true);
-        meshView.setScaleX(10);
-        meshView.setScaleY(10);
-        meshView.setScaleZ(10);
+
+        int scale = 3;
+        meshView.setScaleX(scale);
+        meshView.setScaleY(scale);
+        meshView.setScaleZ(scale);
 
         //rotate the mesh
         meshView.setRotationAxis(Rotate.X_AXIS);
