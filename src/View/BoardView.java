@@ -26,9 +26,9 @@ public class BoardView {
 
     private TilePane board;
     private final int SIDE_LENGTH = 8;
-    private final String LIGHT_COLOR_HEX = "#ede8da";
-    private final String DARK_COLOR_HEX = "#949085";
-    private SquareView[][] SquareHolder = new SquareView[SIDE_LENGTH][SIDE_LENGTH];
+    public static final String LIGHT_COLOR_HEX = "#ede8da";
+    public static final String DARK_COLOR_HEX = "#949085";
+
 
     public BoardView(int size){
         //the board will be a grid of squares
@@ -39,7 +39,6 @@ public class BoardView {
             for (int col = 0; col < SIDE_LENGTH; col++) {
                 //make it a stack pane. it will have a color background and the piece can be placed on top of it
                 SquareView square = new SquareView(row,col);
-                SquareHolder[row][col] = square;
                 square.setSize(size/SIDE_LENGTH);
 
 
@@ -114,4 +113,17 @@ public class BoardView {
     }
 
     public TilePane getPane(){return board;}
+
+    public void highlightSquare(int row, int col){
+        getPane().getChildren().get(row*8+col).setStyle("-fx-background-color: #7dff9d");}
+
+    public void unHighlightSquare(int row, int col){
+        String squareColor;
+        if ((row + col) % 2 == 0) {
+            squareColor = BoardView.LIGHT_COLOR_HEX;
+        } else {
+            squareColor = BoardView.DARK_COLOR_HEX;
+        }
+        getPane().getChildren().get(row*8+col).setStyle("-fx-background-color: " + squareColor);
+    }
 }

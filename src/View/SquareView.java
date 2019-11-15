@@ -27,7 +27,7 @@ public class SquareView {
     private int col;
 
 
-    public SquareView(int col,int row){
+    public SquareView(int row,int col){
         pane = new StackPane();
         this.row = row;
         this.col = col;
@@ -50,4 +50,5 @@ public class SquareView {
     public int getCol() {
         return col;
     }
+
 }

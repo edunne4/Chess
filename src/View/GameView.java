@@ -4,9 +4,7 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -14,8 +12,12 @@ import javafx.stage.Stage;
 public class GameView extends Application {
 
     private HBox root;
+    VBox rightSideContainer;
     private int windowHeight = 750;
     private int windowWidth = 900;
+    BoardView board;
+    FlowPane deadPieceHolderWhite;
+    FlowPane deadPieceHolderBlack;
 
     public static void main(String[] args) {
         launch(args);
@@ -29,25 +31,38 @@ public class GameView extends Application {
         root.setMinSize(windowWidth,windowHeight);
 
         //make the board, which is a grid pane on the left
-       BoardView board = new BoardView(640);
-       board.initBoard();
-       board.movePiece(0,0,4,5);
-       board.movePiece(1,0,0,0);
-
+        board = new BoardView(640);
+        board.initBoard();
+        //add side coords to view
         VBox boardCoordContainer = new VBox();
-       //add side coords to view
         HBox sideCoordAndBoardContainer = new HBox();
         sideCoordAndBoardContainer.getChildren().add(makeSideBoardCoords());
+        //add the actual board in
         sideCoordAndBoardContainer.getChildren().add(board.getPane());
         boardCoordContainer.getChildren().add(makeTopBoardCoords());
         boardCoordContainer.getChildren().add(sideCoordAndBoardContainer);
+        //put this whole shabang in the root, an HBox
         root.getChildren().add(boardCoordContainer);
 
+        //next four lines demonstrate some board methods
+        board.movePiece(0,0,4,5);
+        board.highlightSquare(0,2);
+        board.unHighlightSquare(0,2);
+        board.highlightSquare(4,5);
 
+        rightSideContainer = new VBox();
+        createDeadPieceHolders();
+        root.getChildren().add(rightSideContainer);
 
-        //make right side, which is a vbox containing importnant information and menus
-        //VBox infoMenu = new VBox();
-        //root.getChildren().add(infoMenu);
+        //demonstrating killPiece method
+        killPiece(0,4,deadPieceHolderWhite);
+        killPiece(0,5,deadPieceHolderWhite);
+        killPiece(0,6,deadPieceHolderWhite);
+        killPiece(0,7,deadPieceHolderWhite);
+        killPiece(1,4,deadPieceHolderWhite);
+        killPiece(1,5,deadPieceHolderWhite);
+        killPiece(7,4,deadPieceHolderBlack);
+        killPiece(7,7,deadPieceHolderBlack);
 
 
         Scene scene = new Scene(root);
@@ -55,6 +70,24 @@ public class GameView extends Application {
         primaryStage.setScene(scene);
         primaryStage.sizeToScene();
         primaryStage.show();
+    }
+
+    private void createDeadPieceHolders() {
+        //make right side, which is a vbox containing importnant information and menus
+        //make the flowpanes for dead pieces
+        deadPieceHolderWhite = new FlowPane();
+        deadPieceHolderBlack = new FlowPane();
+        Text deadPieceHolderWhiteName = new Text();
+        Text deadPieceHolderBlackName = new Text();
+        deadPieceHolderBlackName.setFont(new Font(20));
+        deadPieceHolderWhiteName.setFont(new Font(20));
+        deadPieceHolderBlackName.setText("Captured Black Pieces:");
+        deadPieceHolderWhiteName.setText("Captured White Pieces:");
+
+        rightSideContainer.getChildren().add(deadPieceHolderBlackName);
+        rightSideContainer.getChildren().add(deadPieceHolderBlack);
+        rightSideContainer.getChildren().add(deadPieceHolderWhiteName);
+        rightSideContainer.getChildren().add(deadPieceHolderWhite);
     }
 
     public VBox makeSideBoardCoords(){
@@ -82,5 +115,11 @@ public class GameView extends Application {
             coords.getChildren().add(coord);
         }
         return coords;
+    }
+
+    public void killPiece(int row, int col, FlowPane deadPieceHolder){
+        StackPane oldLocationStackPane = (StackPane)board.getPane().getChildren().get(row*8+col);
+        deadPieceHolder.getChildren().add(oldLocationStackPane.getChildren().get(0));
+        oldLocationStackPane.getChildren().clear();
     }
 }
