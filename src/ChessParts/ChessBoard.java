@@ -102,6 +102,35 @@ public class ChessBoard {
         return positions[row][col];
     }
 
+    public Square getSquareAt(String chessPos) throws IllegalArgumentException{
+
+        if(!isStringPosValid(chessPos)){
+            throw new IllegalArgumentException("That is not a real chess position");
+        }
+        char letter = chessPos.charAt(0);
+        int col = (int)(letter - 97);
+        int row = Character.getNumericValue(chessPos.charAt(1)) - 1;
+        return getSquareAt(row, col);
+    }
+
+    private boolean isStringPosValid(String potentialPos){
+        if (potentialPos.length() != 2){
+            return false;
+        }
+        //check letter in bounds of board
+        char letter = potentialPos.charAt(0);
+        if(letter < 'a' || letter > 'f'){
+            return false;
+        }
+        //check number in bounds of board
+        char num = potentialPos.charAt(1);
+        if (num < '1' || num > '8'){
+            return false;
+        }
+        //otherwise it's fine
+        return true;
+    }
+
     /**
      * @return a string representation of the board
      */
@@ -119,4 +148,12 @@ public class ChessBoard {
 
         return strRep;
     }
+
+    public boolean posIsInBoard(int row, int col){
+        if(row<0 || row >= BOARD_HEIGHT || col < 0 || col >= BOARD_WIDTH){
+            return false;
+        }
+        return true;
+    }
+
 }
