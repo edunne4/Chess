@@ -20,6 +20,9 @@ package ChessParts;
 
 import ChessParts.ChessPieces.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Represents a chess board
  */
@@ -29,6 +32,12 @@ public class ChessBoard {
 
     /** 2D array of squares representing positions that chess pieces can be at */
     private final Square[][] positions;
+
+    /** Pieces that have been captured by the black team */
+    private List<ChessPiece> capturedWhitePieces = new ArrayList<>();
+
+    /** Pieces that have been captured by the white team */
+    private List<ChessPiece> capturedBlackPieces = new ArrayList<>();
 
     /**
      * Explicit constructor to initialize the squares array and set up the starting positions of the game pieces
@@ -156,4 +165,11 @@ public class ChessBoard {
         return true;
     }
 
+    public void capturePiece(ChessPiece pieceKilled) {
+        if(pieceKilled.getTeam() == Team.WHITE){
+            capturedWhitePieces.add(pieceKilled);
+        }else{
+            capturedBlackPieces.add(pieceKilled);
+        }
+    }
 }

@@ -59,6 +59,10 @@ public class Square {
         return col;
     }
 
+    public boolean isEmpty(){
+        return currentPiece == null;
+    }
+
     /**
      * @return a string of the Chess format of this square's position
      */

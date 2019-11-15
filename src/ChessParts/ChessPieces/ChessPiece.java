@@ -64,4 +64,8 @@ public abstract class ChessPiece {
     public boolean isDiagonalMovementOnly() {
         return diagonalMovementOnly;
     }
+
+    public Team getTeam() {
+        return team;
+    }
 }

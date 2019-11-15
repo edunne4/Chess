@@ -19,8 +19,8 @@
 
 import ChessParts.ChessPieces.ChessPiece;
 import ChessParts.Square;
+import Model.GameManager;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
