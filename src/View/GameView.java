@@ -122,4 +122,8 @@ public class GameView extends Application {
         deadPieceHolder.getChildren().add(oldLocationStackPane.getChildren().get(0));
         oldLocationStackPane.getChildren().clear();
     }
+
+    public BoardView getBoard() {
+        return board;
+    }
 }

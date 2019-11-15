@@ -1,4 +1,4 @@
-/* *****************************************
+package Model;/* *****************************************
  * CSCI205 - Software Engineering and Design
  * Fall 2019
  * Instructor: Prof. Brian King
@@ -10,7 +10,7 @@
  *
  * Project: csci205finalproject
  * Package: PACKAGE_NAME
- * Class: GameManager
+ * Class: Model.GameManager
  *
  * Description:
  *
@@ -54,6 +54,9 @@ public class GameManager {
 
         //remove piece from old location
         currentLocation.setCurrentPiece(null);
+
+        //add killed piece to pieces captured
+        board.capturePiece(pieceKilled);
 
         switchTurn();
         return pieceKilled;
@@ -105,4 +108,6 @@ public class GameManager {
     public Team getCurrentTurn() {
         return currentTurn;
     }
+
+
 }
