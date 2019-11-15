@@ -19,10 +19,14 @@
 package View;
 
 import javafx.geometry.Pos;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 
-public class BoardView {
+/**
+ * This class is the container for the TilePane that contains all the squares on the board.
+ */
+public class BoardView extends TilePane{
 
     private TilePane board;
     private final int SIDE_LENGTH = 8;
@@ -32,8 +36,8 @@ public class BoardView {
 
     public BoardView(int size){
         //the board will be a grid of squares
-        board = new TilePane();
-        board.setPrefSize(size,size);
+        super();
+        this.setPrefSize(size,size);
         //for every one of the 64 squares
         for (int row = 0; row < SIDE_LENGTH; row++) {
             for (int col = 0; col < SIDE_LENGTH; col++) {
@@ -42,7 +46,7 @@ public class BoardView {
                 square.setSize(size/SIDE_LENGTH);
 
 
-                square.getPane().setAlignment(Pos.CENTER); // make sure piece will be put in center
+                square.setAlignment(Pos.CENTER); // make sure piece will be put in center
 
 
                 //pick color of square
@@ -53,9 +57,9 @@ public class BoardView {
                     squareColor = DARK_COLOR_HEX;
                 }
                 //set square color
-                square.getPane().setStyle("-fx-background-color: " + squareColor);
+                square.setStyle("-fx-background-color: " + squareColor);
                 //add square to the board
-                board.getChildren().add(square.getPane());
+                this.getChildren().add(square);
 
             }
         }
@@ -79,8 +83,8 @@ public class BoardView {
             //white pawns
             if(i < 16 && i >=8) {piece = new PieceView("https://upload.wikimedia.org/wikipedia/commons/0/04/Chess_plt60.png");}
 
-            StackPane squarePane = (StackPane)board.getChildren().get(i);
-            squarePane.getChildren().add(piece.getView());
+            SquareView square = (SquareView)this.getChildren().get(i);
+            square.addImageView(piece.getView());
         }
         //bottom side
         for (int i = 0; i < SIDE_LENGTH*2; i++) {
@@ -98,32 +102,22 @@ public class BoardView {
             //knights
             if(i == 9 || i == 14) {piece = new PieceView("https://upload.wikimedia.org/wikipedia/commons/f/f1/Chess_ndt60.png");}
             int offset = SIDE_LENGTH*SIDE_LENGTH - SIDE_LENGTH*2;
-            StackPane squarePane = (StackPane)board.getChildren().get(i + offset);
-            squarePane.getChildren().add(piece.getView());
+            SquareView square = (SquareView)this.getChildren().get(i + offset);
+            square.addImageView(piece.getView());
         }
 
     }
 
     public void movePiece(int oldRow,int oldCol,int newRow,int newCol){
-        StackPane oldLocationStackPane = (StackPane)board.getChildren().get(oldRow*8+oldCol);
-        StackPane newLocationStackPane = (StackPane)board.getChildren().get(newRow*8+newCol);
+        SquareView oldLocationSquare = (SquareView)this.getSquare(oldRow,oldCol);
+        SquareView newLocationSquare = (SquareView)this.getSquare(newRow,newCol);
 
-        newLocationStackPane.getChildren().add(oldLocationStackPane.getChildren().get(0));
-        oldLocationStackPane.getChildren().clear();
+        newLocationSquare.addImageView((ImageView)oldLocationSquare.getPiece());
+        oldLocationSquare.getChildren().clear();
     }
 
-    public TilePane getPane(){return board;}
 
-    public void highlightSquare(int row, int col){
-        getPane().getChildren().get(row*8+col).setStyle("-fx-background-color: #7dff9d");}
-
-    public void unHighlightSquare(int row, int col){
-        String squareColor;
-        if ((row + col) % 2 == 0) {
-            squareColor = BoardView.LIGHT_COLOR_HEX;
-        } else {
-            squareColor = BoardView.DARK_COLOR_HEX;
-        }
-        getPane().getChildren().get(row*8+col).setStyle("-fx-background-color: " + squareColor);
+    public SquareView getSquare(int row, int col) {
+        return (SquareView)this.getChildren().get(row * 8 + col);
     }
 }

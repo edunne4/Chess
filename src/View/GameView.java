@@ -38,7 +38,7 @@ public class GameView extends Application {
         HBox sideCoordAndBoardContainer = new HBox();
         sideCoordAndBoardContainer.getChildren().add(makeSideBoardCoords());
         //add the actual board in
-        sideCoordAndBoardContainer.getChildren().add(board.getPane());
+        sideCoordAndBoardContainer.getChildren().add(board);
         boardCoordContainer.getChildren().add(makeTopBoardCoords());
         boardCoordContainer.getChildren().add(sideCoordAndBoardContainer);
         //put this whole shabang in the root, an HBox
@@ -46,9 +46,9 @@ public class GameView extends Application {
 
         //next four lines demonstrate some board methods
         board.movePiece(0,0,4,5);
-        board.highlightSquare(0,2);
-        board.unHighlightSquare(0,2);
-        board.highlightSquare(4,5);
+        board.getSquare(0,2).highlight();
+        board.getSquare(0,2).unHighlight();
+        board.getSquare(4,5).highlight();
 
         rightSideContainer = new VBox();
         createDeadPieceHolders();
@@ -118,8 +118,8 @@ public class GameView extends Application {
     }
 
     public void killPiece(int row, int col, FlowPane deadPieceHolder){
-        StackPane oldLocationStackPane = (StackPane)board.getPane().getChildren().get(row*8+col);
-        deadPieceHolder.getChildren().add(oldLocationStackPane.getChildren().get(0));
-        oldLocationStackPane.getChildren().clear();
+        SquareView oldLocationSquare = (SquareView)board.getSquare(row,col);
+        deadPieceHolder.getChildren().add(oldLocationSquare.getPiece());
+        oldLocationSquare.getChildren().clear();
     }
 }
