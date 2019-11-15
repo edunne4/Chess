@@ -22,6 +22,12 @@ import ChessParts.ChessPieces.ChessPiece;
 import ChessParts.Square;
 import ChessParts.Team;
 
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Class to control the flow fo the game
+ */
 public class GameManager {
 
     /** Whichever team's turn it is */
@@ -53,8 +59,34 @@ public class GameManager {
         return pieceKilled;
     }
 
+
     /**
-     * helprer function to toggle whose turn it is
+     *
+     * @param pieceLocation the square chosen to get the moves of the piece located there
+     * @return a list of possible move locations for the piece at that location
+     * @throws NullPointerException if there is no piece at that location
+     */
+    public List<Square> getLegalMoves(Square pieceLocation) throws NullPointerException{
+        List<int[]> posVectors = pieceLocation.getCurrentPiece().getMoves(new int[]{pieceLocation.getCol(), pieceLocation.getRow()});
+
+        List<Square> squareList = new ArrayList<Square>();
+        for (int[] vec : posVectors) {
+            squareList.add(new Square(vec[1], vec[0]));
+        }
+
+        //then, check if the squares created are legal in the board
+        for (Square pos : squareList) {
+            //if it's not even on the board remove it
+            if (!board.posIsInBoard(pos.getRow(), pos.getCol())){
+                //squareList.remove(pos);
+            }
+        }
+
+        return squareList;
+    }
+
+    /**
+     * Helper function to toggle whose turn it is
      * @return the team whose turn it is
      */
     private Team switchTurn(){
@@ -68,5 +100,9 @@ public class GameManager {
 
     public ChessBoard getBoard() {
         return board;
+    }
+
+    public Team getCurrentTurn() {
+        return currentTurn;
     }
 }

@@ -21,5 +21,7 @@
 public class Main {
     public static void main(String[] args) {
         System.out.println("Hello final project");
+        ConsoleInterface CI = new ConsoleInterface();
+        CI.runChessGame();
     }
 }
