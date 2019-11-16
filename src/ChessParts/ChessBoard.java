@@ -99,7 +99,12 @@ public class ChessBoard {
      * @return the Square object, which may or may not contain a ChessPiece
      */
     public Square getSquareAt(int row, int col){
-        return positions[row][col];
+
+        try {
+            return positions[row][col];
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     /**

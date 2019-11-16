@@ -18,12 +18,15 @@
  */
 package ChessParts.ChessPieces;
 
+import ChessParts.ChessBoard;
+import ChessParts.Square;
 import ChessParts.Team;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Bishop extends ChessPiece{
+
 
     public Bishop(Team team) {
         super(team);
@@ -37,15 +40,15 @@ public class Bishop extends ChessPiece{
      * @return ArrayList of all the possible moves
      */
     @Override
-    public List<int[]> getMoves(int[] Position) {
-        int xCoordinate = Position[0];
-        int yCoordinate = Position[1];
-        ArrayList<int[]> moves = new ArrayList<>(DIRECTIONS);
+    public List<int[]> getMoves(Square square, ChessBoard Board) {
+        int row = square.getRow();
+        int col = square.getCol();
+        ArrayList<Square> moves = new ArrayList<>(DIRECTIONS);
         for (int i = 0 ; i < DIRECTIONS; i ++){
-            int[] option1 = {Position[0] + i, Position[1]};
-            int[] option2 = {Position[0] - i, Position[1]};
-            int[] option3 = {Position[0], Position[1] + i};
-            int[] option4 = {Position[0], Position[1] - i};
+            Square option1 = Board.getSquareAt(row+i,col+i);
+            Square option2 = Board.getSquareAt(row+i, col-i;
+            Square option3 = Board.getSquareAt(row-i,col+i);
+            Square option4 = Board.getSquareAt(row-i,col+i);
             moves.add(option1);
             moves.add(option2);
             moves.add(option3);
