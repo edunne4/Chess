@@ -18,6 +18,8 @@
  */
 package ChessParts.ChessPieces;
 
+import ChessParts.ChessBoard;
+import ChessParts.Square;
 import ChessParts.Team;
 
 import java.util.ArrayList;
@@ -39,24 +41,31 @@ public class King extends ChessPiece{
     /**
      * Will return an ArrayList with integer arrays of all the possible x y coordinates that
      * a specific chess piece is allowed to move to
-     * @param Position, the position the chess piece is on the board
+     * @param currentPosition, the position the chess piece is on the board, board, the chess board that it is on
      * @return ArrayList of all the possible moves
      */
     @Override
-    public List<int[]> getMoves(int[] Position) {
-        ArrayList<int[]> moves = new ArrayList<>(DIRECTIONS);
-        int[] option1 = {Position[0] + 1, Position[1]};
-        int[] option2 = {Position[0] + 1, Position[1] + 1};
-        int[] option3 = {Position[0] + 1, Position[1] -1};
-        int[] option4 = {Position[0], Position[1] + 1};
-        int[] option5 = {Position[0], Position[1] - 1};
-        int[] option6 = {Position[0] - 1, Position[1] + 1};
-        int[] option7 = {Position[0] - 1, Position[1]};
-        int[] option8 = {Position[0] - 1, Position[1] - 1};
+    public List<Square> getLegalMoves(Square currentSquare, ChessBoard board) {
+        ArrayList<Square> moves = new ArrayList<>(DIRECTIONS);
+        int row = currentSquare.getRow();
+        int col = currentSquare.getCol();
+        //Get all diagnols
+        Square option1 = board.getSquareAt(row+1,col+1);
+
+        Square option2 = board.getSquareAt(row+1, col-1;
+        Square option3 = board.getSquareAt(row-1,col+1);
+        Square option4 = board.getSquareAt(row-1,col+1);
+        //Add options to arraList
         moves.add(option1);
         moves.add(option2);
         moves.add(option3);
         moves.add(option4);
+        //Get all non-Diagnols
+        Square option5 = board.getSquareAt(row+1,col);
+        Square option6 = board.getSquareAt(row-1, col;
+        Square option7 = board.getSquareAt(row,col+1);
+        Square option8 = board.getSquareAt(row,col-11);
+        //Add options to arrayList
         moves.add(option5);
         moves.add(option6);
         moves.add(option7);
@@ -64,6 +73,10 @@ public class King extends ChessPiece{
         return  moves;
     }
 
+    public boolean checkSquare(Square square){
+        boolean canMove = false;
+        if (square.)
+    }
     @Override
     public String toString() {
         return "K" + team.toString().substring(0,1);
