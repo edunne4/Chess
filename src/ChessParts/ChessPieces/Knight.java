@@ -38,7 +38,7 @@ public class Knight extends ChessPiece{
      * @param Position, the Position of the Chess Piece on the chess board.
      * @return, legalMoves, and array list with all the possible values for its moves
      */
-    public List<int[]> getMoves(int[] Position){
+    public List<int[]> getLegalMoves(int[] Position){
         ArrayList<int[]> moves = new ArrayList<>(DIRECTIONS);
         int[] option1 = {Position[0] + 1, Position[1] + 2};
         int[] option2 = {Position[0] + 2, Position[1] + 1};

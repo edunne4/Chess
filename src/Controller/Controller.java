@@ -44,9 +44,9 @@ public class Controller {
 
     private void makeSquaresClickable() {
 
-        for (Node child : theView.getBoard().getPane().getChildren()){
-            //SquareView squareView = (SquareView) child;
-            child.setOnMouseClicked(event -> squareWasClicked((SquareView) event.getSource()));
+        for (Node child : theView.getBoard().getChildren()){
+            SquareView squareView = (SquareView) child;
+            squareView.setOnMouseClicked(event -> squareWasClicked((SquareView) event.getSource()));
         }
     }
 
@@ -55,6 +55,7 @@ public class Controller {
      * @param squareSelected - the square that was clicked
      */
     private void squareWasClicked (SquareView squareSelected){
+        System.out.println("Square was clicked");
         //get model's corresponding square
         Square thisSquare = theModel.getBoard().getSquareAt(squareSelected.getRow(), squareSelected.getCol());
         //if it has a piece in it in the model (it's not empty)
@@ -65,7 +66,8 @@ public class Controller {
 
             //highlight those positions on the board view
             for (Square pos : legalMoves) {
-                theView.getBoard().highlightSquare(pos.getRow(), pos.getCol());
+
+                theView.getBoard().getSquare(pos.getRow(), pos.getCol()).highlight();
             }
         }
 

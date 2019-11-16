@@ -105,10 +105,14 @@ public class ChessBoard {
      * Get the square at the specified location
      * @param row the row
      * @param col the column
-     * @return the Square object, which may or may not contain a ChessPiece
+     * @return the Square object, which may or may not contain a ChessPiece. If its out of bounds of the board, return null
      */
     public Square getSquareAt(int row, int col){
-        return positions[row][col];
+        try {
+            return positions[row][col];
+        } catch (IndexOutOfBoundsException e) {
+            return null;
+        }
     }
 
     public Square getSquareAt(String chessPos) throws IllegalArgumentException{

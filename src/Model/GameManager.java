@@ -72,9 +72,9 @@ public class GameManager {
      * @throws NullPointerException if there is no piece at that location
      */
     public List<Square> getLegalMoves(Square pieceLocation) throws NullPointerException{
-        List<int[]> posVectors = pieceLocation.getCurrentPiece().getMoves(new int[]{pieceLocation.getCol(), pieceLocation.getRow()});
+        List<int[]> posVectors = pieceLocation.getCurrentPiece().getLegalMoves(new int[]{pieceLocation.getCol(), pieceLocation.getRow()});
 
-        List<Square> squareList = new ArrayList<Square>();
+        List<Square> squareList = new ArrayList<>();
         for (int[] vec : posVectors) {
             squareList.add(new Square(vec[1], vec[0]));
         }

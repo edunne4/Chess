@@ -35,7 +35,7 @@ public class Queen extends ChessPiece {
      * @return ArrayList of all the possible moves
      */
     @Override
-    public List<int[]> getMoves(int[] Position) {
+    public List<int[]> getLegalMoves(int[] Position) {
         int xCoordinate = Position[0];
         int yCoordinate = Position[1];
         ArrayList<int[]> moves = new ArrayList<>(DIRECTIONS);

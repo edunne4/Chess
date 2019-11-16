@@ -18,6 +18,8 @@
  */
 package ChessParts.ChessPieces;
 
+import ChessParts.ChessBoard;
+import ChessParts.Square;
 import ChessParts.Team;
 
 import java.util.ArrayList;
@@ -33,25 +35,48 @@ public class Bishop extends ChessPiece{
      * Will return an ArrayList with integer arrays of all the possible x y coordinates that
      * a specific chess piece is allowed to move to. As of right now the bishop returns 32 moves that are not
      * all plausible, i.e. will be off board.
-     * @param Position, the position the chess piece is on the board
-     * @return ArrayList of all the possible moves
+     * @param currentPos, the position the chess piece is on the board
+     * @return ArrayList of all the legal moves
      */
     @Override
-    public List<int[]> getMoves(int[] Position) {
-        int xCoordinate = Position[0];
-        int yCoordinate = Position[1];
-        ArrayList<int[]> moves = new ArrayList<>(DIRECTIONS);
-        for (int i = 0 ; i < DIRECTIONS; i ++){
-            int[] option1 = {Position[0] + i, Position[1]};
-            int[] option2 = {Position[0] - i, Position[1]};
-            int[] option3 = {Position[0], Position[1] + i};
-            int[] option4 = {Position[0], Position[1] - i};
-            moves.add(option1);
-            moves.add(option2);
-            moves.add(option3);
-            moves.add(option4);
+    public List<Square> getLegalMoves(Square currentPos, ChessBoard board) {
+        List<Square> legalMoves = new ArrayList<>();
+
+        //check up and to the right
+        legalMoves.addAll(checkDiagonal(currentPos, board, 1,1));
+        //check down and to the right
+        legalMoves.addAll(checkDiagonal(currentPos, board, -1,1));
+        //check down and to the left
+        legalMoves.addAll(checkDiagonal(currentPos, board, -1,-1));
+        //check up and to the left
+        legalMoves.addAll(checkDiagonal(currentPos, board, 1,-1));
+
+
+        return legalMoves;
+    }
+
+    private List<Square> checkDiagonal(Square currentPos, ChessBoard board, int rowDirection, int colDirection){
+        List<Square> diagSquares = new ArrayList<>();
+        int col = currentPos.getCol();
+        int row = currentPos.getRow();
+        for (int i = 0; i < DIRECTIONS; i++) {
+            Square diagSquare = board.getSquareAt(row + i*rowDirection, col + i*colDirection);
+            //check if it's not null
+            if (diagSquare == null){
+                break;
+            }
+            //check if there's a piece there
+            if(!diagSquare.isEmpty()){
+                //if it is on the other team, include that space
+                if(diagSquare.getCurrentPiece().getTeam() != this.team){
+                    diagSquares.add(diagSquare);
+                }
+                break;
+            }
+            diagSquares.add(diagSquare);
         }
-        return moves;
+
+        return diagSquares;
     }
 
     @Override

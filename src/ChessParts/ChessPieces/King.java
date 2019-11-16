@@ -43,7 +43,7 @@ public class King extends ChessPiece{
      * @return ArrayList of all the possible moves
      */
     @Override
-    public List<int[]> getMoves(int[] Position) {
+    public List<int[]> getLegalMoves(int[] Position) {
         ArrayList<int[]> moves = new ArrayList<>(DIRECTIONS);
         int[] option1 = {Position[0] + 1, Position[1]};
         int[] option2 = {Position[0] + 1, Position[1] + 1};

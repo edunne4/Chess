@@ -18,6 +18,8 @@
  */
 package ChessParts.ChessPieces;
 
+import ChessParts.ChessBoard;
+import ChessParts.Square;
 import ChessParts.Team;
 
 import java.util.ArrayList;
@@ -42,12 +44,13 @@ public abstract class ChessPiece {
     }
 
     /**
-     * Will return an ArrayList with integer arrays of all the possible x y coordinates that
+     * Will return an ArrayList with square positions of all the possible that
      * a specific chess piece is allowed to move to
-     * @param Position, the position the chess piece is on the board
+     * @param currentPos, the position the chess piece is on the board
+     * @param  board, the board to check for it's legal positions on
      * @return ArrayList of all the possible moves
      */
-    public abstract List<int[]> getMoves(int[] Position);
+    public abstract List<Square> getLegalMoves(Square currentPos, ChessBoard board);
 
     public int[] getMovement() {
         return movement;
