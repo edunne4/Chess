@@ -86,24 +86,7 @@ public class King extends ChessPiece{
         return allMoves;
     }
 
-    /**
-     * Loops through the allMoves array list and makes a new list containing only the valid moves,
-     * i.e is on the board and not blocked by a piece on the same team
-     * @param allMoves
-     * @return
-     */
-    private ArrayList<Square> getValidMoves(ArrayList<Square> allMoves) {
-        ArrayList<Square> validMoves = new ArrayList<>(DIRECTIONS);
-        for (Square square: allMoves){
-            if (square != null){
-                if (checkSquare(square)){
-                    validMoves.add(square);
-                }
-            }
-            continue;
-        }
-        return validMoves;
-    }
+
 
 
     @Override
