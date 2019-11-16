@@ -41,41 +41,79 @@ public class King extends ChessPiece{
     /**
      * Will return an ArrayList with integer arrays of all the possible x y coordinates that
      * a specific chess piece is allowed to move to
-     * @param currentPosition, the position the chess piece is on the board, board, the chess board that it is on
+     * @param currentSquare, the position the chess piece is on the board, board, the chess board that it is on
      * @return ArrayList of all the possible moves
      */
     @Override
     public List<Square> getLegalMoves(Square currentSquare, ChessBoard board) {
-        ArrayList<Square> moves = new ArrayList<>(DIRECTIONS);
+
+        ArrayList<Square> allMoves = getAllMoves(currentSquare, board);
+        ArrayList<Square> validMoves = getValidMoves(allMoves);
+        return  validMoves;
+    }
+
+    /**
+     * Method to return all the squares that a piece could potentially move to
+     * not minding the bounds of the board or the prescence of other pieces
+     * @param currentSquare
+     * @param board
+     * @return
+     */
+    private ArrayList<Square> getAllMoves(Square currentSquare, ChessBoard board) {
+        ArrayList<Square> allMoves = new ArrayList<>(DIRECTIONS);
         int row = currentSquare.getRow();
         int col = currentSquare.getCol();
-        //Get all diagnols
+        //Get all diagonals
         Square option1 = board.getSquareAt(row+1,col+1);
-
-        Square option2 = board.getSquareAt(row+1, col-1;
+        Square option2 = board.getSquareAt(row+1, col-1);
         Square option3 = board.getSquareAt(row-1,col+1);
         Square option4 = board.getSquareAt(row-1,col+1);
         //Add options to arraList
-        moves.add(option1);
-        moves.add(option2);
-        moves.add(option3);
-        moves.add(option4);
+        allMoves.add(option1);
+        allMoves.add(option2);
+        allMoves.add(option3);
+        allMoves.add(option4);
         //Get all non-Diagnols
         Square option5 = board.getSquareAt(row+1,col);
-        Square option6 = board.getSquareAt(row-1, col;
+        Square option6 = board.getSquareAt(row-1, col);
         Square option7 = board.getSquareAt(row,col+1);
         Square option8 = board.getSquareAt(row,col-11);
         //Add options to arrayList
-        moves.add(option5);
-        moves.add(option6);
-        moves.add(option7);
-        moves.add(option8);
-        return  moves;
+        allMoves.add(option5);
+        allMoves.add(option6);
+        allMoves.add(option7);
+        allMoves.add(option8);
+        return allMoves;
+    }
+
+    /**
+     * Loops through the allMoves array list and makes a new list containing only the valid moves,
+     * i.e is on the board and not blocked by a piece on the same team
+     * @param allMoves
+     * @return
+     */
+    private ArrayList<Square> getValidMoves(ArrayList<Square> allMoves) {
+        ArrayList<Square> validMoves = new ArrayList<>(DIRECTIONS);
+        for (Square square: allMoves){
+            if (square != null){
+                if (checkSquare(square)){
+                    validMoves.add(square);
+                }
+            }
+            continue;
+        }
+        return validMoves;
     }
 
     public boolean checkSquare(Square square){
-        boolean canMove = false;
-        if (square.)
+        if (!square.isEmpty()){
+            ChessPiece piece = square.getCurrentPiece();
+            if (piece.team == this.team){
+                return false;
+            }
+            return true;
+        }
+        return true;
     }
     @Override
     public String toString() {
