@@ -37,10 +37,20 @@ public abstract class ChessPiece {
     /**
      * Will return an ArrayList with integer arrays of all the possible x y coordinates that
      * a specific chess piece is allowed to move to
-     * @param currentPositon, the position the chess piece is on the board, boarf, the chessboard the piece is on
+     * @param currentSquare, the position the chess piece is on the board, boarf, the chessboard the piece is on
      * @return ArrayList of all the possible moves
      */
-    public abstract List<Square> getLegalMoves(Square currentPosition, ChessBoard bo
+    public abstract List<Square> getLegalMoves(Square currentSquare, ChessBoard board);
 
+    public boolean checkSquare(Square square){
+        if (!square.isEmpty()){
+            ChessPiece piece = square.getCurrentPiece();
+            if (piece.team == this.team){
+                return false;
+            }
+            return true;
+        }
+        return true;
+    }
 
 }

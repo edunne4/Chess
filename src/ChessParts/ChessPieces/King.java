@@ -105,16 +105,7 @@ public class King extends ChessPiece{
         return validMoves;
     }
 
-    public boolean checkSquare(Square square){
-        if (!square.isEmpty()){
-            ChessPiece piece = square.getCurrentPiece();
-            if (piece.team == this.team){
-                return false;
-            }
-            return true;
-        }
-        return true;
-    }
+
     @Override
     public String toString() {
         return "K" + team.toString().substring(0,1);
