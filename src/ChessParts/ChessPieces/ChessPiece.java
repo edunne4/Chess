@@ -26,15 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class ChessPiece {
-    //The x and y movement capabilities of a chess piece
-    protected int[] movement;
-    //Says if the chess piece can only move laterally
-    protected boolean lateralMovementOnly;
-    //Says if the chess piece can only move diagonally
-    protected boolean diagonalMovementOnly;
-    //Says if the x and y capabilities can be made bigger, i.e. the piece can move more than 1 square in
-    //that direction
-    protected boolean canExtrapolateMovement;
     //Stores the team of the chess piece
     protected Team team;
     //All possible directions on a Chess Board
@@ -46,29 +37,44 @@ public abstract class ChessPiece {
     /**
      * Will return an ArrayList with square positions of all the possible that
      * a specific chess piece is allowed to move to
-     * @param currentPos, the position the chess piece is on the board
+     * @param currentSquare, the position the chess piece is on the board
      * @param  board, the board to check for it's legal positions on
      * @return ArrayList of all the possible moves
      */
-    public abstract List<Square> getLegalMoves(Square currentPos, ChessBoard board);
+    public abstract List<Square> getLegalMoves(Square currentSquare, ChessBoard board);
 
-    public int[] getMovement() {
-        return movement;
+    public boolean checkSquare(Square square){
+        if (!square.isEmpty()){
+            ChessPiece piece = square.getCurrentPiece();
+            if (piece.team == this.team){
+                return false;
+            }
+            return true;
+        }
+        return true;
     }
 
-    public boolean isLateralMovementOnly() {
-        return lateralMovementOnly;
-    }
-
-    public boolean isCanExtrapolateMovement() {
-        return canExtrapolateMovement;
-    }
-
-    public boolean isDiagonalMovementOnly() {
-        return diagonalMovementOnly;
+    /**
+     * Loops through the allMoves array list and makes a new list containing only the valid moves,
+     * i.e is on the board and not blocked by a piece on the same team
+     * @param allMoves
+     * @return
+     */
+    public ArrayList<Square> getValidMoves(ArrayList<Square> allMoves) {
+        ArrayList<Square> validMoves = new ArrayList<>(DIRECTIONS);
+        for (Square square : allMoves) {
+            if (square != null) {
+                if (checkSquare(square)) {
+                    validMoves.add(square);
+                }
+            }
+            continue;
+        }
+        return validMoves;
     }
 
     public Team getTeam() {
         return team;
     }
+
 }
