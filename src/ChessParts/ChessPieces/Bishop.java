@@ -32,24 +32,24 @@ public class Bishop extends ChessPiece{
     }
 
     /**
-     * Will return an ArrayList with integer arrays of all the possible x y coordinates that
-     * a specific chess piece is allowed to move to. As of right now the bishop returns 32 moves that are not
-     * all plausible, i.e. will be off board.
-     * @param currentPos, the position the chess piece is on the board
-     * @return ArrayList of all the legal moves
+     * Will return an ArrayList with square positions of all the possible that
+     * a specific chess piece is allowed to move to
+     * @param currentSquare, the position the chess piece is on the board
+     * @param  board, the board to check for it's legal positions on
+     * @return ArrayList of all the possible moves
      */
     @Override
-    public List<Square> getLegalMoves(Square currentPos, ChessBoard board) {
+    public List<Square> getLegalMoves(Square currentSquare, ChessBoard board) {
         List<Square> legalMoves = new ArrayList<>();
 
         //check up and to the right
-        legalMoves.addAll(checkDiagonal(currentPos, board, 1,1));
+        legalMoves.addAll(checkDiagonal(currentSquare, board, 1,1));
         //check down and to the right
-        legalMoves.addAll(checkDiagonal(currentPos, board, -1,1));
+        legalMoves.addAll(checkDiagonal(currentSquare, board, -1,1));
         //check down and to the left
-        legalMoves.addAll(checkDiagonal(currentPos, board, -1,-1));
+        legalMoves.addAll(checkDiagonal(currentSquare, board, -1,-1));
         //check up and to the left
-        legalMoves.addAll(checkDiagonal(currentPos, board, 1,-1));
+        legalMoves.addAll(checkDiagonal(currentSquare, board, 1,-1));
 
 
         return legalMoves;
@@ -59,7 +59,7 @@ public class Bishop extends ChessPiece{
         List<Square> diagSquares = new ArrayList<>();
         int col = currentPos.getCol();
         int row = currentPos.getRow();
-        for (int i = 0; i < DIRECTIONS; i++) {
+        for (int i = 1; i < DIRECTIONS; i++) {
             Square diagSquare = board.getSquareAt(row + i*rowDirection, col + i*colDirection);
             //check if it's not null
             if (diagSquare == null){

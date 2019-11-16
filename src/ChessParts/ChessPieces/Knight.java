@@ -34,15 +34,17 @@ public class Knight extends ChessPiece{
         super(team);
     }
 
-    /**
-     * Will return an ArrayList with integer arrays of all the possible x y coordinates that
+
+     /**
+     * Will return an ArrayList with square positions of all the possible that
      * a specific chess piece is allowed to move to
-     * @param currentSquare, the position the chess piece is on the board, board, the chess board that it is on
+     * @param currentSquare, the position the chess piece is on the board
+     * @param  board, the board to check for it's legal positions on
      * @return ArrayList of all the possible moves
      */
     @Override
     public List<Square> getLegalMoves(Square currentSquare, ChessBoard board) {
-        ArrayList<Square> allMoves = new ArrayList<>(DIRECTIONS);
+        //ArrayList<Square> allMoves = new ArrayList<>(DIRECTIONS);
         ArrayList<Square> allMoves = getAllMoves(currentSquare, board);
         ArrayList<Square> validMoves = getValidMoves(allMoves);
         return  validMoves;
@@ -54,23 +56,24 @@ public class Knight extends ChessPiece{
      * @return, legalMoves, and array list with all the possible values for its moves
      */
     public List<Square> getMoves(int[] Position){
-        int[] option1 = {Position[0] + 1, Position[1] + 2};
-        int[] option2 = {Position[0] + 2, Position[1] + 1};
-        int[] option3 = {Position[0] + 1, Position[1] - 2};
-        int[] option4 = {Position[0] + 2, Position[1] - 1};
-        int[] option5 = {Position[0] - 1, Position[1] + 2};
-        int[] option6 = {Position[0] - 2, Position[1] + 1};
-        int[] option7 = {Position[0] - 1, Position[1] - 2};
-        int[] option8 = {Position[0] - 2, Position[1] - 1};
-        allMoves.add(option1);
-        allMoves.add(option2);
-        allMoves.add(option3);
-        allMoves.add(option4);
-        allMoves.add(option5);
-        allMoves.add(option6);
-        allMoves.add(option7);
-        allMoves.add(option8);
-        return  moves;
+        List<Square> legalMoves = new ArrayList<>();
+//        int[] option1 = {Position[0] + 1, Position[1] + 2};
+//        int[] option2 = {Position[0] + 2, Position[1] + 1};
+//        int[] option3 = {Position[0] + 1, Position[1] - 2};
+//        int[] option4 = {Position[0] + 2, Position[1] - 1};
+//        int[] option5 = {Position[0] - 1, Position[1] + 2};
+//        int[] option6 = {Position[0] - 2, Position[1] + 1};
+//        int[] option7 = {Position[0] - 1, Position[1] - 2};
+//        int[] option8 = {Position[0] - 2, Position[1] - 1};
+//        allMoves.add(option1);
+//        allMoves.add(option2);
+//        allMoves.add(option3);
+//        allMoves.add(option4);
+//        allMoves.add(option5);
+//        allMoves.add(option6);
+//        allMoves.add(option7);
+//        allMoves.add(option8);
+        return  legalMoves;
     }
 
     /**

@@ -43,6 +43,11 @@ public abstract class ChessPiece {
      */
     public abstract List<Square> getLegalMoves(Square currentSquare, ChessBoard board);
 
+    /**
+     * Returns true if the given square is not empty or occupied by the opposing team
+     * @param square the square to check
+     * @return whether or not this chess piece can occupy this square
+     */
     public boolean checkSquare(Square square){
         if (!square.isEmpty()){
             ChessPiece piece = square.getCurrentPiece();

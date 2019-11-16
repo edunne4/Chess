@@ -37,15 +37,14 @@ public class Rooke extends ChessPiece {
     }
 
     /**
-     * Will return an ArrayList with integer arrays of all the possible x y coordinates that
+     * Will return an ArrayList with square positions of all the possible that
      * a specific chess piece is allowed to move to
-     *
-     * @param currentPos
-     * @param board
+     * @param currentSquare, the position the chess piece is on the board
+     * @param  board, the board to check for it's legal positions on
      * @return ArrayList of all the possible moves
      */
     @Override
-    public List<Square> getLegalMoves(Square currentPos, ChessBoard board) {
+    public List<Square> getLegalMoves(Square currentSquare, ChessBoard board) {
         List<Square> legalMoves = new ArrayList<>();
 
 
@@ -65,9 +64,28 @@ public class Rooke extends ChessPiece {
         int colMultiplier = isCol ? dir : 0;
 
 
-        for (int i = 0; i < DIRECTIONS; i++) {
+        for (int i = 1; i < DIRECTIONS; i++) {
             Square nextSquare = board.getSquareAt(row + i*rowMultiplier, col + i*colMultiplier);
 
+            //check if it's not null
+            if (nextSquare == null){
+                break;
+            }
+            //check if there's a piece there
+            if(!nextSquare.isEmpty()){
+                //if it is on the other team, include that space
+                if(nextSquare.getCurrentPiece().getTeam() != this.team){
+                    adjacentSquares.add(nextSquare);
+                }
+                break; //stop looking in this direction
+            }
+            adjacentSquares.add(nextSquare);
+
+            if(nextSquare != null){ //if the square is on the board
+                if(checkSquare(nextSquare)) { //if the square does not contain someone on in it
+                    adjacentSquares.add(nextSquare);
+                }
+            }
         }
 
 
