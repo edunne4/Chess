@@ -1,4 +1,4 @@
-/* *****************************************
+package Model;/* *****************************************
  * CSCI205 - Software Engineering and Design
  * Fall 2019
  * Instructor: Prof. Brian King
@@ -10,7 +10,7 @@
  *
  * Project: csci205finalproject
  * Package: PACKAGE_NAME
- * Class: GameManager
+ * Class: Model.GameManager
  *
  * Description:
  *
@@ -22,6 +22,12 @@ import ChessParts.ChessPieces.ChessPiece;
 import ChessParts.Square;
 import ChessParts.Team;
 
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Class to control the flow fo the game
+ */
 public class GameManager {
 
     /** Whichever team's turn it is */
@@ -49,12 +55,39 @@ public class GameManager {
         //remove piece from old location
         currentLocation.setCurrentPiece(null);
 
+        //add killed piece to pieces captured
+        if(pieceKilled != null) {
+            board.capturePiece(pieceKilled);
+        }
+
         switchTurn();
         return pieceKilled;
     }
 
+
     /**
-     * helprer function to toggle whose turn it is
+     *
+     * @param pieceLocation the square chosen to get the moves of the piece located there
+     * @return a list of possible move locations for the piece at that location
+     * @throws NullPointerException if there is no piece at that location
+     */
+    public List<Square> getLegalMoves(Square pieceLocation) throws NullPointerException{
+        //get the possible moves of the piece at this location
+        List<Square> squareList = pieceLocation.getCurrentPiece().getLegalMoves(pieceLocation, this.board);
+
+//        //then, check if the squares created are legal in the board
+//        for (Square pos : squareList) {
+//            //if it's not even on the board remove it
+//            if (!board.posIsInBoard(pos.getRow(), pos.getCol())){
+//                //squareList.remove(pos);
+//            }
+//        }
+
+        return squareList;
+    }
+
+    /**
+     * Helper function to toggle whose turn it is
      * @return the team whose turn it is
      */
     private Team switchTurn(){
@@ -69,4 +102,10 @@ public class GameManager {
     public ChessBoard getBoard() {
         return board;
     }
+
+    public Team getCurrentTurn() {
+        return currentTurn;
+    }
+
+
 }

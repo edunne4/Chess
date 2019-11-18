@@ -3,8 +3,8 @@
  * Fall 2019
  * Instructor: Prof. Brian King
  *
- * Name: YOUR NAME
- * Section: YOUR SECTION
+ * Name: James Campbell
+ * Section: 11 am
  * Date: 11/10/19
  * Time: 1:42 PM
  *
@@ -13,11 +13,14 @@
  * Class: Queen
  *
  * Description:
- *
+ * A Queen piece class that holds the team of queen and can calculate the moves. Queen can move diagnolly as many pieces
+ * and horizontally or vertically as many pieces.
  * ****************************************
  */
 package ChessParts.ChessPieces;
 
+import ChessParts.ChessBoard;
+import ChessParts.Square;
 import ChessParts.Team;
 
 import java.util.ArrayList;
@@ -29,43 +32,45 @@ public class Queen extends ChessPiece {
     }
 
     /**
-     * Will return an ArrayList with integer arrays of all the possible x y coordinates that
+     * Will return an ArrayList with square positions of all the possible that
      * a specific chess piece is allowed to move to
-     * @param Position, the position the chess piece is on the board
+     * @param currentSquare, the position the chess piece is on the board
+     * @param  board, the board to check for it's legal positions on
      * @return ArrayList of all the possible moves
      */
     @Override
-    public List<int[]> getMoves(int[] Position) {
-        int xCoordinate = Position[0];
-        int yCoordinate = Position[1];
-        ArrayList<int[]> moves = new ArrayList<>(DIRECTIONS);
-        for (int a = 0 ; a < DIRECTIONS; a ++){
-            int[] option1 = {Position[0] + a, Position[1]};
-            int[] option2 = {Position[0] - a, Position[1]};
-            int[] option3 = {Position[0], Position[1] + a};
-            int[] option4 = {Position[0], Position[1] - a};
-            moves.add(option1);
-            moves.add(option2);
-            moves.add(option3);
-            moves.add(option4);
-        }
-        for (int i = 0; i < DIRECTIONS - xCoordinate; i ++){
-            int[] option = {Position[0] + i, Position[1]};
-            moves.add(option);
-        }
-        for (int j = 0; j < xCoordinate; j ++){
-            int[] option = {Position[0] - j, Position[1]};
-            moves.add(option);
-        }
-        for (int k = 0; k < DIRECTIONS - yCoordinate; k ++){
-            int[] option = {Position[0], Position[1] + k};
-            moves.add(option);
-        }
-        for (int l = 0; l < yCoordinate; l ++){
-            int[] option = {Position[0], Position[1] - l};
-            moves.add(option);
-        }
-        return moves;
+    public List<Square> getLegalMoves(Square currentSquare, ChessBoard board) {
+        List<Square> legalMoves = new ArrayList<>();
+//        int xCoordinate = Position[0];
+//        int yCoordinate = Position[1];
+//        ArrayList<int[]> moves = new ArrayList<>(DIRECTIONS);
+//        for (int a = 0 ; a < DIRECTIONS; a ++){
+//            int[] option1 = {Position[0] + a, Position[1]};
+//            int[] option2 = {Position[0] - a, Position[1]};
+//            int[] option3 = {Position[0], Position[1] + a};
+//            int[] option4 = {Position[0], Position[1] - a};
+//            moves.add(option1);
+//            moves.add(option2);
+//            moves.add(option3);
+//            moves.add(option4);
+//        }
+//        for (int i = 0; i < DIRECTIONS - xCoordinate; i ++){
+//            int[] option = {Position[0] + i, Position[1]};
+//            moves.add(option);
+//        }
+//        for (int j = 0; j < xCoordinate; j ++){
+//            int[] option = {Position[0] - j, Position[1]};
+//            moves.add(option);
+//        }
+//        for (int k = 0; k < DIRECTIONS - yCoordinate; k ++){
+//            int[] option = {Position[0], Position[1] + k};
+//            moves.add(option);
+//        }
+//        for (int l = 0; l < yCoordinate; l ++){
+//            int[] option = {Position[0], Position[1] - l};
+//            moves.add(option);
+//        }
+        return legalMoves;
     }
 
     @Override
