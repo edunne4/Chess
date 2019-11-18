@@ -20,6 +20,8 @@ package ChessParts;
 
 import ChessParts.ChessPieces.ChessPiece;
 
+import java.util.Objects;
+
 /**
  * Representation of a single space on a chess board
  */
@@ -57,6 +59,10 @@ public class Square {
         return col;
     }
 
+    public boolean isEmpty(){
+        return currentPiece == null;
+    }
+
     /**
      * @return a string of the Chess format of this square's position
      */
@@ -74,5 +80,19 @@ public class Square {
             return currentPiece.toString();
         }
         return "_|";
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Square square = (Square) o;
+        return row == square.row && col == square.col;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(currentPiece, row, col);
     }
 }
