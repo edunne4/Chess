@@ -30,6 +30,10 @@ import java.util.List;
 public class Pawn extends ChessPiece{
 
     private boolean hasMoved = false;
+    //White pawns start at column 1
+    private static final int StartingColWhite = 1;
+    //Black pawns start at column 6
+    private static final int StartingColBlack = 6;
 
     public Pawn(Team team) {
         super(team);
@@ -49,6 +53,11 @@ public class Pawn extends ChessPiece{
         int direction = (team == Team.WHITE) ? 1 : -1;
         int row = currentSquare.getRow();
         int col = currentSquare.getCol();
+
+        //Check to see if the pawn has moved, the pawn will only have not moved
+        if ((col != StartingColWhite) || (col != StartingColBlack)){
+            setHasMoved(true);
+        }
 
         //check in front
         Square frontSquare = board.getSquareAt(row + direction, col);
@@ -89,30 +98,6 @@ public class Pawn extends ChessPiece{
                 }
             }
         }
-
-//        if (this.team == team.WHITE) {
-//            int[] option1 = {Position[0], Position[1] + 1};
-//            int[] option2 = {Position[0] + 1, Position[1] + 1};
-//            int[] option3 = {Position[0] - 1, Position[1] + 1};
-//            moves.add(option1);
-//            moves.add(option2);
-//            moves.add(option3);
-//            if (!hasMoved) {
-//                int[] option4 = {Position[0], Position[1] + 2};
-//                moves.add(option4);
-//            }
-//        } else {
-//            int[] option5 = {Position[0], Position[1] - 1};
-//            int[] option6 = {Position[0] + 1, Position[1] - 1};
-//            int[] option7 = {Position[0] - 1, Position[1] - 1};
-//            if (!hasMoved) {
-//                int[] option8 = {Position[0], Position[1] - 2};
-//                moves.add(option8);
-//            }
-//            moves.add(option5);
-//            moves.add(option6);
-//            moves.add(option7);
-//        }
         return legalMoves;
     }
 
@@ -123,5 +108,17 @@ public class Pawn extends ChessPiece{
 
     public void setHasMoved(boolean hasMoved) {
         this.hasMoved = hasMoved;
+    }
+
+    public boolean isHasMoved() {
+        return hasMoved;
+    }
+
+    public static int getStartingColWhite() {
+        return StartingColWhite;
+    }
+
+    public static int getStartingColBlack() {
+        return StartingColBlack;
     }
 }
