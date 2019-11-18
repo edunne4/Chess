@@ -86,7 +86,8 @@ public class Controller {
             if(legalMoves.contains(thisSquare)){
                 //move piece to the new square "thisSquare"
                 theModel.movePiece(currentSquareSelected, thisSquare);
-
+                //move piece to the new square in the view
+                theView.getBoard().movePiece(currentSquareSelected.getRow(),currentSquareSelected.getCol(),thisSquare.getRow(),thisSquare.getCol());
             }
             //else, deselect the square and unhighlight legal moves
             for (Square pos : legalMoves) {
