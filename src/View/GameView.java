@@ -16,7 +16,7 @@ public class GameView {
     private int windowHeight = 750;
     private int windowWidth = 900;
     BoardView board;
-    FlowPane deadPieceHolderWhite;
+    private FlowPane deadPieceHolderWhite;
     private FlowPane deadPieceHolderBlack;
     GameManager gm;
 
@@ -122,5 +122,13 @@ public class GameView {
 
     public HBox getRoot() {
         return root;
+    }
+
+    public FlowPane getDeadPieceHolderWhite() {
+        return deadPieceHolderWhite;
+    }
+
+    public FlowPane getDeadPieceHolderBlack() {
+        return deadPieceHolderBlack;
     }
 }
