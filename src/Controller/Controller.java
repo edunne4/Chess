@@ -18,7 +18,9 @@
  */
 package Controller;
 
+import ChessParts.ChessPieces.ChessPiece;
 import ChessParts.Square;
+import ChessParts.Team;
 import Model.GameManager;
 import View.GameView;
 import View.SquareView;
@@ -85,7 +87,17 @@ public class Controller {
             // if this new square clicked is a legal move, move the chess piece
             if(legalMoves.contains(thisSquare)){
                 //move piece to the new square "thisSquare"
-                theModel.movePiece(currentSquareSelected, thisSquare);
+                ChessPiece killedPiece = theModel.movePiece(currentSquareSelected, thisSquare);
+
+                //if there is a piece at the new location(thisSquare), kill it
+                if (killedPiece != null){
+                    if(killedPiece.getTeam() == Team.WHITE){
+                        theView.killPiece(thisSquare.getRow(),thisSquare.getCol(),theView.getDeadPieceHolderWhite());
+                    }
+                    else{
+                        theView.killPiece(thisSquare.getRow(),thisSquare.getCol(),theView.getDeadPieceHolderBlack());
+                    }
+                }
                 //move piece to the new square in the view
                 theView.getBoard().movePiece(currentSquareSelected.getRow(),currentSquareSelected.getCol(),thisSquare.getRow(),thisSquare.getCol());
             }
