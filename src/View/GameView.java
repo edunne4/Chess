@@ -1,5 +1,6 @@
 package View;
 
+import Model.GameManager;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -8,7 +9,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class GameView extends Application {
+public class GameView {
 
     private HBox root;
     VBox rightSideContainer;
@@ -16,14 +17,11 @@ public class GameView extends Application {
     private int windowWidth = 900;
     BoardView board;
     FlowPane deadPieceHolderWhite;
-    FlowPane deadPieceHolderBlack;
+    private FlowPane deadPieceHolderBlack;
+    GameManager gm;
 
-    public static void main(String[] args) {
-        launch(args);
-    }
-
-    @Override
-    public void start(Stage primaryStage) {
+    public GameView(GameManager model) {
+        this.gm = model;
         //make root which is a set of horizontal boxes
         root = new HBox();
         //root.setAlignment(Pos.CENTER);
@@ -43,17 +41,19 @@ public class GameView extends Application {
         //put this whole shabang in the root, an HBox
         root.getChildren().add(boardCoordContainer);
 
-        //next four lines demonstrate some board methods
+        //these four lines demonstrate some board methods
+        /*
         board.movePiece(0,0,4,5);
         board.getSquare(0,2).highlight();
         board.getSquare(0,2).unHighlight();
         board.getSquare(4,5).highlight();
-
+        */
         rightSideContainer = new VBox();
         createDeadPieceHolders();
         root.getChildren().add(rightSideContainer);
 
         //demonstrating killPiece method
+        /*
         killPiece(0,4,deadPieceHolderWhite);
         killPiece(0,5,deadPieceHolderWhite);
         killPiece(0,6,deadPieceHolderWhite);
@@ -62,13 +62,7 @@ public class GameView extends Application {
         killPiece(1,5,deadPieceHolderWhite);
         killPiece(7,4,deadPieceHolderBlack);
         killPiece(7,7,deadPieceHolderBlack);
-
-
-        Scene scene = new Scene(root);
-        primaryStage.setTitle("Chess");
-        primaryStage.setScene(scene);
-        primaryStage.sizeToScene();
-        primaryStage.show();
+        */
     }
 
     private void createDeadPieceHolders() {
@@ -124,5 +118,9 @@ public class GameView extends Application {
 
     public BoardView getBoard() {
         return board;
+    }
+
+    public HBox getRoot() {
+        return root;
     }
 }
