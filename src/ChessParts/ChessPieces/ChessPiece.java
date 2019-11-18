@@ -43,6 +43,41 @@ public abstract class ChessPiece {
      */
     public abstract List<Square> getLegalMoves(Square currentSquare, ChessBoard board);
 
+
+    protected List<Square> checkDirection(Square currentPos, ChessBoard board, int rowDirec, int colDirec, int distance){
+        List<Square> adjacentSquares = new ArrayList<>();
+        int col = currentPos.getCol();
+        int row = currentPos.getRow();
+
+
+        for (int i = 1; i < distance; i++) {
+            Square nextSquare = board.getSquareAt(row + i*rowDirec, col + i*colDirec);
+
+            //check if it's not null
+            if (nextSquare == null){
+                break;
+            }
+            //check if there's a piece there
+            if(!nextSquare.isEmpty()){
+                //if it is on the other team, include that space
+                if(nextSquare.getCurrentPiece().getTeam() != this.team){
+                    adjacentSquares.add(nextSquare);
+                }
+                break; //stop looking in this direction
+            }
+            adjacentSquares.add(nextSquare);
+
+            if(nextSquare != null){ //if the square is on the board
+                if(checkSquare(nextSquare)) { //if the square does not contain someone on in it
+                    adjacentSquares.add(nextSquare);
+                }
+            }
+        }
+
+
+        return adjacentSquares;
+    }
+
     /**
      * Returns true if the given square is not empty or occupied by the opposing team
      * @param square the square to check
