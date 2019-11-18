@@ -68,7 +68,7 @@ public class King extends ChessPiece{
         Square option1 = board.getSquareAt(row+1,col+1);
         Square option2 = board.getSquareAt(row+1, col-1);
         Square option3 = board.getSquareAt(row-1,col+1);
-        Square option4 = board.getSquareAt(row-1,col+1);
+        Square option4 = board.getSquareAt(row-1,col-1);
         //Add options to arraList
         allMoves.add(option1);
         allMoves.add(option2);
@@ -78,7 +78,7 @@ public class King extends ChessPiece{
         Square option5 = board.getSquareAt(row+1,col);
         Square option6 = board.getSquareAt(row-1, col);
         Square option7 = board.getSquareAt(row,col+1);
-        Square option8 = board.getSquareAt(row,col-11);
+        Square option8 = board.getSquareAt(row,col-1);
         //Add options to arrayList
         allMoves.add(option5);
         allMoves.add(option6);

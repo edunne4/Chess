@@ -40,37 +40,47 @@ public class Queen extends ChessPiece {
      */
     @Override
     public List<Square> getLegalMoves(Square currentSquare, ChessBoard board) {
+        ArrayList<Square> allMoves = getAllMoves(currentSquare, board);
         List<Square> legalMoves = new ArrayList<>();
+
+
 //        int xCoordinate = Position[0];
 //        int yCoordinate = Position[1];
 //        ArrayList<int[]> moves = new ArrayList<>(DIRECTIONS);
-//        for (int a = 0 ; a < DIRECTIONS; a ++){
-//            int[] option1 = {Position[0] + a, Position[1]};
-//            int[] option2 = {Position[0] - a, Position[1]};
-//            int[] option3 = {Position[0], Position[1] + a};
-//            int[] option4 = {Position[0], Position[1] - a};
-//            moves.add(option1);
-//            moves.add(option2);
-//            moves.add(option3);
-//            moves.add(option4);
-//        }
-//        for (int i = 0; i < DIRECTIONS - xCoordinate; i ++){
-//            int[] option = {Position[0] + i, Position[1]};
-//            moves.add(option);
-//        }
-//        for (int j = 0; j < xCoordinate; j ++){
-//            int[] option = {Position[0] - j, Position[1]};
-//            moves.add(option);
-//        }
-//        for (int k = 0; k < DIRECTIONS - yCoordinate; k ++){
-//            int[] option = {Position[0], Position[1] + k};
-//            moves.add(option);
-//        }
-//        for (int l = 0; l < yCoordinate; l ++){
-//            int[] option = {Position[0], Position[1] - l};
-//            moves.add(option);
-//        }
+//
         return legalMoves;
+    }
+
+    private ArrayList<Square> getAllMoves(Square currentSquare, ChessBoard board) {
+        ArrayList<Square> allMoves = new ArrayList<>();
+        int row = currentSquare.getRow();
+        int col = currentSquare.getCol();
+        for (int a = 0 ; a < DIRECTIONS; a ++){
+            Square option1 = {row + a, col};
+            Square option2 = {row - a, col};
+            Square option3 = {row, Position[1] + a};
+            Square option4 = {Position[0], Position[1] - a};
+            moves.add(option1);
+            moves.add(option2);
+            moves.add(option3);
+            moves.add(option4);
+        }
+        for (int i = 0; i < DIRECTIONS - xCoordinate; i ++){
+            int[] option = {Position[0] + i, Position[1]};
+            moves.add(option);
+        }
+        for (int j = 0; j < xCoordinate; j ++){
+            int[] option = {Position[0] - j, Position[1]};
+            moves.add(option);
+        }
+        for (int k = 0; k < DIRECTIONS - yCoordinate; k ++){
+            int[] option = {Position[0], Position[1] + k};
+            moves.add(option);
+        }
+        for (int l = 0; l < yCoordinate; l ++){
+            int[] option = {Position[0], Position[1] - l};
+            moves.add(option);
+        }
     }
 
     @Override
