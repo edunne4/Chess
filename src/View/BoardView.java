@@ -70,17 +70,17 @@ public class BoardView extends TilePane{
         //top side
         for (int i = 0; i < SIDE_LENGTH*2; i++) {
             //white rooks
-            if(i == 0 || i == 7) {piece = new PieceView("https://upload.wikimedia.org/wikipedia/commons/5/5c/Chess_rlt60.png");}
+            if(i == 0 || i == 7) {piece = new PieceView("https://upload.wikimedia.org/wikipedia/commons/a/a0/Chess_rdt60.png");}
             //queen
-            if(i == 4){piece = new PieceView("https://upload.wikimedia.org/wikipedia/commons/4/49/Chess_qlt60.png");}
+            if(i == 4){piece = new PieceView("https://upload.wikimedia.org/wikipedia/commons/a/af/Chess_qdt60.png");}
             //king
-            if(i == 3){piece = new PieceView("https://upload.wikimedia.org/wikipedia/commons/3/3b/Chess_klt60.png");}
+            if(i == 3){piece = new PieceView("https://upload.wikimedia.org/wikipedia/commons/e/e3/Chess_kdt60.png");}
             //white bishops
-            if(i == 2 || i == 5) {piece = new PieceView("https://upload.wikimedia.org/wikipedia/commons/9/9b/Chess_blt60.png");}
+            if(i == 2 || i == 5) {piece = new PieceView("https://upload.wikimedia.org/wikipedia/commons/8/81/Chess_bdt60.png");}
             //knights
-            if(i == 1 || i == 6) {piece = new PieceView("https://upload.wikimedia.org/wikipedia/commons/2/28/Chess_nlt60.png");}
+            if(i == 1 || i == 6) {piece = new PieceView("https://upload.wikimedia.org/wikipedia/commons/f/f1/Chess_ndt60.png");}
             //white pawns
-            if(i < 16 && i >=8) {piece = new PieceView("https://upload.wikimedia.org/wikipedia/commons/0/04/Chess_plt60.png");}
+            if(i < 16 && i >=8) {piece = new PieceView("https://upload.wikimedia.org/wikipedia/commons/c/cd/Chess_pdt60.png");}
 
             SquareView square = (SquareView)this.getChildren().get(i);
             square.addImageView(piece.getView());
@@ -89,17 +89,17 @@ public class BoardView extends TilePane{
         for (int i = 0; i < SIDE_LENGTH*2; i++) {
 
             //black pawns
-            if(i < 8) {piece = new PieceView("https://upload.wikimedia.org/wikipedia/commons/c/cd/Chess_pdt60.png");}
+            if(i < 8) {piece = new PieceView("https://upload.wikimedia.org/wikipedia/commons/0/04/Chess_plt60.png");}
             //black rooks
-            if(i == 8 || i ==15){piece = new PieceView("https://upload.wikimedia.org/wikipedia/commons/a/a0/Chess_rdt60.png");}
+            if(i == 8 || i ==15){piece = new PieceView("https://upload.wikimedia.org/wikipedia/commons/5/5c/Chess_rlt60.png");}
             //queen
-            if(i == 12){piece = new PieceView("https://upload.wikimedia.org/wikipedia/commons/a/af/Chess_qdt60.png");}
+            if(i == 12){piece = new PieceView("https://upload.wikimedia.org/wikipedia/commons/4/49/Chess_qlt60.png");}
             //king
-            if(i == 11){piece = new PieceView("https://upload.wikimedia.org/wikipedia/commons/e/e3/Chess_kdt60.png");}
+            if(i == 11){piece = new PieceView("https://upload.wikimedia.org/wikipedia/commons/3/3b/Chess_klt60.png");}
             //bishops
-            if(i == 10 || i == 13) {piece = new PieceView("https://upload.wikimedia.org/wikipedia/commons/8/81/Chess_bdt60.png");}
+            if(i == 10 || i == 13) {piece = new PieceView("https://upload.wikimedia.org/wikipedia/commons/9/9b/Chess_blt60.png");}
             //knights
-            if(i == 9 || i == 14) {piece = new PieceView("https://upload.wikimedia.org/wikipedia/commons/f/f1/Chess_ndt60.png");}
+            if(i == 9 || i == 14) {piece = new PieceView("https://upload.wikimedia.org/wikipedia/commons/2/28/Chess_nlt60.png");}
             int offset = SIDE_LENGTH*SIDE_LENGTH - SIDE_LENGTH*2;
             SquareView square = (SquareView)this.getChildren().get(i + offset);
             square.addImageView(piece.getView());

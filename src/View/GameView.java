@@ -74,8 +74,8 @@ public class GameView {
         Text deadPieceHolderBlackName = new Text();
         deadPieceHolderBlackName.setFont(new Font(20));
         deadPieceHolderWhiteName.setFont(new Font(20));
-        deadPieceHolderBlackName.setText("Captured Black Pieces:");
-        deadPieceHolderWhiteName.setText("Captured White Pieces:");
+        deadPieceHolderBlackName.setText("Captured White Pieces:");
+        deadPieceHolderWhiteName.setText("Captured Black Pieces:");
 
         rightSideContainer.getChildren().add(deadPieceHolderBlackName);
         rightSideContainer.getChildren().add(deadPieceHolderBlack);
