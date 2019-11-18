@@ -28,19 +28,27 @@ public class SquareView extends StackPane {
     private int col;
 
 
-    public SquareView(int row, int col) {
+    SquareView(int row, int col) {
         super(); //this
         this.row = row;
         this.col = col;
     }
 
-    public void setSize(int size) {
+    void setSize(int size) {
         this.setPrefSize(size, size);
     }
 
-    public void addImageView(ImageView iv) { this.getChildren().add(iv); }
+    void addImageView(ImageView iv) { this.getChildren().add(iv); }
 
-    public void highlight() { this.setStyle("-fx-background-color: #7dff9d"); }
+    public void highlight() {
+        String squareColor;
+        if ((row + col) % 2 == 0) {
+            squareColor = BoardView.LIGHT_HIGHLIGHT_HEX;
+        } else {
+            squareColor = BoardView.DARK_HIGHLIGHT_HEX;
+        }
+        this.setStyle("-fx-background-color: " + squareColor);
+        }
 
     public void unHighlight(){
         String squareColor;

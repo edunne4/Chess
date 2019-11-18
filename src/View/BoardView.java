@@ -29,11 +29,13 @@ public class BoardView extends TilePane{
 
     private TilePane board;
     private final int SIDE_LENGTH = 8;
-    public static final String LIGHT_COLOR_HEX = "#ede8da";
-    public static final String DARK_COLOR_HEX = "#949085";
+    static final String LIGHT_COLOR_HEX = "#ede8da";
+    static final String DARK_COLOR_HEX = "#949085";
+    static final String LIGHT_HIGHLIGHT_HEX = "#b2edb3";
+    static final String DARK_HIGHLIGHT_HEX = "#7bbd7b";
 
 
-    public BoardView(int size){
+    BoardView(int size){
         //the board will be a grid of squares
         super();
         this.setPrefSize(size,size);
@@ -64,7 +66,7 @@ public class BoardView extends TilePane{
         }
     }
 
-    public void initBoard(){
+    void initBoard(){
         //placeholder to avoid errors
         PieceView piece = new PieceView("https://via.placeholder.com/60");
         //top side
@@ -80,7 +82,7 @@ public class BoardView extends TilePane{
             //knights
             if(i == 1 || i == 6) {piece = new PieceView("https://upload.wikimedia.org/wikipedia/commons/f/f1/Chess_ndt60.png");}
             //white pawns
-            if(i < 16 && i >=8) {piece = new PieceView("https://upload.wikimedia.org/wikipedia/commons/c/cd/Chess_pdt60.png");}
+            if(i >=8) {piece = new PieceView("https://upload.wikimedia.org/wikipedia/commons/c/cd/Chess_pdt60.png");}
 
             SquareView square = (SquareView)this.getChildren().get(i);
             square.addImageView(piece.getView());
@@ -108,10 +110,10 @@ public class BoardView extends TilePane{
     }
 
     public void movePiece(int oldRow,int oldCol,int newRow,int newCol){
-        SquareView oldLocationSquare = (SquareView)this.getSquare(oldRow,oldCol);
-        SquareView newLocationSquare = (SquareView)this.getSquare(newRow,newCol);
+        SquareView oldLocationSquare = this.getSquare(oldRow,oldCol);
+        SquareView newLocationSquare = this.getSquare(newRow,newCol);
 
-        newLocationSquare.addImageView((ImageView)oldLocationSquare.getPiece());
+        newLocationSquare.addImageView(oldLocationSquare.getPiece());
         oldLocationSquare.getChildren().clear();
     }
 
