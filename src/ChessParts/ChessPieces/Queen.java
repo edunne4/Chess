@@ -41,38 +41,25 @@ public class Queen extends ChessPiece {
     @Override
     public List<Square> getLegalMoves(Square currentSquare, ChessBoard board) {
         List<Square> legalMoves = new ArrayList<>();
-//        int xCoordinate = Position[0];
-//        int yCoordinate = Position[1];
-//        ArrayList<int[]> moves = new ArrayList<>(DIRECTIONS);
-//        for (int a = 0 ; a < DIRECTIONS; a ++){
-//            int[] option1 = {Position[0] + a, Position[1]};
-//            int[] option2 = {Position[0] - a, Position[1]};
-//            int[] option3 = {Position[0], Position[1] + a};
-//            int[] option4 = {Position[0], Position[1] - a};
-//            moves.add(option1);
-//            moves.add(option2);
-//            moves.add(option3);
-//            moves.add(option4);
-//        }
-//        for (int i = 0; i < DIRECTIONS - xCoordinate; i ++){
-//            int[] option = {Position[0] + i, Position[1]};
-//            moves.add(option);
-//        }
-//        for (int j = 0; j < xCoordinate; j ++){
-//            int[] option = {Position[0] - j, Position[1]};
-//            moves.add(option);
-//        }
-//        for (int k = 0; k < DIRECTIONS - yCoordinate; k ++){
-//            int[] option = {Position[0], Position[1] + k};
-//            moves.add(option);
-//        }
-//        for (int l = 0; l < yCoordinate; l ++){
-//            int[] option = {Position[0], Position[1] - l};
-//            moves.add(option);
-//        }
+
+        //Get horizontal and vertical directions
+        legalMoves.addAll(checkDirection(currentSquare, board, 0, 1, DIRECTIONS)); //check forward
+        legalMoves.addAll(checkDirection(currentSquare, board, 1, 0, DIRECTIONS)); //check right
+        legalMoves.addAll(checkDirection(currentSquare, board, 0, -1, DIRECTIONS)); //check backward
+        legalMoves.addAll(checkDirection(currentSquare, board, -1, 0, DIRECTIONS)); //check left
+
+        //Get Diagonal Directions
+        //check up and to the right
+        legalMoves.addAll(checkDirection(currentSquare, board, 1,1, DIRECTIONS));
+        //check down and to the right
+        legalMoves.addAll(checkDirection(currentSquare, board, -1,1, DIRECTIONS));
+        //check down and to the left
+        legalMoves.addAll(checkDirection(currentSquare, board, -1,-1, DIRECTIONS));
+        //check up and to the left
+        legalMoves.addAll(checkDirection(currentSquare, board, 1,-1, DIRECTIONS));
+
         return legalMoves;
     }
-
     @Override
     public String toString() {
         return "Q" + team.toString().substring(0,1);
