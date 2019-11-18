@@ -39,9 +39,10 @@ public class King extends ChessPiece{
     }
 
     /**
-     * Will return an ArrayList with integer arrays of all the possible x y coordinates that
+     * Will return an ArrayList with square positions of all the possible that
      * a specific chess piece is allowed to move to
-     * @param currentSquare, the position the chess piece is on the board, board, the chess board that it is on
+     * @param currentSquare, the position the chess piece is on the board
+     * @param  board, the board to check for it's legal positions on
      * @return ArrayList of all the possible moves
      */
     @Override

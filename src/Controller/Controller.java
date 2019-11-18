@@ -34,6 +34,9 @@ public class Controller {
     private GameManager theModel;
 
 
+    private Square currentSquareSelected;
+
+
     public Controller(GameView theView, GameManager theModel) {
         this.theView = theView;
         this.theModel = theModel;
@@ -44,9 +47,9 @@ public class Controller {
 
     private void makeSquaresClickable() {
 
-        for (Node child : theView.getBoard().getPane().getChildren()){
-            //SquareView squareView = (SquareView) child;
-            child.setOnMouseClicked(event -> squareWasClicked((SquareView) event.getSource()));
+        for (Node child : theView.getBoard().getChildren()){
+            SquareView squareView = (SquareView) child;
+            squareView.setOnMouseClicked(event -> squareWasClicked((SquareView) event.getSource()));
         }
     }
 
@@ -55,18 +58,41 @@ public class Controller {
      * @param squareSelected - the square that was clicked
      */
     private void squareWasClicked (SquareView squareSelected){
+        System.out.println("Square was clicked");
+
         //get model's corresponding square
         Square thisSquare = theModel.getBoard().getSquareAt(squareSelected.getRow(), squareSelected.getCol());
-        //if it has a piece in it in the model (it's not empty)
-        if(!thisSquare.isEmpty()){
-            //get the possible moves of that piece
-            //TODO - try block maybe surrounding this
-            List<Square> legalMoves = theModel.getLegalMoves(thisSquare);
 
-            //highlight those positions on the board view
-            for (Square pos : legalMoves) {
-                theView.getBoard().highlightSquare(pos.getRow(), pos.getCol());
+        if(currentSquareSelected == null) { //if no other square is selected
+            //if it has a piece in it in the model (it's not empty)
+            if (!thisSquare.isEmpty()) { //TODO - check if this piece is on the team whose turn it is!!
+                //get the possible moves of that piece
+                //TODO - try block maybe surrounding this
+                List<Square> legalMoves = theModel.getLegalMoves(thisSquare);
+
+                currentSquareSelected = thisSquare;
+
+                //highlight those positions on the board view
+                for (Square pos : legalMoves) {
+                    theView.getBoard().getSquare(pos.getRow(), pos.getCol()).highlight();
+                }
             }
+        } else { //else there is already a square selected
+
+            //TODO maybe make a function for this
+            List<Square> legalMoves = theModel.getLegalMoves(currentSquareSelected);
+
+            // if this new square clicked is a legal move, move the chess piece
+            if(legalMoves.contains(thisSquare)){
+                //move piece to the new square "thisSquare"
+                theModel.movePiece(currentSquareSelected, thisSquare);
+
+            }
+            //else, deselect the square and unhighlight legal moves
+            for (Square pos : legalMoves) {
+                theView.getBoard().getSquare(pos.getRow(), pos.getCol()).unHighlight();
+            }
+            currentSquareSelected = null;
         }
 
 

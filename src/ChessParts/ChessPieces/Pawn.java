@@ -35,62 +35,93 @@ public class Pawn extends ChessPiece{
         super(team);
     }
 
+    /**
+     * Will return an ArrayList with square positions of all the possible that
+     * a specific chess piece is allowed to move to
+     * @param currentSquare, the position the chess piece is on the board
+     * @param  board, the board to check for it's legal positions on
+     * @return ArrayList of all the possible moves
+     */
     @Override
     public List<Square> getLegalMoves(Square currentSquare, ChessBoard board) {
-        ArrayList<Square> allMoves = getAllMoves(currentSquare, board);
-        ArrayList<Square> validMoves = getValidMoves(allMoves);
-        return  validMoves;
-    }
-
-    private ArrayList<Square> getAllMoves(Square currentSquare, ChessBoard board) {
-        ArrayList<Square> allMoves = new ArrayList<>(DIRECTIONS);
+        ArrayList<Square> legalMoves = new ArrayList<>();
+        //if it's the black team, movements should be down (-1)
+        int direction = (team == Team.WHITE) ? 1 : -1;
         int row = currentSquare.getRow();
         int col = currentSquare.getCol();
-        //White team moves up the board
-        if (this.team == team.WHITE) {
-            Square option1 = board.getSquareAt(row, col + 1);
-            allMoves.add(option1);
-            //A pawn can move diagonally to capture a piece
-            if (!board.getSquareAt(row + 1, col + 1).isEmpty()) {
-                Square option2 = board.getSquareAt(row + 1, col + 1);
-                allMoves.add(option2);
 
-            }
-            //A pawn can move diagonally to capture a piece
-            if (!board.getSquareAt(row - 1, col + 1).isEmpty()) {
-                Square option3 = board.getSquareAt(row - 1, col + 1);
-                allMoves.add(option3);
-
-            }
-            //A pawn can move twice for its first move
-            if (!hasMoved) {
-                Square option4 = board.getSquareAt(row, col + 2);
-                allMoves.add(option4);
+        //check in front
+        Square frontSquare = board.getSquareAt(row + direction, col);
+        if(frontSquare != null){
+            if(frontSquare.isEmpty()){ //only if it is empty can a pawn move onto the spot in front of them
+                legalMoves.add(frontSquare);
             }
         }
-        //if the pawn is on the black team it will move down the board
-        else {
-            Square option5 = board.getSquareAt(row, col - 1);
-            allMoves.add(option5);
-            if (!board.getSquareAt(row + 1, col - 1).isEmpty()) {
-                Square option6 = board.getSquareAt(row + 1, col - 1);
-                allMoves.add(option6);
-
-            }
-            if (!board.getSquareAt(row - 1, col - 1).isEmpty()) {
-                Square option7 = board.getSquareAt(row - 1, col - 1);
-                allMoves.add(option7);
-                if (!hasMoved) {
-                    Square option8 = board.getSquareAt(row, col - 2);
-                    allMoves.add(option8);
+        //check front left for enemy
+        Square frontLeft = board.getSquareAt(row + direction, col - direction);
+        if(frontLeft != null){
+            //only if it occupied by the other team can a pawn move onto the spot diagonal to them
+            if(!frontLeft.isEmpty()){
+                if(frontLeft.getCurrentPiece().getTeam() != team) {
+                    legalMoves.add(frontLeft);
                 }
             }
         }
-        return allMoves;
+
+        //check front right for enemy
+        Square frontRight = board.getSquareAt(row + direction, col + direction);
+        if(frontRight != null){
+            //only if it occupied by the other team can a pawn move onto the spot diagonal to them
+            if(!frontRight.isEmpty()){
+                if(frontRight.getCurrentPiece().getTeam() != team) {
+                    legalMoves.add(frontRight);
+                }
+            }
+        }
+
+        // if it has not moved, add the extra 2 movement to possible moves
+        if (!hasMoved){
+            Square twoInFront = board.getSquareAt(row + direction*2, col);
+            if(twoInFront != null){
+                //only if it is empty can a pawn move onto the spot in front of them
+                if(twoInFront.isEmpty()){
+                    legalMoves.add(twoInFront);
+                }
+            }
+        }
+
+//        if (this.team == team.WHITE) {
+//            int[] option1 = {Position[0], Position[1] + 1};
+//            int[] option2 = {Position[0] + 1, Position[1] + 1};
+//            int[] option3 = {Position[0] - 1, Position[1] + 1};
+//            moves.add(option1);
+//            moves.add(option2);
+//            moves.add(option3);
+//            if (!hasMoved) {
+//                int[] option4 = {Position[0], Position[1] + 2};
+//                moves.add(option4);
+//            }
+//        } else {
+//            int[] option5 = {Position[0], Position[1] - 1};
+//            int[] option6 = {Position[0] + 1, Position[1] - 1};
+//            int[] option7 = {Position[0] - 1, Position[1] - 1};
+//            if (!hasMoved) {
+//                int[] option8 = {Position[0], Position[1] - 2};
+//                moves.add(option8);
+//            }
+//            moves.add(option5);
+//            moves.add(option6);
+//            moves.add(option7);
+//        }
+        return legalMoves;
     }
 
     @Override
     public String toString() {
         return "P" + team.toString().substring(0,1);
+    }
+
+    public void setHasMoved(boolean hasMoved) {
+        this.hasMoved = hasMoved;
     }
 }

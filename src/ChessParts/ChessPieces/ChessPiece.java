@@ -35,13 +35,19 @@ public abstract class ChessPiece {
     }
 
     /**
-     * Will return an ArrayList with integer arrays of all the possible x y coordinates that
+     * Will return an ArrayList with square positions of all the possible that
      * a specific chess piece is allowed to move to
-     * @param currentSquare, the position the chess piece is on the board, boarf, the chessboard the piece is on
+     * @param currentSquare, the position the chess piece is on the board
+     * @param  board, the board to check for it's legal positions on
      * @return ArrayList of all the possible moves
      */
     public abstract List<Square> getLegalMoves(Square currentSquare, ChessBoard board);
 
+    /**
+     * Returns true if the given square is not empty or occupied by the opposing team
+     * @param square the square to check
+     * @return whether or not this chess piece can occupy this square
+     */
     public boolean checkSquare(Square square){
         if (!square.isEmpty()){
             ChessPiece piece = square.getCurrentPiece();
@@ -61,9 +67,9 @@ public abstract class ChessPiece {
      */
     public ArrayList<Square> getValidMoves(ArrayList<Square> allMoves) {
         ArrayList<Square> validMoves = new ArrayList<>(DIRECTIONS);
-        for (Square square: allMoves){
-            if (square != null){
-                if (checkSquare(square)){
+        for (Square square : allMoves) {
+            if (square != null) {
+                if (checkSquare(square)) {
                     validMoves.add(square);
                 }
             }
@@ -71,4 +77,9 @@ public abstract class ChessPiece {
         }
         return validMoves;
     }
+
+    public Team getTeam() {
+        return team;
+    }
+
 }

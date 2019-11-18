@@ -49,6 +49,10 @@ public class ConsoleInterface {
 
                     //check if piece is there and get the moves from that piece
                     List<Square> legalMoves = gm.getLegalMoves(squareToMoveFrom);
+                    if(legalMoves.isEmpty()){
+                        System.err.println("That piece has no legal moves.");
+                        throw new IllegalArgumentException("No Legal Moves");
+                    }
 
                     while(true) {
                         System.out.println("Choose one of the following positions to move this piece to:");
