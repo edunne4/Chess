@@ -34,23 +34,13 @@ public class SquareView extends StackPane {
         this.col = col;
     }
 
-    public void addPieceView(PieceView pv) {
-        this.getChildren().add(pv.getView());
-    }
-
     public void setSize(int size) {
         this.setPrefSize(size, size);
     }
 
-    public void addImageView(ImageView iv) {
-        this.getChildren().add(iv);
-    }
+    public void addImageView(ImageView iv) { this.getChildren().add(iv); }
 
-    public void highlight() {
-
-    this.setStyle("-fx-background-color: #7dff9d");
-
-    }
+    public void highlight() { this.setStyle("-fx-background-color: #7dff9d"); }
 
     public void unHighlight(){
         String squareColor;
