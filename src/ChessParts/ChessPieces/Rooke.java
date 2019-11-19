@@ -48,10 +48,10 @@ public class Rooke extends ChessPiece {
         List<Square> legalMoves = new ArrayList<>();
 
 
-        legalMoves.addAll(checkDirection(currentSquare, board, 0, 1, DIRECTIONS)); //check forward
-        legalMoves.addAll(checkDirection(currentSquare, board, 1, 0, DIRECTIONS)); //check right
-        legalMoves.addAll(checkDirection(currentSquare, board, 0, -1, DIRECTIONS)); //check backward
-        legalMoves.addAll(checkDirection(currentSquare, board, -1, 0, DIRECTIONS)); //check left
+        legalMoves.addAll(checkDirection(currentSquare, board, 0, 1, MAX_DISTANCE)); //check forward
+        legalMoves.addAll(checkDirection(currentSquare, board, 1, 0, MAX_DISTANCE)); //check right
+        legalMoves.addAll(checkDirection(currentSquare, board, 0, -1, MAX_DISTANCE)); //check backward
+        legalMoves.addAll(checkDirection(currentSquare, board, -1, 0, MAX_DISTANCE)); //check left
 
 
         return legalMoves;

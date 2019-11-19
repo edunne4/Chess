@@ -84,7 +84,7 @@ public class Knight extends ChessPiece{
      * @return
      */
     private ArrayList<Square> getAllMoves(Square currentSquare, ChessBoard board) {
-        ArrayList<Square> allMoves = new ArrayList<>(DIRECTIONS);
+        ArrayList<Square> allMoves = new ArrayList<>(MAX_DISTANCE);
         int row = currentSquare.getRow();
         int col = currentSquare.getCol();
         //Get all diagonals

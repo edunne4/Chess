@@ -29,7 +29,9 @@ public abstract class ChessPiece {
     //Stores the team of the chess piece
     protected Team team;
     //All possible directions on a Chess Board
-    protected static final int DIRECTIONS = 8;
+    protected static final int MAX_DISTANCE = 8;
+
+    protected boolean hasMoved = false;
     public ChessPiece(Team team) {
         this.team = team;
     }
@@ -101,7 +103,7 @@ public abstract class ChessPiece {
      * @return
      */
     public ArrayList<Square> getValidMoves(ArrayList<Square> allMoves) {
-        ArrayList<Square> validMoves = new ArrayList<>(DIRECTIONS);
+        ArrayList<Square> validMoves = new ArrayList<>(MAX_DISTANCE);
         for (Square square : allMoves) {
             if (square != null) {
                 if (checkSquare(square)) {
@@ -116,5 +118,11 @@ public abstract class ChessPiece {
     public Team getTeam() {
         return team;
     }
+    public void setHasMoved(boolean hasMoved) {
+        this.hasMoved = hasMoved;
+    }
 
+    public boolean getHasMoved() {
+        return hasMoved;
+    }
 }

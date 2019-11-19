@@ -60,6 +60,11 @@ public class GameManager {
             board.capturePiece(pieceKilled);
         }
 
+        //tell the piece it has moved
+        if(!currentLocation.isEmpty()){
+            currentLocation.getCurrentPiece().setHasMoved(true);
+        }
+
         switchTurn();
         return pieceKilled;
     }

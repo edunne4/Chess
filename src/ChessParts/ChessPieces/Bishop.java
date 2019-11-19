@@ -22,7 +22,6 @@ import ChessParts.ChessBoard;
 import ChessParts.Square;
 import ChessParts.Team;
 
-import java.awt.image.DirectColorModel;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,13 +43,13 @@ public class Bishop extends ChessPiece{
         List<Square> legalMoves = new ArrayList<>();
 
         //check up and to the right
-        legalMoves.addAll(checkDirection(currentSquare, board, 1,1, DIRECTIONS));
+        legalMoves.addAll(checkDirection(currentSquare, board, 1,1, MAX_DISTANCE));
         //check down and to the right
-        legalMoves.addAll(checkDirection(currentSquare, board, -1,1, DIRECTIONS));
+        legalMoves.addAll(checkDirection(currentSquare, board, -1,1, MAX_DISTANCE));
         //check down and to the left
-        legalMoves.addAll(checkDirection(currentSquare, board, -1,-1, DIRECTIONS));
+        legalMoves.addAll(checkDirection(currentSquare, board, -1,-1, MAX_DISTANCE));
         //check up and to the left
-        legalMoves.addAll(checkDirection(currentSquare, board, 1,-1, DIRECTIONS));
+        legalMoves.addAll(checkDirection(currentSquare, board, 1,-1, MAX_DISTANCE));
 
 
         return legalMoves;

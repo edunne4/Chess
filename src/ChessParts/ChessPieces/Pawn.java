@@ -29,7 +29,7 @@ import java.util.List;
 
 public class Pawn extends ChessPiece{
 
-    private boolean hasMoved = false;
+    //private boolean hasMoved = false;
 
     public Pawn(Team team) {
         super(team);
@@ -121,7 +121,5 @@ public class Pawn extends ChessPiece{
         return "P" + team.toString().substring(0,1);
     }
 
-    public void setHasMoved(boolean hasMoved) {
-        this.hasMoved = hasMoved;
-    }
+
 }
