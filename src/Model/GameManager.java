@@ -49,6 +49,8 @@ public class GameManager {
     public ChessPiece movePiece(Square currentLocation, Square newLocation) {
         //if there is a piece in the new location, kill it
         ChessPiece pieceKilled = newLocation.getCurrentPiece();
+
+
         //put the piece moved in the new location
         newLocation.setCurrentPiece(currentLocation.getCurrentPiece());
 
@@ -61,8 +63,8 @@ public class GameManager {
         }
 
         //tell the piece it has moved
-        if(!currentLocation.isEmpty()){
-            currentLocation.getCurrentPiece().setHasMoved(true);
+        if(!newLocation.isEmpty()){
+            newLocation.getCurrentPiece().setHasMoved(true);
         }
 
         switchTurn();
