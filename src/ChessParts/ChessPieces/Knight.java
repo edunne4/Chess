@@ -34,10 +34,12 @@ public class Knight extends ChessPiece{
         super(team);
     }
 
-    /**
-     * Will return an ArrayList with integer arrays of all the possible x y coordinates that
+
+     /**
+     * Will return an ArrayList with square positions of all the possible that
      * a specific chess piece is allowed to move to
-     * @param currentSquare, the position the chess piece is on the board, board, the chess board that it is on
+     * @param currentSquare, the position the chess piece is on the board
+     * @param  board, the board to check for it's legal positions on
      * @return ArrayList of all the possible moves
      */
     @Override
@@ -53,8 +55,8 @@ public class Knight extends ChessPiece{
      *  @param board
      *  @return
      */
-    public ArrayList<Square> getAllMoves(Square currentSquare, ChessBoard board){
-        ArrayList<Square> allMoves = new ArrayList<>(DIRECTIONS);
+    private ArrayList<Square> getAllMoves(Square currentSquare, ChessBoard board) {
+        ArrayList<Square> allMoves = new ArrayList<>(MAX_DISTANCE);
         int row = currentSquare.getRow();
         int col = currentSquare.getCol();
         // Options based off the knights movement patterns
@@ -76,7 +78,7 @@ public class Knight extends ChessPiece{
         allMoves.add(option6);
         allMoves.add(option7);
         allMoves.add(option8);
-        return  allMoves;
+        return allMoves;
     }
 
 

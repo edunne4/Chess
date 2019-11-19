@@ -67,16 +67,19 @@ public class Controller {
 
         if(currentSquareSelected == null) { //if no other square is selected
             //if it has a piece in it in the model (it's not empty)
-            if (!thisSquare.isEmpty()) { //TODO - check if this piece is on the team whose turn it is!!
-                //get the possible moves of that piece
-                //TODO - try block maybe surrounding this
-                List<Square> legalMoves = theModel.getLegalMoves(thisSquare);
+            if (!thisSquare.isEmpty()) {
+                //TODO - check if this piece is on the team whose turn it is!!
+                if(thisSquare.getCurrentPiece().getTeam() == theModel.getCurrentTurn()) {
+                    //get the possible moves of that piece
+                    //TODO - try block maybe surrounding this
+                    List<Square> legalMoves = theModel.getLegalMoves(thisSquare);
 
-                currentSquareSelected = thisSquare;
+                    currentSquareSelected = thisSquare;
 
-                //highlight those positions on the board view
-                for (Square pos : legalMoves) {
-                    theView.getBoard().getSquare(pos.getRow(), pos.getCol()).highlight();
+                    //highlight those positions on the board view
+                    for (Square pos : legalMoves) {
+                        theView.getBoard().getSquare(pos.getRow(), pos.getCol()).highlight();
+                    }
                 }
             }
         } else { //else there is already a square selected
