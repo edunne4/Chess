@@ -43,20 +43,20 @@ public class Queen extends ChessPiece {
         List<Square> legalMoves = new ArrayList<>();
 
         //Get horizontal and vertical directions
-        legalMoves.addAll(checkDirection(currentSquare, board, 0, 1, DIRECTIONS)); //check forward
-        legalMoves.addAll(checkDirection(currentSquare, board, 1, 0, DIRECTIONS)); //check right
-        legalMoves.addAll(checkDirection(currentSquare, board, 0, -1, DIRECTIONS)); //check backward
-        legalMoves.addAll(checkDirection(currentSquare, board, -1, 0, DIRECTIONS)); //check left
+        legalMoves.addAll(checkDirection(currentSquare, board, 0, 1, MAX_DISTANCE)); //check forward
+        legalMoves.addAll(checkDirection(currentSquare, board, 1, 0, MAX_DISTANCE)); //check right
+        legalMoves.addAll(checkDirection(currentSquare, board, 0, -1, MAX_DISTANCE)); //check backward
+        legalMoves.addAll(checkDirection(currentSquare, board, -1, 0, MAX_DISTANCE)); //check left
 
         //Get Diagonal Directions
         //check up and to the right
-        legalMoves.addAll(checkDirection(currentSquare, board, 1,1, DIRECTIONS));
+        legalMoves.addAll(checkDirection(currentSquare, board, 1,1, MAX_DISTANCE));
         //check down and to the right
-        legalMoves.addAll(checkDirection(currentSquare, board, -1,1, DIRECTIONS));
+        legalMoves.addAll(checkDirection(currentSquare, board, -1,1, MAX_DISTANCE));
         //check down and to the left
-        legalMoves.addAll(checkDirection(currentSquare, board, -1,-1, DIRECTIONS));
+        legalMoves.addAll(checkDirection(currentSquare, board, -1,-1, MAX_DISTANCE));
         //check up and to the left
-        legalMoves.addAll(checkDirection(currentSquare, board, 1,-1, DIRECTIONS));
+        legalMoves.addAll(checkDirection(currentSquare, board, 1,-1, MAX_DISTANCE));
 
         return legalMoves;
     }
