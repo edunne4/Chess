@@ -6,18 +6,18 @@ package Import3DMaker;
 import com.interactivemesh.jfx.importer.ImportException;
 import com.interactivemesh.jfx.importer.stl.StlMeshImporter;
 import javafx.application.Application;
+import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Point3D;
 import javafx.geometry.Pos;
 import javafx.scene.*;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.PickResult;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.*;
+import javafx.scene.transform.NonInvertibleTransformException;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
@@ -32,8 +32,8 @@ public class Board3DView extends Application {
     private double mousePosY;
     private double mouseOldX;
     private double mouseOldY;
-    private final Rotate rotate = new Rotate(60,Rotate.X_AXIS);
-    private final Translate translate = new Translate(0, 0, -2000);
+
+    private String CAMERA = "Cam1";
 
     private volatile boolean isPicking=false;
     private Point3D vecIni, vecPos;
@@ -76,6 +76,8 @@ public class Board3DView extends Application {
 
         }
 
+        Node row = board.getChildren().get(1);
+
         HBox redPieces1 = new HBox(SQUARE_SIZE*.85);
         //pieces.setPadding(new Insets(20));
         redPieces1.setAlignment(Pos.CENTER);
@@ -116,19 +118,66 @@ public class Board3DView extends Application {
 //        root.getChildren().add(new AmbientLight(Color.WHITE));
 
         //initialize the camera
-        camera = new PerspectiveCamera(false);
+        camera = new PerspectiveCamera(true);
         camera.setVerticalFieldOfView(false);
         camera.setNearClip(0.1);
         camera.setFarClip(100000.0);
-        camera.getTransforms().addAll(rotate, translate);
+
 
         //initialize the scene, and set the camera to the scene
         scene = new Scene(root);
         scene.setCamera(camera);
 
+        changeCameraOnClick();
+
         //show the scene to the user
         stage.setScene(scene);
         stage.show();
+
+    }
+
+    private void changeCameraOnClick() {
+        //camera view 1 for player 1, assuming we are at home
+        final Translate translate1 = new Translate(0, 0, -4000);
+        //final Rotate rotate1 = new Rotate(60,Rotate.X_AXIS);
+
+        //camera view 2 for player 2, assuming we are at home
+        final Translate translate2 = new Translate(-1000, -1000, -4000);
+        //final Rotate rotate2a = new Rotate(180,Rotate.Z_AXIS);
+        //final Rotate rotate2b = new Rotate(60,Rotate.X_AXIS);
+
+        Bounds rootBounds = root.localToScene(root.getBoundsInLocal());
+
+
+
+
+        camera.getTransforms().addAll(translate1); //set camera angle
+
+
+        scene.setOnMouseClicked(event -> {
+            System.out.println("Click!");
+            Bounds boundsInScene = camera.localToScene(camera.getBoundsInLocal());
+            System.out.printf("X: %f, Y: %f \n", boundsInScene.getCenterX(), boundsInScene.getCenterY());
+            System.out.println(CAMERA);
+
+//            try {
+                if (CAMERA == "Cam2") { //we are currently player 2, go to player 1
+                    camera.getTransforms().addAll(translate2.createInverse());
+                    camera.getTransforms().addAll(translate1);
+                    CAMERA = "Cam1";
+
+                }
+                else if (CAMERA == "Cam1") {
+                    camera.getTransforms().addAll(translate1.createInverse());
+                    camera.getTransforms().addAll(translate2);
+                    CAMERA = "Cam2";
+                }
+//            } catch (NonInvertibleTransformException e) {
+//                System.out.println("Error!!!!");
+//                e.printStackTrace();
+//            }
+
+          });
 
     }
 
