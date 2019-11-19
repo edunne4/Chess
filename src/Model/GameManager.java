@@ -80,13 +80,6 @@ public class GameManager {
         //get the possible moves of the piece at this location
         List<Square> squareList = pieceLocation.getCurrentPiece().getLegalMoves(pieceLocation, this.board);
 
-//        //then, check if the squares created are legal in the board
-//        for (Square pos : squareList) {
-//            //if it's not even on the board remove it
-//            if (!board.posIsInBoard(pos.getRow(), pos.getCol())){
-//                //squareList.remove(pos);
-//            }
-//        }
 
         return squareList;
     }

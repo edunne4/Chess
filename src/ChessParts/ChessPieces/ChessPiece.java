@@ -118,10 +118,10 @@ public abstract class ChessPiece {
     public Team getTeam() {
         return team;
     }
+
     public void setHasMoved(boolean hasMoved) {
         this.hasMoved = hasMoved;
     }
-
     public boolean getHasMoved() {
         return hasMoved;
     }
