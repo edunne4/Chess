@@ -30,10 +30,6 @@ import java.util.List;
 public class Pawn extends ChessPiece{
 
     private boolean hasMoved = false;
-    //White pawns start at column 1
-    private static final int StartingRowWhite = 1;
-    //Black pawns start at column 6
-    private static final int StartingRowBlack = 6;
 
     public Pawn(Team team) {
         super(team);
@@ -54,10 +50,6 @@ public class Pawn extends ChessPiece{
         int row = currentSquare.getRow();
         int col = currentSquare.getCol();
 
-        //Check to see if the pawn has moved, the pawn will only have not moved
-        if ((row != StartingRowWhite) && (row != StartingRowBlack)){
-            setHasMoved(true);
-        }
 
         //check in front
         Square frontSquare = board.getSquareAt(row + direction, col);
@@ -114,11 +106,4 @@ public class Pawn extends ChessPiece{
         return hasMoved;
     }
 
-    public static int getStartingRowWhite() {
-        return StartingRowWhite;
-    }
-
-    public static int getStartingRowBlack() {
-        return StartingRowBlack;
-    }
 }
