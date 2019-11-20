@@ -3,14 +3,19 @@
 
 package Import3DMaker;
 
+//https://stackoverflow.com/questions/31148690/get-real-position-of-a-node-in-javafx
+//https://stackoverflow.com/questions/20825935/javafx-get-node-by-row-and-column
+
 import com.interactivemesh.jfx.importer.ImportException;
 import com.interactivemesh.jfx.importer.stl.StlMeshImporter;
 import javafx.application.Application;
+import javafx.collections.ObservableList;
 import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Point3D;
 import javafx.geometry.Pos;
 import javafx.scene.*;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -42,8 +47,8 @@ public class Board3DView extends Application {
     private Scene scene;
     private StackPane root;
 
-    private VBox board;
-    private VBox pieces;
+    private GridPane board;
+    private HBox pieces;
 
     private int SQUARE_SIZE = 100;
     private int SQUARE_DEPTH = 10;
@@ -52,14 +57,11 @@ public class Board3DView extends Application {
     public void start(Stage stage) throws IOException {
 
         //initialize the board
-        board = new VBox(SQUARE_SIZE *0.05);
-        board.setPadding(new Insets(20));
-        board.setAlignment(Pos.CENTER);
+        board = new GridPane();
+        //board.setAlignment(Pos.CENTER);
 
         //add all of the squares to the board
         for (int i = 0; i < 8 ; i++) {
-            HBox row = new HBox(SQUARE_SIZE *0.05);
-            row.setAlignment(Pos.CENTER);
             for (int j = 0; j < 8; j++) {
                 Box square = new Box(SQUARE_SIZE, SQUARE_SIZE,SQUARE_DEPTH);
 
@@ -70,17 +72,11 @@ public class Board3DView extends Application {
                     square.setMaterial(new PhongMaterial(Color.BLUE));
                 }
 
-                row.getChildren().add(square);
+                board.add(square,i,j);
             }
-            board.getChildren().add(row);
 
         }
 
-        Node row = board.getChildren().get(1);
-
-        HBox redPieces1 = new HBox(SQUARE_SIZE*.85);
-        //pieces.setPadding(new Insets(20));
-        redPieces1.setAlignment(Pos.CENTER);
 
         //create red (team 1) pieces on the back row
         MeshView kingR = createChessPiece("stl/king.stl",Color.RED);
@@ -92,21 +88,43 @@ public class Board3DView extends Application {
         MeshView knightR2 = createChessPiece("stl/knight.stl",Color.RED);
         MeshView bishopR2 = createChessPiece("stl/bishop.stl",Color.RED);
 
-        redPieces1.getChildren().addAll(rookR1,knightR1,bishopR1,queenR,kingR,bishopR2,knightR2,rookR2);
-        redPieces1.setAlignment(Pos.CENTER);
-
-        //create red (team 1) row of pawns)
-        HBox redPieces2 = new HBox(SQUARE_SIZE*.85);
-        redPieces2.setAlignment(Pos.CENTER);
-        for (int i = 0; i < 8; i++) {
-            redPieces2.getChildren().add(createChessPiece("stl/pawn.stl",Color.RED));
-        }
 
         //add all of the pieces
-        pieces = new VBox(SQUARE_SIZE*.85);
-        pieces.setAlignment(Pos.CENTER);
-        pieces.getChildren().addAll(redPieces2,redPieces1);
-        pieces.setTranslateY(230);
+        pieces = new HBox();
+        //pieces.setAlignment(Pos.CENTER);
+
+        Node squareOnBoard = getNodeFromGridPane(board,5,5);
+        squareOnBoard.setTranslateX(20);
+
+        squareOnBoard.localToScene(0.0,0.0);
+
+        System.out.println(squareOnBoard.getTranslateX());
+        Bounds testttt = pieces.localToScene(pieces.getBoundsInLocal());
+        System.out.println(testttt);
+
+        Bounds squareOnBoardPos = squareOnBoard.localToScene(squareOnBoard.getBoundsInLocal());
+        Bounds boundsInScene = squareOnBoard.localToScreen(squareOnBoard.getBoundsInLocal());
+
+
+        //rookR1.setTranslateX(200);
+        //rookR1.setTranslateY(100);
+
+        rookR1.relocate(squareOnBoard.getBoundsInLocal().getCenterX(),squareOnBoard.getBoundsInLocal().getCenterY());
+        Bounds pieceOnBoardPos = rookR1.localToScene(rookR1.getBoundsInLocal());
+
+//        System.out.printf("X: %f \n",squareOnBoardPos.getCenterX());
+//        System.out.printf("Y: %f \n",squareOnBoardPos.getCenterY());
+
+
+        pieces.getChildren().addAll(rookR1);
+
+//        pieces.add(knightR1,0,1);
+//        pieces.add(bishopR1,0,2);
+//        pieces.add(queenR,0,3);
+//        pieces.add(kingR,0,4);
+//        pieces.add(bishopR2,0,5);
+//        pieces.add(knightR2,0,6);
+//        pieces.add(rookR2,0,7);
 
         //add the board and the pieces to the root
         root = new StackPane();
@@ -136,6 +154,15 @@ public class Board3DView extends Application {
 
     }
 
+    private Node getNodeFromGridPane(GridPane gridPane, int col, int row) {
+        for (Node node : gridPane.getChildren()) {
+            if (GridPane.getColumnIndex(node) == col && GridPane.getRowIndex(node) == row) {
+                return node;
+            }
+        }
+        return null;
+    }
+
     private void changeCameraOnClick() {
         //camera view 1 for player 1, assuming we are at home
         final Translate translate1 = new Translate(0, 0, -4000);
@@ -155,7 +182,7 @@ public class Board3DView extends Application {
 
 
         scene.setOnMouseClicked(event -> {
-            System.out.println("Click!");
+            //System.out.println("Click!");
             Bounds boundsInScene = camera.localToScene(camera.getBoundsInLocal());
             System.out.printf("X: %f, Y: %f \n", boundsInScene.getCenterX(), boundsInScene.getCenterY());
             System.out.println(CAMERA);
