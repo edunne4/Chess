@@ -131,6 +131,10 @@ public class RuleMaster {
         }
     }
 
+    /**
+     * unchecks the King of the other team that is specified
+     * @param team, the team that has no move that is checking the king
+     */
     private void uncheckKing(Team team) {
         if( team == Team.BLACK){
             isCheckedWhite = false;
@@ -138,4 +142,6 @@ public class RuleMaster {
             isCheckedBlack = false;
         }
     }
+
+
 }
