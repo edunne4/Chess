@@ -176,4 +176,29 @@ public class ChessBoard {
             capturedBlackPieces.add(pieceKilled);
         }
     }
+
+    /**
+     * Method that gets all the pieces on the board of a specified team,
+     * loops through all the squares on the board to get all the alive pieces and returns
+     * returns the squares that they are at,
+     * this makes it easier to see if one of them is checking the King
+     * @author Jim Campbell
+     * @param team, the team that you want to get all of the pieces for
+     * @return teamPiecesSquares, a List of all the alive pieces of a team, but not the piece itself
+     * the squares that they are located at
+     */
+    public ArrayList<Square> getAllAlivePiecesOfATeam(Team team) {
+        ArrayList<Square> teamPiecesSquares = new ArrayList<>();
+        for (int i = 0; i < BOARD_WIDTH; i++) {
+            for (Square currentSquare : positions[i]){
+                if (currentSquare.getCurrentPiece() != null){
+                    ChessPiece currentPiece = currentSquare.getCurrentPiece();
+                    if( currentPiece.getTeam() == team){
+                        teamPiecesSquares.add(currentSquare);
+                    }
+                }
+            }
+        }
+        return teamPiecesSquares;
+    }
 }
