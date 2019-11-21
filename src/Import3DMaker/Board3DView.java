@@ -93,30 +93,38 @@ public class Board3DView extends Application {
         pieces = new HBox();
         //pieces.setAlignment(Pos.CENTER);
 
-        Node squareOnBoard = getNodeFromGridPane(board,5,5);
+        Node squareOnBoard = getNodeFromGridPane(board,4,5);
+
         squareOnBoard.setTranslateX(20);
 
-        squareOnBoard.localToScene(0.0,0.0);
-
-        System.out.println(squareOnBoard.getTranslateX());
-        Bounds testttt = pieces.localToScene(pieces.getBoundsInLocal());
-        System.out.println(testttt);
-
         Bounds squareOnBoardPos = squareOnBoard.localToScene(squareOnBoard.getBoundsInLocal());
-        Bounds boundsInScene = squareOnBoard.localToScreen(squareOnBoard.getBoundsInLocal());
+        Bounds pieceOnBoardPos = pieces.localToScreen(pieces.getBoundsInLocal());
 
+        System.out.println(squareOnBoardPos.getMinX());
+        System.out.println(squareOnBoardPos.getMaxX());
+
+        Box box1 = new Box(10,10,10);
+        Box box2 = new Box(10,10,10);
+
+        //double amountToMoveX = squareOnBoardPos.getMinX() - pieceOnBoardPos.getMinX();
+
+        //rookR1.setTranslateX(amountToMoveX);
+
+        pieces.getChildren().addAll(rookR1);
+
+        //Bounds squareOnBoardPos = squareOnBoard.localToScene(squareOnBoard.getBoundsInLocal());
 
         //rookR1.setTranslateX(200);
         //rookR1.setTranslateY(100);
 
-        rookR1.relocate(squareOnBoard.getBoundsInLocal().getCenterX(),squareOnBoard.getBoundsInLocal().getCenterY());
-        Bounds pieceOnBoardPos = rookR1.localToScene(rookR1.getBoundsInLocal());
+        //rookR1.relocate(squareOnBoard.getBoundsInLocal().getCenterX(),squareOnBoard.getBoundsInLocal().getCenterY());
+        //Bounds pieceOnBoardPos = rookR1.localToScene(rookR1.getBoundsInLocal());
 
 //        System.out.printf("X: %f \n",squareOnBoardPos.getCenterX());
 //        System.out.printf("Y: %f \n",squareOnBoardPos.getCenterY());
 
 
-        pieces.getChildren().addAll(rookR1);
+        //pieces.getChildren().addAll(rookR1);
 
 //        pieces.add(knightR1,0,1);
 //        pieces.add(bishopR1,0,2);
