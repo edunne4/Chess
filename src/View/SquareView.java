@@ -18,30 +18,51 @@
  */
 package View;
 
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 
-public class SquareView {
+public class SquareView extends StackPane {
 
     private StackPane pane;
     private int row;
     private int col;
 
 
-    public SquareView(int row,int col){
-        pane = new StackPane();
+    SquareView(int row, int col) {
+        super(); //this
         this.row = row;
         this.col = col;
     }
 
-    public void addPieceView(PieceView pv){
-        pane.getChildren().add(pv.getView());
+    void setSize(int size) {
+        this.setPrefSize(size, size);
     }
 
-    public void setSize(int size){
-        pane.setPrefSize(size,size);
+    void addImageView(ImageView iv) { this.getChildren().add(iv); }
+
+    public void highlight() {
+        String squareColor;
+        if ((row + col) % 2 == 0) {
+            squareColor = BoardView.LIGHT_HIGHLIGHT_HEX;
+        } else {
+            squareColor = BoardView.DARK_HIGHLIGHT_HEX;
+        }
+        this.setStyle("-fx-background-color: " + squareColor);
+        }
+
+    public void unHighlight(){
+        String squareColor;
+        if ((row + col) % 2 == 0) {
+            squareColor = BoardView.LIGHT_COLOR_HEX;
+        } else {
+            squareColor = BoardView.DARK_COLOR_HEX;
+        }
+        this.setStyle("-fx-background-color: " + squareColor);
     }
 
-    public StackPane getPane(){return pane;}
+    public ImageView getPiece(){
+        return (ImageView)this.getChildren().get(0);
+    }
 
     public int getRow() {
         return row;

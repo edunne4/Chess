@@ -1,30 +1,27 @@
 package View;
 
+import Model.GameManager;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class GameView extends Application {
+public class GameView {
 
     private HBox root;
     VBox rightSideContainer;
     private int windowHeight = 750;
     private int windowWidth = 900;
     BoardView board;
-    FlowPane deadPieceHolderWhite;
-    FlowPane deadPieceHolderBlack;
+    private FlowPane deadPieceHolderWhite;
+    private FlowPane deadPieceHolderBlack;
+    GameManager gm;
 
-    public static void main(String[] args) {
-        launch(args);
-    }
-
-    @Override
-    public void start(Stage primaryStage) {
+    public GameView(GameManager model) {
+        this.gm = model;
         //make root which is a set of horizontal boxes
         root = new HBox();
         //root.setAlignment(Pos.CENTER);
@@ -38,23 +35,25 @@ public class GameView extends Application {
         HBox sideCoordAndBoardContainer = new HBox();
         sideCoordAndBoardContainer.getChildren().add(makeSideBoardCoords());
         //add the actual board in
-        sideCoordAndBoardContainer.getChildren().add(board.getPane());
+        sideCoordAndBoardContainer.getChildren().add(board);
         boardCoordContainer.getChildren().add(makeTopBoardCoords());
         boardCoordContainer.getChildren().add(sideCoordAndBoardContainer);
         //put this whole shabang in the root, an HBox
         root.getChildren().add(boardCoordContainer);
 
-        //next four lines demonstrate some board methods
+        //these four lines demonstrate some board methods
+        /*
         board.movePiece(0,0,4,5);
-        board.highlightSquare(0,2);
-        board.unHighlightSquare(0,2);
-        board.highlightSquare(4,5);
-
+        board.getSquare(0,2).highlight();
+        board.getSquare(0,2).unHighlight();
+        board.getSquare(4,5).highlight();
+        */
         rightSideContainer = new VBox();
         createDeadPieceHolders();
         root.getChildren().add(rightSideContainer);
 
         //demonstrating killPiece method
+        /*
         killPiece(0,4,deadPieceHolderWhite);
         killPiece(0,5,deadPieceHolderWhite);
         killPiece(0,6,deadPieceHolderWhite);
@@ -63,13 +62,7 @@ public class GameView extends Application {
         killPiece(1,5,deadPieceHolderWhite);
         killPiece(7,4,deadPieceHolderBlack);
         killPiece(7,7,deadPieceHolderBlack);
-
-
-        Scene scene = new Scene(root);
-        primaryStage.setTitle("Chess");
-        primaryStage.setScene(scene);
-        primaryStage.sizeToScene();
-        primaryStage.show();
+        */
     }
 
     private void createDeadPieceHolders() {
@@ -81,8 +74,8 @@ public class GameView extends Application {
         Text deadPieceHolderBlackName = new Text();
         deadPieceHolderBlackName.setFont(new Font(20));
         deadPieceHolderWhiteName.setFont(new Font(20));
-        deadPieceHolderBlackName.setText("Captured Black Pieces:");
-        deadPieceHolderWhiteName.setText("Captured White Pieces:");
+        deadPieceHolderBlackName.setText("Captured White Pieces:");
+        deadPieceHolderWhiteName.setText("Captured Black Pieces:");
 
         rightSideContainer.getChildren().add(deadPieceHolderBlackName);
         rightSideContainer.getChildren().add(deadPieceHolderBlack);
@@ -118,8 +111,24 @@ public class GameView extends Application {
     }
 
     public void killPiece(int row, int col, FlowPane deadPieceHolder){
-        StackPane oldLocationStackPane = (StackPane)board.getPane().getChildren().get(row*8+col);
-        deadPieceHolder.getChildren().add(oldLocationStackPane.getChildren().get(0));
-        oldLocationStackPane.getChildren().clear();
+        SquareView oldLocationSquare = (SquareView)board.getSquare(row,col);
+        deadPieceHolder.getChildren().add(oldLocationSquare.getPiece());
+        oldLocationSquare.getChildren().clear();
+    }
+
+    public BoardView getBoard() {
+        return board;
+    }
+
+    public HBox getRoot() {
+        return root;
+    }
+
+    public FlowPane getDeadPieceHolderWhite() {
+        return deadPieceHolderWhite;
+    }
+
+    public FlowPane getDeadPieceHolderBlack() {
+        return deadPieceHolderBlack;
     }
 }

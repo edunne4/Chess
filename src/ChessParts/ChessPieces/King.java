@@ -3,21 +3,23 @@
  * Fall 2019
  * Instructor: Prof. Brian King
  *
- * Name: YOUR NAME
- * Section: YOUR SECTION
+ * Name: James Campbell
+ * Section: 11 am
  * Date: 11/10/19
  * Time: 12:10 PM
  *
  * Project: CSCI205FinalProject
  * Package: ChessParts
- * Class: KIng
+ * Class: King
  *
  * Description:
- *
+ * A king piece implementation, the king can move to any adjacent block, any of the 8 directions.
  * ****************************************
  */
 package ChessParts.ChessPieces;
 
+import ChessParts.ChessBoard;
+import ChessParts.Square;
 import ChessParts.Team;
 
 import java.util.ArrayList;
@@ -37,32 +39,56 @@ public class King extends ChessPiece{
     }
 
     /**
-     * Will return an ArrayList with integer arrays of all the possible x y coordinates that
+     * Will return an ArrayList with square positions of all the possible that
      * a specific chess piece is allowed to move to
-     * @param Position, the position the chess piece is on the board
+     * @param currentSquare, the position the chess piece is on the board
+     * @param  board, the board to check for it's legal positions on
      * @return ArrayList of all the possible moves
      */
     @Override
-    public List<int[]> getMoves(int[] Position) {
-        ArrayList<int[]> moves = new ArrayList<>(DIRECTIONS);
-        int[] option1 = {Position[0] + 1, Position[1]};
-        int[] option2 = {Position[0] + 1, Position[1] + 1};
-        int[] option3 = {Position[0] + 1, Position[1] -1};
-        int[] option4 = {Position[0], Position[1] + 1};
-        int[] option5 = {Position[0], Position[1] - 1};
-        int[] option6 = {Position[0] - 1, Position[1] + 1};
-        int[] option7 = {Position[0] - 1, Position[1]};
-        int[] option8 = {Position[0] - 1, Position[1] - 1};
-        moves.add(option1);
-        moves.add(option2);
-        moves.add(option3);
-        moves.add(option4);
-        moves.add(option5);
-        moves.add(option6);
-        moves.add(option7);
-        moves.add(option8);
-        return  moves;
+    public List<Square> getLegalMoves(Square currentSquare, ChessBoard board) {
+
+        ArrayList<Square> allMoves = getAllMoves(currentSquare, board);
+        ArrayList<Square> validMoves = getValidMoves(allMoves);
+        return  validMoves;
     }
+
+    /**
+     * Method to return all the squares that a piece could potentially move to
+     * not minding the bounds of the board or the prescence of other pieces
+     * @param currentSquare
+     * @param board
+     * @return
+     */
+    private ArrayList<Square> getAllMoves(Square currentSquare, ChessBoard board) {
+        ArrayList<Square> allMoves = new ArrayList<>(MAX_DISTANCE);
+        int row = currentSquare.getRow();
+        int col = currentSquare.getCol();
+        //Get all diagonals
+        Square option1 = board.getSquareAt(row+1,col+1);
+        Square option2 = board.getSquareAt(row+1, col-1);
+        Square option3 = board.getSquareAt(row-1,col+1);
+        Square option4 = board.getSquareAt(row-1,col-1);
+        //Add options to arraList
+        allMoves.add(option1);
+        allMoves.add(option2);
+        allMoves.add(option3);
+        allMoves.add(option4);
+        //Get all non-Diagnols
+        Square option5 = board.getSquareAt(row+1,col);
+        Square option6 = board.getSquareAt(row-1, col);
+        Square option7 = board.getSquareAt(row,col+1);
+        Square option8 = board.getSquareAt(row,col-1);
+        //Add options to arrayList
+        allMoves.add(option5);
+        allMoves.add(option6);
+        allMoves.add(option7);
+        allMoves.add(option8);
+        return allMoves;
+    }
+
+
+
 
     @Override
     public String toString() {

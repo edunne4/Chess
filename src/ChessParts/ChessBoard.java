@@ -20,6 +20,9 @@ package ChessParts;
 
 import ChessParts.ChessPieces.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Represents a chess board
  */
@@ -29,6 +32,12 @@ public class ChessBoard {
 
     /** 2D array of squares representing positions that chess pieces can be at */
     private final Square[][] positions;
+
+    /** Pieces that have been captured by the black team */
+    private List<ChessPiece> capturedWhitePieces = new ArrayList<>();
+
+    /** Pieces that have been captured by the white team */
+    private List<ChessPiece> capturedBlackPieces = new ArrayList<>();
 
     /**
      * Explicit constructor to initialize the squares array and set up the starting positions of the game pieces
@@ -96,10 +105,43 @@ public class ChessBoard {
      * Get the square at the specified location
      * @param row the row
      * @param col the column
-     * @return the Square object, which may or may not contain a ChessPiece
+     * @return the Square object, which may or may not contain a ChessPiece. If its out of bounds of the board, return null
      */
     public Square getSquareAt(int row, int col){
-        return positions[row][col];
+        try {
+            return positions[row][col];
+        } catch (IndexOutOfBoundsException e) {
+            return null;
+        }
+    }
+
+    public Square getSquareAt(String chessPos) throws IllegalArgumentException{
+
+        if(!isStringPosValid(chessPos)){
+            throw new IllegalArgumentException("That is not a real chess position");
+        }
+        char letter = chessPos.charAt(0);
+        int col = (int)(letter - 97);
+        int row = Character.getNumericValue(chessPos.charAt(1)) - 1;
+        return getSquareAt(row, col);
+    }
+
+    private boolean isStringPosValid(String potentialPos){
+        if (potentialPos.length() != 2){
+            return false;
+        }
+        //check letter in bounds of board
+        char letter = potentialPos.charAt(0);
+        if(letter < 'a' || letter > 'f'){
+            return false;
+        }
+        //check number in bounds of board
+        char num = potentialPos.charAt(1);
+        if (num < '1' || num > '8'){
+            return false;
+        }
+        //otherwise it's fine
+        return true;
     }
 
     /**
@@ -118,5 +160,45 @@ public class ChessBoard {
         }
 
         return strRep;
+    }
+
+    public boolean posIsInBoard(int row, int col){
+        if(row<0 || row >= BOARD_HEIGHT || col < 0 || col >= BOARD_WIDTH){
+            return false;
+        }
+        return true;
+    }
+
+    public void capturePiece(ChessPiece pieceKilled) {
+        if(pieceKilled.getTeam() == Team.WHITE){
+            capturedWhitePieces.add(pieceKilled);
+        }else{
+            capturedBlackPieces.add(pieceKilled);
+        }
+    }
+
+    /**
+     * Method that gets all the pieces on the board of a specified team,
+     * loops through all the squares on the board to get all the alive pieces and returns
+     * returns the squares that they are at,
+     * this makes it easier to see if one of them is checking the King
+     * @author Jim Campbell
+     * @param team, the team that you want to get all of the pieces for
+     * @return teamPiecesSquares, a List of all the alive pieces of a team, but not the piece itself
+     * the squares that they are located at
+     */
+    public ArrayList<Square> getAllAlivePiecesOfATeam(Team team) {
+        ArrayList<Square> teamPiecesSquares = new ArrayList<>();
+        for (int i = 0; i < BOARD_WIDTH; i++) {
+            for (Square currentSquare : positions[i]){
+                if (currentSquare.getCurrentPiece() != null){
+                    ChessPiece currentPiece = currentSquare.getCurrentPiece();
+                    if( currentPiece.getTeam() == team){
+                        teamPiecesSquares.add(currentSquare);
+                    }
+                }
+            }
+        }
+        return teamPiecesSquares;
     }
 }
