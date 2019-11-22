@@ -48,22 +48,26 @@ public class Board3DView extends Application {
     private StackPane root;
 
     private GridPane board;
-    private HBox pieces;
 
     private int SQUARE_SIZE = 100;
     private int SQUARE_DEPTH = 10;
+
+    private final Color PLAYER1 = Color.RED;
+    private final Color PLAYER2 = Color.BLUE;
 
     @Override
     public void start(Stage stage) throws IOException {
 
         //initialize the board
         board = new GridPane();
-        //board.setAlignment(Pos.CENTER);
+        board.setAlignment(Pos.CENTER);
 
         //add all of the squares to the board
         for (int i = 0; i < 8 ; i++) {
             for (int j = 0; j < 8; j++) {
                 Box square = new Box(SQUARE_SIZE, SQUARE_SIZE,SQUARE_DEPTH);
+                StackPane stackPane = new StackPane(square);
+                stackPane.setAlignment(Pos.CENTER);
 
                 if ((i+j) % 2 == 0) {
                     square.setMaterial(new PhongMaterial(Color.RED));
@@ -72,93 +76,91 @@ public class Board3DView extends Application {
                     square.setMaterial(new PhongMaterial(Color.BLUE));
                 }
 
-                board.add(square,i,j);
+                board.add(stackPane,i,j);
             }
 
         }
 
+        //create the pieces for player1
+        createPieceOnBoard(0,0,"stl/rook.stl",PLAYER1);
+        createPieceOnBoard(1,0,"stl/knight.stl",PLAYER1);
+        createPieceOnBoard(2,0,"stl/bishop.stl",PLAYER1);
+        createPieceOnBoard(3,0,"stl/king.stl",PLAYER1);
+        createPieceOnBoard(4,0,"stl/queen.stl",PLAYER1);
+        createPieceOnBoard(5,0,"stl/bishop.stl",PLAYER1);
+        createPieceOnBoard(6,0,"stl/knight.stl",PLAYER1);
+        createPieceOnBoard(7,0,"stl/rook.stl",PLAYER1);
+        for (int i = 0; i < 8; i++) {
+            createPieceOnBoard(i,1,"stl/pawn.stl",PLAYER1);
+        }
 
-        //create red (team 1) pieces on the back row
-        MeshView kingR = createChessPiece("stl/king.stl",Color.RED);
-        MeshView queenR = createChessPiece("stl/queen.stl",Color.RED);
-        MeshView rookR1 = createChessPiece("stl/rook.stl",Color.RED);
-        MeshView knightR1 = createChessPiece("stl/knight.stl",Color.RED);
-        MeshView bishopR1 = createChessPiece("stl/bishop.stl",Color.RED);
-        MeshView rookR2 = createChessPiece("stl/rook.stl",Color.RED);
-        MeshView knightR2 = createChessPiece("stl/knight.stl",Color.RED);
-        MeshView bishopR2 = createChessPiece("stl/bishop.stl",Color.RED);
-
-
-        //add all of the pieces
-        pieces = new HBox();
-        //pieces.setAlignment(Pos.CENTER);
-
-        Node squareOnBoard = getNodeFromGridPane(board,4,5);
-
-        squareOnBoard.setTranslateX(20);
-
-        Bounds squareOnBoardPos = squareOnBoard.localToScene(squareOnBoard.getBoundsInLocal());
-        Bounds pieceOnBoardPos = pieces.localToScreen(pieces.getBoundsInLocal());
-
-        System.out.println(squareOnBoardPos.getMinX());
-        System.out.println(squareOnBoardPos.getMaxX());
-
-        Box box1 = new Box(10,10,10);
-        Box box2 = new Box(10,10,10);
-
-        //double amountToMoveX = squareOnBoardPos.getMinX() - pieceOnBoardPos.getMinX();
-
-        //rookR1.setTranslateX(amountToMoveX);
-
-        pieces.getChildren().addAll(rookR1);
-
-        //Bounds squareOnBoardPos = squareOnBoard.localToScene(squareOnBoard.getBoundsInLocal());
-
-        //rookR1.setTranslateX(200);
-        //rookR1.setTranslateY(100);
-
-        //rookR1.relocate(squareOnBoard.getBoundsInLocal().getCenterX(),squareOnBoard.getBoundsInLocal().getCenterY());
-        //Bounds pieceOnBoardPos = rookR1.localToScene(rookR1.getBoundsInLocal());
-
-//        System.out.printf("X: %f \n",squareOnBoardPos.getCenterX());
-//        System.out.printf("Y: %f \n",squareOnBoardPos.getCenterY());
+        //create the pieces for player 2
+        createPieceOnBoard(0,7,"stl/rook.stl",PLAYER2);
+        createPieceOnBoard(1,7,"stl/knight.stl",PLAYER2);
+        createPieceOnBoard(2,7,"stl/bishop.stl",PLAYER2);
+        createPieceOnBoard(3,7,"stl/king.stl",PLAYER2);
+        createPieceOnBoard(4,7,"stl/queen.stl",PLAYER2);
+        createPieceOnBoard(5,7,"stl/bishop.stl",PLAYER2);
+        createPieceOnBoard(6,7,"stl/knight.stl",PLAYER2);
+        createPieceOnBoard(7,7,"stl/rook.stl",PLAYER2);
+        for (int i = 0; i < 8; i++) {
+            createPieceOnBoard(i,6,"stl/pawn.stl",PLAYER2);
+        }
 
 
-        //pieces.getChildren().addAll(rookR1);
-
-//        pieces.add(knightR1,0,1);
-//        pieces.add(bishopR1,0,2);
-//        pieces.add(queenR,0,3);
-//        pieces.add(kingR,0,4);
-//        pieces.add(bishopR2,0,5);
-//        pieces.add(knightR2,0,6);
-//        pieces.add(rookR2,0,7);
 
         //add the board and the pieces to the root
         root = new StackPane();
-        root.getChildren().addAll(board,pieces);
-
-        //create lighting scheme
-//        PointLight light = new PointLight(Color.GAINSBORO);
-//        root.getChildren().add(light);
-//        root.getChildren().add(new AmbientLight(Color.WHITE));
+        root.getChildren().addAll(board);
+        root.setAlignment(Pos.CENTER);
 
         //initialize the camera
         camera = new PerspectiveCamera(true);
-        camera.setVerticalFieldOfView(false);
-        camera.setNearClip(0.1);
-        camera.setFarClip(100000.0);
-
+        //camera.setVerticalFieldOfView(false);
+        camera.setNearClip(1.0);
+        camera.setFarClip(10000.0);
 
         //initialize the scene, and set the camera to the scene
         scene = new Scene(root);
         scene.setCamera(camera);
 
-        changeCameraOnClick();
+        //changeCameraOnClick();
+
+        camera.getTransforms().addAll(new Translate(0,0,-4000)); //set camera angle
 
         //show the scene to the user
         stage.setScene(scene);
         stage.show();
+    }
+
+    private void removePieceOnBoard(int col, int row) {
+        //remove it from the board
+        StackPane squareOnBoard = (StackPane) getNodeFromGridPane(board,col,row);
+        if (squareOnBoard != null) {
+            int pieceIndex = squareOnBoard.getChildren().size() - 1;
+            squareOnBoard.getChildren().remove(pieceIndex);
+        }
+
+    }
+
+    private void createPieceOnBoard(int col, int row, String fileName, Color color) {
+        //create the chess piece
+        MeshView piece = createChessPiece(fileName, color);
+
+        //add it to the board
+        StackPane squareOnBoard = (StackPane) getNodeFromGridPane(board,col,row);
+        if (squareOnBoard != null) {
+            squareOnBoard.getChildren().add(piece);
+        }
+
+        piece.setOnMouseClicked(event -> {
+
+            removePieceOnBoard(col,row);
+            createPieceOnBoard(col,row,fileName,Color.BLUE.grayscale());
+
+        });
+
+
 
     }
 
@@ -173,44 +175,35 @@ public class Board3DView extends Application {
 
     private void changeCameraOnClick() {
         //camera view 1 for player 1, assuming we are at home
-        final Translate translate1 = new Translate(0, 0, -4000);
-        //final Rotate rotate1 = new Rotate(60,Rotate.X_AXIS);
+        final Translate translate1 = new Translate(400, 2500, -2000);
+        final Rotate rotate1 = new Rotate(45,Rotate.X_AXIS);
 
         //camera view 2 for player 2, assuming we are at home
         final Translate translate2 = new Translate(-1000, -1000, -4000);
-        //final Rotate rotate2a = new Rotate(180,Rotate.Z_AXIS);
-        //final Rotate rotate2b = new Rotate(60,Rotate.X_AXIS);
-
-        Bounds rootBounds = root.localToScene(root.getBoundsInLocal());
+        final Rotate rotate2 = new Rotate(180,Rotate.Z_AXIS);
 
 
-
-
-        camera.getTransforms().addAll(translate1); //set camera angle
+        camera.getTransforms().addAll(translate1,rotate1); //set camera angle
 
 
         scene.setOnMouseClicked(event -> {
-            //System.out.println("Click!");
-            Bounds boundsInScene = camera.localToScene(camera.getBoundsInLocal());
-            System.out.printf("X: %f, Y: %f \n", boundsInScene.getCenterX(), boundsInScene.getCenterY());
-            System.out.println(CAMERA);
 
-//            try {
+            try {
                 if (CAMERA == "Cam2") { //we are currently player 2, go to player 1
                     camera.getTransforms().addAll(translate2.createInverse());
-                    camera.getTransforms().addAll(translate1);
+                    camera.getTransforms().addAll(translate1,rotate1);
                     CAMERA = "Cam1";
 
                 }
                 else if (CAMERA == "Cam1") {
-                    camera.getTransforms().addAll(translate1.createInverse());
+                    camera.getTransforms().addAll(rotate1.createInverse(),translate1.createInverse());
                     camera.getTransforms().addAll(translate2);
                     CAMERA = "Cam2";
                 }
-//            } catch (NonInvertibleTransformException e) {
-//                System.out.println("Error!!!!");
-//                e.printStackTrace();
-//            }
+            } catch (Exception e) {
+                System.out.println("Error!!!!");
+                e.printStackTrace();
+            }
 
           });
 
