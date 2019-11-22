@@ -29,13 +29,13 @@ import java.util.ArrayList;
 
 public class RuleMaster {
     //Variable that holds if the White King is in Check
-    private boolean isCheckedWhite = false;
+    private SimpleBooleanProperty isCheckedWhite = new SimpleBooleanProperty(false);
     //Variable that holds if the Black King is in Check
-    private boolean isCheckedBlack = false;
+    private SimpleBooleanProperty isCheckedBlack = new SimpleBooleanProperty(false);
 
     //ArrayList that holds all the squares that have pieces that have a potential move to check the Black King
     private ArrayList<Square> squaresThatHaveBlackPiecesThatAreCheckingWhiteKing = new ArrayList<>();
-    //ArrayList that holds all the squares that have piecse that have a potential move to check the White King
+    //ArrayList that holds all the squares that have pieces that have a potential move to check the White King
     private ArrayList<Square> squaresThatHaveWhitePiecesThatAreCheckingBlackKing = new ArrayList<>();
 
     //The board that we are playing on
@@ -49,12 +49,20 @@ public class RuleMaster {
         this.board = board;
     }
 
-    public boolean isCheckedWhite() {
-        return isCheckedWhite;
+    public boolean isIsCheckedBlack() {
+        return isCheckedBlack.get();
     }
 
-    public boolean isCheckedBlack() {
+    public SimpleBooleanProperty isCheckedBlackProperty() {
         return isCheckedBlack;
+    }
+
+    public boolean isIsCheckedWhite() {
+        return isCheckedWhite.get();
+    }
+
+    public SimpleBooleanProperty isCheckedWhiteProperty() {
+        return isCheckedWhite;
     }
 
     /**
@@ -65,16 +73,16 @@ public class RuleMaster {
      */
     public boolean captureKing(ChessPiece king){
         if (king.getTeam() == Team.BLACK){
-            if (isCheckedBlack){
+            if (isCheckedBlack.getValue()){
                 return true;
             }
-            isCheckedBlack = true;
+            isCheckedBlack.setValue(true);
         }
         if (king.getTeam() == Team.WHITE){
-            if(isCheckedWhite){
+            if(isCheckedWhite.getValue()){
                 return true;
             }
-            isCheckedWhite = true;
+            isCheckedWhite.setValue(true);
         }
         return false;
     }
@@ -110,12 +118,12 @@ public class RuleMaster {
                 //Then check the King of that team
                 if ((currentPiece.getClass() == King.class) && (currentPiece.getTeam() != team)) {
                     if( team == Team.BLACK){
-                        isCheckedWhite = true;
+                        isCheckedWhite.setValue(true);
                         checkedKing = true;
                         squaresThatHaveBlackPiecesThatAreCheckingWhiteKing.add(currentSquare);
 
                     } else {
-                        isCheckedBlack = true;
+                        isCheckedBlack.setValue(true);
                         checkedKing = true;
                         squaresThatHaveWhitePiecesThatAreCheckingBlackKing.add(currentSquare);
                     }
@@ -137,9 +145,9 @@ public class RuleMaster {
      */
     private void uncheckKing(Team team) {
         if( team == Team.BLACK){
-            isCheckedWhite = false;
+            isCheckedWhite.setValue(false);
         } else {
-            isCheckedBlack = false;
+            isCheckedBlack.setValue(false);
         }
     }
 
