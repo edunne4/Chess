@@ -7,6 +7,7 @@ package View3D;
 //https://stackoverflow.com/questions/20825935/javafx-get-node-by-row-and-column
 
 import javafx.application.Application;
+import javafx.geometry.Point3D;
 import javafx.geometry.Pos;
 import javafx.scene.*;
 import javafx.scene.layout.GridPane;
@@ -24,7 +25,7 @@ public class Board3DView extends Application {
 
     private PerspectiveCamera camera;
 
-    private String CAMERA = "Cam1";
+    private String CAMERA = "Cam2";
 
     private Scene scene;
     private StackPane root;
@@ -32,6 +33,7 @@ public class Board3DView extends Application {
 
     private int SQUARE_SIZE = 100;
     private int SQUARE_DEPTH = 10;
+    private int NUM_ROWS = 8;
 
     private final Color PLAYER1_COLOR = Color.RED;
     private final Color PLAYER2_COLOR = Color.WHITE;
@@ -75,10 +77,10 @@ public class Board3DView extends Application {
         scene = new Scene(root);
         scene.setCamera(camera);
 
-        //changeCameraOnClick();
+        changeCameraOnClick();
 
         //camera.getTransforms().addAll(new Translate(0,0,-2000)); //set camera angle for above shot
-        camera.getTransforms().addAll(new Translate(0,1800,-2000),new Rotate(40,Rotate.X_AXIS)); //set camera angle for view 1
+
 
         //show the scene to the user
         stage.setScene(scene);
@@ -202,38 +204,14 @@ public class Board3DView extends Application {
     }
 
     private void changeCameraOnClick() {
-        //camera view 1 for player 1, assuming we are at home
-        final Translate translate1 = new Translate(400, 2500, -2000);
-        final Rotate rotate1 = new Rotate(45,Rotate.X_AXIS);
 
-        //camera view 2 for player 2, assuming we are at home
-        final Translate translate2 = new Translate(-1000, -1000, -4000);
-        final Rotate rotate2 = new Rotate(180,Rotate.Z_AXIS);
+        camera.getTransforms().addAll(new Translate(0,1800,-2000),new Rotate(40,Rotate.X_AXIS)); //set camera angle for view 1
+        if (CAMERA == "Cam2")  {
+            board.getTransforms().addAll(new Translate(0,SQUARE_SIZE*NUM_ROWS,0), new Rotate(180,Rotate.X_AXIS));
+            board.getTransforms().addAll(new Translate(SQUARE_SIZE*NUM_ROWS,0,0), new Rotate(180,Rotate.Y_AXIS));
 
-
-        camera.getTransforms().addAll(translate1,rotate1); //set camera angle
-
-
-        scene.setOnMouseClicked(event -> {
-
-            try {
-                if (CAMERA == "Cam2") { //we are currently player 2, go to player 1
-                    camera.getTransforms().addAll(translate2.createInverse());
-                    camera.getTransforms().addAll(translate1,rotate1);
-                    CAMERA = "Cam1";
-
-                }
-                else if (CAMERA == "Cam1") {
-                    camera.getTransforms().addAll(rotate1.createInverse(),translate1.createInverse());
-                    camera.getTransforms().addAll(translate2);
-                    CAMERA = "Cam2";
-                }
-            } catch (Exception e) {
-                System.out.println("Error!!!!");
-                e.printStackTrace();
-            }
-
-          });
+            //camera.getTransforms().addAll(new Translate(0,SQUARE_SIZE*NUM_ROWS,-1000), new Rotate(-20,Rotate.X_AXIS));
+        }
 
     }
 
