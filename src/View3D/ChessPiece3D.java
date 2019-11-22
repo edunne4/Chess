@@ -84,7 +84,7 @@ public class ChessPiece3D extends MeshView{
 
     public void selectPiece() {
         this.isSelected = true;
-        this.setMaterial(new PhongMaterial(pieceColor.deriveColor(0.0,0.5,0.5,1.0)));
+        this.setMaterial(new PhongMaterial(pieceColor.deriveColor(0,1,0.3,1.0)));
     }
 
     public void deselectPiece() {

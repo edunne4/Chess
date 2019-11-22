@@ -175,7 +175,13 @@ public class Board3DView extends Application {
             //highlight the piece when it is selected
             ChessPiece3D finalMeshView = meshView;
             meshView.setOnMouseClicked(event -> {
-                finalMeshView.selectPiece();
+                if (finalMeshView.isSelected()) {
+                    finalMeshView.deselectPiece();
+                }
+                else {
+                    finalMeshView.selectPiece();
+                }
+
 
             });
 
