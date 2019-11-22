@@ -31,6 +31,14 @@ public class ChessPiece3D extends MeshView{
 
     private PieceEnum pieceType;
     private Color pieceColor;
+    private int pieceScale;
+    private boolean isSelected = false;
+
+    private final int DEFAULT_SCALE = 2;
+
+    public void setPieceScale(int pieceScale) {
+        this.pieceScale = pieceScale;
+    }
 
     /**
      * A constructor to create a MeshView object from an STL file.
@@ -43,6 +51,8 @@ public class ChessPiece3D extends MeshView{
 
         this.pieceType = piece;
         this.pieceColor = color;
+        this.pieceScale = DEFAULT_SCALE;
+        this.isSelected = false;
 
         //create a StlMeshImporter object and try parsing with the filename
         StlMeshImporter stlImporter = new StlMeshImporter();
@@ -67,10 +77,23 @@ public class ChessPiece3D extends MeshView{
         this.setVisible(true);
 
         //scale the pieces appropriately
-        int scale = 3;
-        this.setScaleX(scale);
-        this.setScaleY(scale);
-        this.setScaleZ(scale);
+        this.setScaleX(pieceScale);
+        this.setScaleY(pieceScale);
+        this.setScaleZ(pieceScale);
+    }
+
+    public void selectPiece() {
+        this.isSelected = true;
+        this.setMaterial(new PhongMaterial(pieceColor.deriveColor(0.0,0.5,0.5,1.0)));
+    }
+
+    public void deselectPiece() {
+        this.isSelected = false;
+        this.setMaterial(new PhongMaterial(pieceColor));
+    }
+
+    public boolean isSelected() {
+        return isSelected;
     }
 
     public PieceEnum getPieceType() {
@@ -80,4 +103,6 @@ public class ChessPiece3D extends MeshView{
     public Color getPieceColor() {
         return pieceColor;
     }
+
+
 }

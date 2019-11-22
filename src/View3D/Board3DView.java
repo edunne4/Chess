@@ -7,7 +7,6 @@ package View3D;
 //https://stackoverflow.com/questions/20825935/javafx-get-node-by-row-and-column
 
 import javafx.application.Application;
-import javafx.geometry.Point3D;
 import javafx.geometry.Pos;
 import javafx.scene.*;
 import javafx.scene.layout.GridPane;
@@ -25,27 +24,21 @@ public class Board3DView extends Application {
 
     private PerspectiveCamera camera;
 
-    private double mousePosX;
-    private double mousePosY;
-    private double mouseOldX;
-    private double mouseOldY;
-
     private String CAMERA = "Cam1";
 
-    private volatile boolean isPicking=false;
-    private Point3D vecIni, vecPos;
-    private double distance;
-    private Sphere s;
     private Scene scene;
     private StackPane root;
-
     private GridPane board;
 
     private int SQUARE_SIZE = 100;
     private int SQUARE_DEPTH = 10;
 
-    private final Color PLAYER1 = Color.RED;
-    private final Color PLAYER2 = Color.BLUE;
+    private final Color PLAYER1_COLOR = Color.RED;
+    private final Color PLAYER2_COLOR = Color.WHITE;
+
+    private final Color SQUARE1_COLOR = Color.BLACK;
+    private final Color SQUARE2_COLOR = Color.WHITE;
+    private final Color BACKGROUND_COLOR = Color.GRAY;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -54,56 +47,18 @@ public class Board3DView extends Application {
         board = new GridPane();
         board.setAlignment(Pos.CENTER);
 
+        //center the board in the view
+        board.setTranslateX(SQUARE_SIZE*-4);
+        board.setTranslateY(SQUARE_SIZE*-4);
+
         //add all of the squares to the board
-        for (int i = 0; i < 8 ; i++) {
-            for (int j = 0; j < 8; j++) {
-                Box square = new Box(SQUARE_SIZE, SQUARE_SIZE,SQUARE_DEPTH);
-                StackPane stackPane = new StackPane(square);
-                stackPane.setAlignment(Pos.CENTER);
+        initializeBoardSquares();
 
-                if ((i+j) % 2 == 0) {
-                    square.setMaterial(new PhongMaterial(Color.RED));
-                }
-                else {
-                    square.setMaterial(new PhongMaterial(Color.BLUE));
-                }
-
-                board.add(stackPane,i,j);
-            }
-
-        }
-
-        //create the pieces for player1
-        createPieceOnBoard(0,0,PieceEnum.ROOK,PLAYER1);
-        createPieceOnBoard(1,0,PieceEnum.KNIGHT,PLAYER1);
-        createPieceOnBoard(2,0,PieceEnum.BISHOP,PLAYER1);
-        createPieceOnBoard(3,0,PieceEnum.KING,PLAYER1);
-        createPieceOnBoard(4,0,PieceEnum.QUEEN,PLAYER1);
-        createPieceOnBoard(5,0,PieceEnum.BISHOP,PLAYER1);
-        createPieceOnBoard(6,0,PieceEnum.KNIGHT,PLAYER1);
-        createPieceOnBoard(7,0,PieceEnum.ROOK,PLAYER1);
-        for (int i = 0; i < 8; i++) {
-            createPieceOnBoard(i,1,PieceEnum.PAWN,PLAYER1);
-        }
-
-        //create the pieces for player 2
-        createPieceOnBoard(0,7,PieceEnum.ROOK,PLAYER2);
-        createPieceOnBoard(1,7,PieceEnum.KNIGHT,PLAYER2);
-        createPieceOnBoard(2,7,PieceEnum.BISHOP,PLAYER2);
-        createPieceOnBoard(3,7,PieceEnum.KING,PLAYER2);
-        createPieceOnBoard(4,7,PieceEnum.QUEEN,PLAYER2);
-        createPieceOnBoard(5,7,PieceEnum.BISHOP,PLAYER2);
-        createPieceOnBoard(6,7,PieceEnum.KNIGHT,PLAYER2);
-        createPieceOnBoard(7,7,PieceEnum.ROOK,PLAYER2);
-        for (int i = 0; i < 8; i++) {
-            createPieceOnBoard(i,6,PieceEnum.PAWN,PLAYER2);
-        }
+        //setup the board in a traditional chess fashion
+        initializeBoard();
 
         removePieceOnBoard(0,0);
-
-        movePieceOnBoard(4,1,3,5);
-
-
+        movePieceOnBoard(4,1,4,3);
 
         //add the board and the pieces to the root
         root = new StackPane();
@@ -120,19 +75,71 @@ public class Board3DView extends Application {
         scene = new Scene(root);
         scene.setCamera(camera);
 
-        changeCameraOnClick();
+        //changeCameraOnClick();
 
-        //camera.getTransforms().addAll(new Translate(0,0,-4000)); //set camera angle
+        //camera.getTransforms().addAll(new Translate(0,0,-2000)); //set camera angle for above shot
+        camera.getTransforms().addAll(new Translate(0,1800,-2000),new Rotate(40,Rotate.X_AXIS)); //set camera angle for view 1
 
         //show the scene to the user
         stage.setScene(scene);
-        scene.setFill(Color.GRAY);
+        scene.setFill(BACKGROUND_COLOR);
         stage.show();
     }
 
+    private void initializeBoardSquares() {
+        for (int i = 0; i < 8 ; i++) {
+            for (int j = 0; j < 8; j++) {
+                Box square = new Box(SQUARE_SIZE, SQUARE_SIZE,SQUARE_DEPTH);
+                StackPane stackPane = new StackPane(square);
+                stackPane.setAlignment(Pos.CENTER);
+
+                if ((i+j) % 2 == 0) {
+                    square.setMaterial(new PhongMaterial(SQUARE1_COLOR));
+                }
+                else {
+                    square.setMaterial(new PhongMaterial(SQUARE2_COLOR));
+                }
+
+                board.add(stackPane,i,j);
+            }
+        }
+    }
+
+    private void initializeBoard() {
+        //create the pieces for player1
+        createPieceOnBoard(0,0, PieceEnum.ROOK, PLAYER1_COLOR);
+        createPieceOnBoard(1,0,PieceEnum.KNIGHT, PLAYER1_COLOR);
+        createPieceOnBoard(2,0,PieceEnum.BISHOP, PLAYER1_COLOR);
+        createPieceOnBoard(3,0,PieceEnum.KING, PLAYER1_COLOR);
+        createPieceOnBoard(4,0,PieceEnum.QUEEN, PLAYER1_COLOR);
+        createPieceOnBoard(5,0,PieceEnum.BISHOP, PLAYER1_COLOR);
+        createPieceOnBoard(6,0,PieceEnum.KNIGHT, PLAYER1_COLOR);
+        createPieceOnBoard(7,0,PieceEnum.ROOK, PLAYER1_COLOR);
+        for (int i = 0; i < 8; i++) {
+            createPieceOnBoard(i,1,PieceEnum.PAWN, PLAYER1_COLOR);
+        }
+
+        //create the pieces for player 2
+        createPieceOnBoard(0,7,PieceEnum.ROOK, PLAYER2_COLOR);
+        createPieceOnBoard(1,7,PieceEnum.KNIGHT, PLAYER2_COLOR);
+        createPieceOnBoard(2,7,PieceEnum.BISHOP, PLAYER2_COLOR);
+        createPieceOnBoard(3,7,PieceEnum.KING, PLAYER2_COLOR);
+        createPieceOnBoard(4,7,PieceEnum.QUEEN, PLAYER2_COLOR);
+        createPieceOnBoard(5,7,PieceEnum.BISHOP, PLAYER2_COLOR);
+        createPieceOnBoard(6,7,PieceEnum.KNIGHT, PLAYER2_COLOR);
+        createPieceOnBoard(7,7,PieceEnum.ROOK, PLAYER2_COLOR);
+        for (int i = 0; i < 8; i++) {
+            createPieceOnBoard(i,6,PieceEnum.PAWN, PLAYER2_COLOR);
+        }
+    }
+
     private void movePieceOnBoard(int startingCol,int startingRow,int endingCol,int endingRow) {
-        ChessPiece3D removedPiece = removePieceOnBoard(startingCol,startingRow);
-        createPieceOnBoard(endingCol,endingRow,removedPiece.getPieceType(),removedPiece.getPieceColor());
+        try {
+            ChessPiece3D removedPiece = removePieceOnBoard(startingCol,startingRow);
+            createPieceOnBoard(endingCol,endingRow,removedPiece.getPieceType(),removedPiece.getPieceColor());
+        } catch (Exception e) {
+            System.err.println("Piece can not be moved.");
+        }
 
 
     }
@@ -140,40 +147,43 @@ public class Board3DView extends Application {
     private ChessPiece3D removePieceOnBoard(int col, int row) {
         //remove it from the board
         StackPane squareOnBoard = (StackPane) getNodeFromGridPane(board,col,row);
-        if (squareOnBoard != null) {
             int pieceIndex = squareOnBoard.getChildren().size() - 1;
-            ChessPiece3D piece3D = (ChessPiece3D) squareOnBoard.getChildren().get(pieceIndex);
-            squareOnBoard.getChildren().remove(pieceIndex);
+
+            ChessPiece3D piece3D = null;
+            try {
+                piece3D = (ChessPiece3D) squareOnBoard.getChildren().get(pieceIndex);
+                squareOnBoard.getChildren().remove(pieceIndex);
+            } catch (Exception e) {
+                System.err.println("Illegal move. There is no piece in the specified spot that can be moved.");
+            }
 
             return piece3D;
-
-        }
-
-        //if there is an issue, simply return a black pawn in it's place
-        return new ChessPiece3D(PieceEnum.PAWN,Color.BLACK);
 
     }
 
     private ChessPiece3D createPieceOnBoard(int col, int row, PieceEnum piece, Color color) {
-        //create the chess piece
-        ChessPiece3D meshView = new ChessPiece3D(piece, color);
 
-        //add it to the board
-        StackPane squareOnBoard = (StackPane) getNodeFromGridPane(board,col,row);
-        if (squareOnBoard != null) {
+       ChessPiece3D meshView = null;
+        try {
+            //create the chess piece
+             meshView = new ChessPiece3D(piece, color);
+
+            //add it to the board
+            StackPane squareOnBoard = (StackPane) getNodeFromGridPane(board,col,row);
             squareOnBoard.getChildren().add(meshView);
-            return meshView;
+
+            //highlight the piece when it is selected
+            ChessPiece3D finalMeshView = meshView;
+            meshView.setOnMouseClicked(event -> {
+                finalMeshView.selectPiece();
+
+            });
+
+        } catch (Exception e) {
+            System.err.println("No piece to be created.");
         }
 
-        //if there is an issue, simply return a black pawn in it's place
-        return new ChessPiece3D(PieceEnum.PAWN,Color.BLACK);
-
-//        meshView.setOnMouseClicked(event -> {
-//
-//            removePieceOnBoard(col,row);
-//            createPieceOnBoard(col,row,piece.getFilename(),Color.BLUE.grayscale());
-//
-//        });
+        return meshView;
     }
 
     private Node getNodeFromGridPane(GridPane gridPane, int col, int row) {
