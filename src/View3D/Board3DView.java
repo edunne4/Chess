@@ -10,12 +10,15 @@ import javafx.application.Application;
 import javafx.geometry.Point3D;
 import javafx.geometry.Pos;
 import javafx.scene.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.*;
+import javafx.scene.transform.NonInvertibleTransformException;
 import javafx.scene.transform.Rotate;
+import javafx.scene.transform.Transform;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 
@@ -205,14 +208,43 @@ public class Board3DView extends Application {
 
     private void changeCameraOnClick() {
 
-        camera.getTransforms().addAll(new Translate(0,1800,-2000),new Rotate(40,Rotate.X_AXIS)); //set camera angle for view 1
-        if (CAMERA == "Cam2")  {
-            board.getTransforms().addAll(new Translate(0,SQUARE_SIZE*NUM_ROWS,0), new Rotate(180,Rotate.X_AXIS));
-            board.getTransforms().addAll(new Translate(SQUARE_SIZE*NUM_ROWS,0,0), new Rotate(180,Rotate.Y_AXIS));
+        Transform cam1A = new Translate(0,1800,-2000);
+        Transform cam1B = new Rotate(40,Rotate.X_AXIS);
 
-            //camera.getTransforms().addAll(new Translate(0,SQUARE_SIZE*NUM_ROWS,-1000), new Rotate(-20,Rotate.X_AXIS));
-        }
+        Transform cam2A = new Translate(0,SQUARE_SIZE*NUM_ROWS,0);
+        Transform cam2B = new Rotate(180,Rotate.X_AXIS);
 
+        Transform cam2C = new Translate(SQUARE_SIZE*NUM_ROWS,0,0);
+        Transform cam2D = new Rotate(180,Rotate.Y_AXIS);
+
+        camera.getTransforms().addAll(cam1A,cam1B); //set camera angle for view 1
+
+        scene.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.C) {
+                camera.getTransforms().addAll(cam1A,cam1B);
+                if (CAMERA == "Cam1") {
+                    try {
+                        camera.getTransforms().addAll(cam1B.createInverse(),cam1A.createInverse());
+                        board.getTransforms().addAll(cam2D.createInverse(),cam2C.createInverse(),cam2B.createInverse(),cam2A.createInverse());
+                        CAMERA = "Cam2";
+                    } catch (NonInvertibleTransformException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else if (CAMERA == "Cam2")  {
+                    try {
+                        camera.getTransforms().addAll(cam1B.createInverse(),cam1A.createInverse());
+                        board.getTransforms().addAll(cam2A,cam2B,cam2C,cam2D);
+                    } catch (NonInvertibleTransformException e) {
+                        e.printStackTrace();
+                    }
+                    CAMERA = "Cam1";
+
+                }
+
+                System.out.println(CAMERA);
+            }
+        });
     }
 
 

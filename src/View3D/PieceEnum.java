@@ -1,12 +1,12 @@
 package View3D;
 
 public enum PieceEnum {
-    ROOK("stl/rook.stl"),
-    KNIGHT("stl/knight.stl"),
-    BISHOP("stl/bishop.stl"),
-    KING("stl/king.stl"),
-    QUEEN("stl/queen.stl"),
-    PAWN("stl/pawn.stl");
+    ROOK("stlModels/rook.stl"),
+    KNIGHT("stlModels/knight.stl"),
+    BISHOP("stlModels/bishop.stl"),
+    KING("stlModels/king.stl"),
+    QUEEN("stlModels/queen.stl"),
+    PAWN("stlModels/pawn.stl");
 
     private final String fileName;
 
