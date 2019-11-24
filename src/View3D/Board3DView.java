@@ -7,7 +7,6 @@ package View3D;
 //https://stackoverflow.com/questions/20825935/javafx-get-node-by-row-and-column
 
 import javafx.application.Application;
-import javafx.geometry.Point3D;
 import javafx.geometry.Pos;
 import javafx.scene.*;
 import javafx.scene.input.KeyCode;
@@ -15,7 +14,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
-import javafx.scene.shape.*;
 import javafx.scene.transform.NonInvertibleTransformException;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Transform;
@@ -34,8 +32,6 @@ public class Board3DView extends Application {
     private StackPane root;
     private GridPane board;
 
-    private int SQUARE_SIZE = 100;
-    private int SQUARE_DEPTH = 10;
     private int NUM_ROWS = 8;
 
     private final Color PLAYER1_COLOR = Color.RED;
@@ -53,8 +49,8 @@ public class Board3DView extends Application {
         board.setAlignment(Pos.CENTER);
 
         //center the board in the view
-        board.setTranslateX(SQUARE_SIZE*-4);
-        board.setTranslateY(SQUARE_SIZE*-4);
+        board.setTranslateX(BoardSquare3DView.SQUARE_SIZE*-4);
+        board.setTranslateY(BoardSquare3DView.SQUARE_SIZE*-4);
 
         //add all of the squares to the board
         initializeBoardSquares();
@@ -82,9 +78,6 @@ public class Board3DView extends Application {
 
         changeCameraOnClick();
 
-        //camera.getTransforms().addAll(new Translate(0,0,-2000)); //set camera angle for above shot
-
-
         //show the scene to the user
         stage.setScene(scene);
         scene.setFill(BACKGROUND_COLOR);
@@ -92,20 +85,16 @@ public class Board3DView extends Application {
     }
 
     private void initializeBoardSquares() {
-        for (int i = 0; i < 8 ; i++) {
-            for (int j = 0; j < 8; j++) {
-                Box square = new Box(SQUARE_SIZE, SQUARE_SIZE,SQUARE_DEPTH);
-                StackPane stackPane = new StackPane(square);
-                stackPane.setAlignment(Pos.CENTER);
-
-                if ((i+j) % 2 == 0) {
-                    square.setMaterial(new PhongMaterial(SQUARE1_COLOR));
+        for (int col = 0; col < 8 ; col++) {
+            for (int row = 0; row < 8; row++) {
+                StackPane square = null;
+                if ((col+row) % 2 == 0) {
+                    square = new BoardSquare3DView(SQUARE1_COLOR);
                 }
                 else {
-                    square.setMaterial(new PhongMaterial(SQUARE2_COLOR));
+                    square = new BoardSquare3DView(SQUARE2_COLOR);
                 }
-
-                board.add(stackPane,i,j);
+                board.add(square,col,row);
             }
         }
     }
@@ -177,19 +166,6 @@ public class Board3DView extends Application {
             StackPane squareOnBoard = (StackPane) getNodeFromGridPane(board,col,row);
             squareOnBoard.getChildren().add(meshView);
 
-            //highlight the piece when it is selected
-            ChessPiece3D finalMeshView = meshView;
-            meshView.setOnMouseClicked(event -> {
-                if (finalMeshView.isSelected()) {
-                    finalMeshView.deselectPiece();
-                }
-                else {
-                    finalMeshView.selectPiece();
-                }
-
-
-            });
-
         } catch (Exception e) {
             System.err.println("No piece to be created.");
         }
@@ -211,10 +187,10 @@ public class Board3DView extends Application {
         Transform cam1A = new Translate(0,1800,-2000);
         Transform cam1B = new Rotate(40,Rotate.X_AXIS);
 
-        Transform cam2A = new Translate(0,SQUARE_SIZE*NUM_ROWS,0);
+        Transform cam2A = new Translate(0,BoardSquare3DView.SQUARE_SIZE*NUM_ROWS,0);
         Transform cam2B = new Rotate(180,Rotate.X_AXIS);
 
-        Transform cam2C = new Translate(SQUARE_SIZE*NUM_ROWS,0,0);
+        Transform cam2C = new Translate(BoardSquare3DView.SQUARE_SIZE*NUM_ROWS,0,0);
         Transform cam2D = new Rotate(180,Rotate.Y_AXIS);
 
         camera.getTransforms().addAll(cam1A,cam1B); //set camera angle for view 1
