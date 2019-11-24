@@ -117,7 +117,7 @@ public class BoardSquare3DView extends StackPane {
             this.piece.selectPiece();
         }
 
-        //TODO - write code that will change the color of the piece and square
+        //TODO - fix code so that the color of the piece will change as well
     }
 
     public void deselect() {
@@ -128,7 +128,7 @@ public class BoardSquare3DView extends StackPane {
             this.piece.deselectPiece();
         }
 
-        //TODO - write code that will change the color of the piece and square
+        //TODO - fix code so that the color of the piece will change as well
     }
 
 

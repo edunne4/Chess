@@ -7,6 +7,8 @@ package View3D;
 //https://stackoverflow.com/questions/20825935/javafx-get-node-by-row-and-column
 
 import ChessParts.ChessPieces.ChessPiece;
+import javafx.animation.RotateTransition;
+import javafx.animation.Transition;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.*;
@@ -16,6 +18,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
+import javafx.scene.shape.Box;
 import javafx.scene.transform.NonInvertibleTransformException;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Transform;
