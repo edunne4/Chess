@@ -20,7 +20,12 @@
 package View3D;
 
 import ChessParts.ChessPieces.ChessPiece;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
@@ -40,15 +45,17 @@ public class BoardSquare3DView extends StackPane {
     private boolean hasPiece;
     private Color color;
     private ChessPiece3D piece;
+    private Box square;
 
     BoardSquare3DView(Color color) {
         this.setAlignment(Pos.CENTER);
         this.color = color;
+        this.piece = null;
 
-        Box square = new Box(SQUARE_SIZE, SQUARE_SIZE,SQUARE_DEPTH);
+        this.square = new Box(SQUARE_SIZE, SQUARE_SIZE,SQUARE_DEPTH);
         square.setMaterial(new PhongMaterial(color));
 
-        this.getChildren().add(square);
+        this.getChildren().addAll(square);
 
         this.isSelected = false;
         this.hasPiece = false;
@@ -56,21 +63,30 @@ public class BoardSquare3DView extends StackPane {
         changeColor();
     }
 
-    private void addPieceToSquare(PieceEnum piece, Color color) {
-        this.getChildren().add(new ChessPiece3D(piece, color));
-        this.hasPiece = true;
+    public void addPieceToSquare(PieceEnum pieceType, Color color) {
+        if (!this.hasPiece) {
+            piece = new ChessPiece3D(pieceType, color);
+            this.getChildren().add(piece);
+            this.hasPiece = true;
+        }
+        else {
+            System.out.println("There is already a piece here.");
+        }
 
     }
 
-    private void removePieceFromSquare() {
+    public ChessPiece3D removePieceFromSquare() {
         if (this.hasPiece) {
-            int pieceIndex = this.getChildren().size() - 1;
-            this.getChildren().remove(pieceIndex);
+            ChessPiece3D pieceToRemove = this.piece;
+            this.getChildren().remove(pieceToRemove);
+            this.piece = null;
+            this.hasPiece = false;
+            return pieceToRemove;
         }
         else {
-            System.out.println("No piece to remove");
+            System.out.println("No piece to remove.");
+            return null;
         }
-
     }
 
 
@@ -95,23 +111,24 @@ public class BoardSquare3DView extends StackPane {
 
     public void select() {
         this.isSelected = true;
-        Box box = (Box) this.getChildren().get(0);
-        box.setMaterial(new PhongMaterial(color.deriveColor(SELECTED_HUE_SHIFT,SELECTED_SATURATION_FACTOR,SELECTED_BRIGHTNESS_FACTOR, SELECTED_OPACITY_FACTOR)));
-        if (this.hasPiece) {
-            ChessPiece3D piece = (ChessPiece3D) this.getChildren().get(1);
-            piece.selectPiece();
+        this.square.setMaterial(new PhongMaterial(Color.GREEN));
+
+        if (hasPiece) {
+            this.piece.selectPiece();
         }
+
+        //TODO - write code that will change the color of the piece and square
     }
 
     public void deselect() {
         this.isSelected = false;
-        Box box = (Box) this.getChildren().get(0);
-        box.setMaterial(new PhongMaterial(color));
+        this.square.setMaterial(new PhongMaterial(color));
 
-        if (this.hasPiece) {
-            ChessPiece3D piece = (ChessPiece3D) this.getChildren().get(1);
-            piece.deselectPiece();
+        if (hasPiece) {
+            this.piece.deselectPiece();
         }
+
+        //TODO - write code that will change the color of the piece and square
     }
 
 

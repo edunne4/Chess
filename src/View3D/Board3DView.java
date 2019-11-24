@@ -6,12 +6,14 @@ package View3D;
 //https://stackoverflow.com/questions/31148690/get-real-position-of-a-node-in-javafx
 //https://stackoverflow.com/questions/20825935/javafx-get-node-by-row-and-column
 
+import ChessParts.ChessPieces.ChessPiece;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.transform.NonInvertibleTransformException;
@@ -30,7 +32,7 @@ public class Board3DView extends Application {
 
     private Scene scene;
     private StackPane root;
-    private GridPane board;
+    private TilePane board;
 
     private int NUM_ROWS = 8;
 
@@ -45,7 +47,8 @@ public class Board3DView extends Application {
     public void start(Stage stage) throws IOException {
 
         //initialize the board
-        board = new GridPane();
+        board = new TilePane();
+        board.setPrefColumns(NUM_ROWS);
         board.setAlignment(Pos.CENTER);
 
         //center the board in the view
@@ -87,14 +90,14 @@ public class Board3DView extends Application {
     private void initializeBoardSquares() {
         for (int col = 0; col < 8 ; col++) {
             for (int row = 0; row < 8; row++) {
-                StackPane square = null;
+                BoardSquare3DView square;
                 if ((col+row) % 2 == 0) {
                     square = new BoardSquare3DView(SQUARE1_COLOR);
                 }
                 else {
                     square = new BoardSquare3DView(SQUARE2_COLOR);
                 }
-                board.add(square,col,row);
+                board.getChildren().add(square);
             }
         }
     }
@@ -127,60 +130,33 @@ public class Board3DView extends Application {
         }
     }
 
-    private void movePieceOnBoard(int startingCol,int startingRow,int endingCol,int endingRow) {
-        try {
-            ChessPiece3D removedPiece = removePieceOnBoard(startingCol,startingRow);
-            createPieceOnBoard(endingCol,endingRow,removedPiece.getPieceType(),removedPiece.getPieceColor());
-        } catch (Exception e) {
-            System.err.println("Piece can not be moved.");
-        }
+    public void movePieceOnBoard(int startingCol,int startingRow,int endingCol,int endingRow) {
+        ChessPiece3D removedPiece = removePieceOnBoard(startingCol,startingRow);
+        createPieceOnBoard(endingCol,endingRow,removedPiece.getPieceType(),removedPiece.getPieceColor());
 
 
     }
 
-    private ChessPiece3D removePieceOnBoard(int col, int row) {
-        //remove it from the board
-        StackPane squareOnBoard = (StackPane) getNodeFromGridPane(board,col,row);
-            int pieceIndex = squareOnBoard.getChildren().size() - 1;
+    public ChessPiece3D removePieceOnBoard(int col, int row) {
+        //get the square we are looking to remove a piece from
+        BoardSquare3DView squareOnBoard = (BoardSquare3DView) board.getChildren().get(col + row*NUM_ROWS);
 
-            ChessPiece3D piece3D = null;
-            try {
-                piece3D = (ChessPiece3D) squareOnBoard.getChildren().get(pieceIndex);
-                squareOnBoard.getChildren().remove(pieceIndex);
-            } catch (Exception e) {
-                System.err.println("Illegal move. There is no piece in the specified spot that can be moved.");
-            }
+        //remove the piece
+        ChessPiece3D removedPiece = squareOnBoard.removePieceFromSquare();
 
-            return piece3D;
+        return removedPiece;
 
     }
 
-    private ChessPiece3D createPieceOnBoard(int col, int row, PieceEnum piece, Color color) {
+    public void createPieceOnBoard(int col, int row, PieceEnum pieceType, Color color) {
+        //get the square we are looking to add a piece to
+        BoardSquare3DView squareOnBoard = (BoardSquare3DView) board.getChildren().get(col + row*NUM_ROWS);
 
-       ChessPiece3D meshView = null;
-        try {
-            //create the chess piece
-             meshView = new ChessPiece3D(piece, color);
+        //add the piece
+        squareOnBoard.addPieceToSquare(pieceType,color);
 
-            //add it to the board
-            StackPane squareOnBoard = (StackPane) getNodeFromGridPane(board,col,row);
-            squareOnBoard.getChildren().add(meshView);
-
-        } catch (Exception e) {
-            System.err.println("No piece to be created.");
-        }
-
-        return meshView;
     }
 
-    private Node getNodeFromGridPane(GridPane gridPane, int col, int row) {
-        for (Node node : gridPane.getChildren()) {
-            if (GridPane.getColumnIndex(node) == col && GridPane.getRowIndex(node) == row) {
-                return node;
-            }
-        }
-        return null;
-    }
 
     private void changeCameraOnClick() {
 

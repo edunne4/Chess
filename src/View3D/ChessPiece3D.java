@@ -27,7 +27,7 @@ import javafx.scene.shape.DrawMode;
 import javafx.scene.shape.MeshView;
 import javafx.scene.shape.TriangleMesh;
 
-public class ChessPiece3D extends MeshView{
+public class ChessPiece3D extends MeshView {
 
     private PieceEnum pieceType;
     private Color pieceColor;
@@ -84,7 +84,7 @@ public class ChessPiece3D extends MeshView{
 
     public void selectPiece() {
         this.isSelected = true;
-        this.setMaterial(new PhongMaterial(pieceColor.deriveColor(0,1,0.3,1.0)));
+        this.setMaterial(new PhongMaterial(pieceColor.deriveColor(0.5,1,1,1.0)));
     }
 
     public void deselectPiece() {
