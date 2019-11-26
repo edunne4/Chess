@@ -2,6 +2,7 @@ import Controller.*;
 import Model.GameManager;
 import View.GameView;
 import View3D.Board3DView;
+import View3D.Game3D;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
@@ -26,7 +27,7 @@ public class ChessGameMain extends Application {
         super.init();
         theModel = new GameManager();
 //        theView  = new GameView(theModel);
-        theView  = new Board3DView(theModel);
+        theView  = new Board3DView();
     }
 
     @Override

@@ -49,9 +49,10 @@ public class Controller3D {
     }
 
     private void makeSquaresClickable() {
-
-        for (Node child : theView.getBoard().getChildren()){
+        System.out.println("setting up");
+        for (Node child : theView.getChildren()){
             BoardSquare3DView squareView3D = (BoardSquare3DView) child;
+            System.out.println("setUp");
             squareView3D.setOnMouseClicked(event -> squareWasClicked((BoardSquare3DView) event.getSource()));
         }
     }
@@ -122,7 +123,7 @@ public class Controller3D {
 //                }
                 //move piece to the new square in the view
                 //theView.getBoard().movePiece(currentSquareSelected.getRow(), currentSquareSelected.getCol(), newSquare.getRow(), newSquare.getCol());
-                theView.movePiece(currentSquareSelected.getRow(), currentSquareSelected.getCol(), newSquare.getRow(), newSquare.getCol());
+                theView.movePieceOnBoard(currentSquareSelected.getRow(), currentSquareSelected.getCol(), newSquare.getRow(), newSquare.getCol());
             }
             //deselect the square and unhighlight the previous square's legal moves
             highlightSquares(legalMoves, false);

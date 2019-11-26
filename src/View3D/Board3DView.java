@@ -7,6 +7,7 @@ package View3D;
 //https://stackoverflow.com/questions/20825935/javafx-get-node-by-row-and-column
 
 import ChessParts.ChessPieces.ChessPiece;
+import View.BoardViewInterface;
 import javafx.animation.RotateTransition;
 import javafx.animation.Transition;
 import javafx.application.Application;
@@ -27,7 +28,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class Board3DView extends TilePane {
+public class Board3DView extends TilePane implements BoardViewInterface {
 
     private int NUM_ROWS = 8;
 
@@ -68,10 +69,10 @@ public class Board3DView extends TilePane {
             for (int row = 0; row < 8; row++) {
                 BoardSquare3DView square;
                 if ((col+row) % 2 == 0) {
-                    square = new BoardSquare3DView(SQUARE1_COLOR);
+                    square = new BoardSquare3DView(row, col, SQUARE1_COLOR);
                 }
                 else {
-                    square = new BoardSquare3DView(SQUARE2_COLOR);
+                    square = new BoardSquare3DView(row, col, SQUARE2_COLOR);
                 }
                 this.getChildren().add(square);
             }
@@ -109,8 +110,6 @@ public class Board3DView extends TilePane {
     public void movePieceOnBoard(int startingCol,int startingRow,int endingCol,int endingRow) {
         ChessPiece3D removedPiece = removePieceOnBoard(startingCol,startingRow);
         createPieceOnBoard(endingCol,endingRow,removedPiece.getPieceType(),removedPiece.getPieceColor());
-
-
     }
 
     public ChessPiece3D removePieceOnBoard(int col, int row) {
@@ -131,5 +130,15 @@ public class Board3DView extends TilePane {
         //add the piece
         squareOnBoard.addPieceToSquare(pieceType,color);
 
+    }
+
+    @Override
+    public void movePiece(int startRow, int startCol, int endRow, int endCol) {
+        ChessPiece3D removedPiece = removePieceOnBoard(startCol,startRow);
+        createPieceOnBoard(endCol,endRow,removedPiece.getPieceType(),removedPiece.getPieceColor());
+    }
+
+    public BoardSquare3DView getSquareAt(int row, int col){
+        return (BoardSquare3DView)this.getChildren().get((7-row) * 8 + col);
     }
 }

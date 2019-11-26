@@ -68,7 +68,7 @@ public class BoardSquare3DView extends StackPane {
         this.isSelected = false;
         this.hasPiece = false;
 
-        changeColor();
+        //changeColor();
     }
 
     public void addPieceToSquare(PieceEnum pieceType, Color color) {
