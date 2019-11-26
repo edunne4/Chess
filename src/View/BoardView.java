@@ -52,7 +52,7 @@ public class BoardView extends TilePane{
 
                 //pick color of square
                 String squareColor;
-                if ((row + col) % 2 == 0) {
+                if ((row + col) % 2 != 0) {
                     squareColor = LIGHT_COLOR_HEX;
                 } else {
                     squareColor = DARK_COLOR_HEX;
@@ -119,6 +119,6 @@ public class BoardView extends TilePane{
 
 
     public SquareView getSquare(int row, int col) {
-        return (SquareView)this.getChildren().get(row * 8 + col);
+        return (SquareView)this.getChildren().get((7-row) * 8 + col);
     }
 }

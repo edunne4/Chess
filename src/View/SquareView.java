@@ -30,7 +30,7 @@ public class SquareView extends StackPane {
 
     SquareView(int row, int col) {
         super(); //this
-        this.row = row;
+        this.row = 7-row;
         this.col = col;
     }
 
