@@ -19,7 +19,6 @@
 package View;
 
 import javafx.geometry.Pos;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
 
 /**
@@ -110,15 +109,15 @@ public class BoardView extends TilePane{
     }
 
     public void movePiece(int oldRow,int oldCol,int newRow,int newCol){
-        SquareView oldLocationSquare = this.getSquare(oldRow,oldCol);
-        SquareView newLocationSquare = this.getSquare(newRow,newCol);
+        SquareView oldLocationSquare = this.getSquareAt(oldRow,oldCol);
+        SquareView newLocationSquare = this.getSquareAt(newRow,newCol);
 
         newLocationSquare.addImageView(oldLocationSquare.getPiece());
         oldLocationSquare.getChildren().clear();
     }
 
 
-    public SquareView getSquare(int row, int col) {
+    public SquareView getSquareAt(int row, int col) {
         return (SquareView)this.getChildren().get((7-row) * 8 + col);
     }
 }

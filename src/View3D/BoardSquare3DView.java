@@ -23,6 +23,7 @@ import ChessParts.ChessPieces.ChessPiece;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -47,7 +48,14 @@ public class BoardSquare3DView extends StackPane {
     private ChessPiece3D piece;
     private Box square;
 
-    BoardSquare3DView(Color color) {
+
+    private int row;
+    private int col;
+
+    BoardSquare3DView(int row, int col, Color color) {
+        super();
+        this.row = row;
+        this.col = col;
         this.setAlignment(Pos.CENTER);
         this.color = color;
         this.piece = null;
@@ -129,6 +137,30 @@ public class BoardSquare3DView extends StackPane {
         }
 
         //TODO - fix code so that the color of the piece will change as well
+    }
+
+    public void highlight() {
+        this.square.setMaterial(new PhongMaterial(Color.GREEN));
+
+        if (hasPiece) {
+            this.piece.selectPiece();
+        }
+    }
+
+    public void unHighlight(){
+        this.square.setMaterial(new PhongMaterial(color));
+
+        if (hasPiece) {
+            this.piece.deselectPiece();
+        }
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public int getCol() {
+        return col;
     }
 
 

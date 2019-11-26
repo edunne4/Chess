@@ -7,6 +7,9 @@ package View3D;
 //https://stackoverflow.com/questions/20825935/javafx-get-node-by-row-and-column
 
 import ChessParts.ChessPieces.ChessPiece;
+import Model.GameManager;
+import View.BoardViewInterface;
+import View.SquareView;
 import javafx.animation.RotateTransition;
 import javafx.animation.Transition;
 import javafx.application.Application;
@@ -25,17 +28,18 @@ import javafx.scene.transform.Transform;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 
+import java.awt.image.TileObserver;
 import java.io.IOException;
 
-public class Board3DView extends Application {
+public class Board3DView extends TilePane implements BoardViewInterface {
 
     private PerspectiveCamera camera;
 
     private String CAMERA = "Cam2";
 
     private Scene scene;
-    private StackPane root;
-    private TilePane board;
+    //private StackPane root;
+    //private TilePane board;
 
     private int NUM_ROWS = 8;
 
@@ -46,17 +50,17 @@ public class Board3DView extends Application {
     private final Color SQUARE2_COLOR = Color.WHITE;
     private final Color BACKGROUND_COLOR = Color.GRAY;
 
-    @Override
-    public void start(Stage stage) throws IOException {
+
+    public Board3DView(GameManager theModel) throws IOException {
 
         //initialize the board
-        board = new TilePane();
-        board.setPrefColumns(NUM_ROWS);
-        board.setAlignment(Pos.CENTER);
+        super();
+        this.setPrefColumns(NUM_ROWS);
+        this.setAlignment(Pos.CENTER);
 
         //center the board in the view
-        board.setTranslateX(BoardSquare3DView.SQUARE_SIZE*-4);
-        board.setTranslateY(BoardSquare3DView.SQUARE_SIZE*-4);
+        this.setTranslateX(BoardSquare3DView.SQUARE_SIZE*-4);
+        this.setTranslateY(BoardSquare3DView.SQUARE_SIZE*-4);
 
         //add all of the squares to the board
         initializeBoardSquares();
@@ -68,9 +72,9 @@ public class Board3DView extends Application {
         movePieceOnBoard(4,1,4,3);
 
         //add the board and the pieces to the root
-        root = new StackPane();
-        root.getChildren().addAll(board);
-        root.setAlignment(Pos.CENTER);
+//        root = new StackPane();
+//        root.getChildren().addAll(this.g);
+//        root.setAlignment(Pos.CENTER);
 
         //initialize the camera
         camera = new PerspectiveCamera(true);
@@ -79,15 +83,15 @@ public class Board3DView extends Application {
         camera.setFarClip(10000.0);
 
         //initialize the scene, and set the camera to the scene
-        scene = new Scene(root);
+        //scene = new Scene(root);
         scene.setCamera(camera);
 
         changeCameraOnClick();
 
         //show the scene to the user
-        stage.setScene(scene);
+        //stage.setScene(scene);
         scene.setFill(BACKGROUND_COLOR);
-        stage.show();
+        //stage.show();
     }
 
     private void initializeBoardSquares() {
@@ -95,12 +99,12 @@ public class Board3DView extends Application {
             for (int row = 0; row < 8; row++) {
                 BoardSquare3DView square;
                 if ((col+row) % 2 == 0) {
-                    square = new BoardSquare3DView(SQUARE1_COLOR);
+                    square = new BoardSquare3DView(row, col, SQUARE1_COLOR);
                 }
                 else {
-                    square = new BoardSquare3DView(SQUARE2_COLOR);
+                    square = new BoardSquare3DView(row, col, SQUARE2_COLOR);
                 }
-                board.getChildren().add(square);
+                this.getChildren().add(square);
             }
         }
     }
@@ -142,7 +146,7 @@ public class Board3DView extends Application {
 
     public ChessPiece3D removePieceOnBoard(int col, int row) {
         //get the square we are looking to remove a piece from
-        BoardSquare3DView squareOnBoard = (BoardSquare3DView) board.getChildren().get(col + row*NUM_ROWS);
+        BoardSquare3DView squareOnBoard = (BoardSquare3DView) this.getChildren().get(col + row*NUM_ROWS);
 
         //remove the piece
         ChessPiece3D removedPiece = squareOnBoard.removePieceFromSquare();
@@ -153,7 +157,7 @@ public class Board3DView extends Application {
 
     public void createPieceOnBoard(int col, int row, PieceEnum pieceType, Color color) {
         //get the square we are looking to add a piece to
-        BoardSquare3DView squareOnBoard = (BoardSquare3DView) board.getChildren().get(col + row*NUM_ROWS);
+        BoardSquare3DView squareOnBoard = (BoardSquare3DView) this.getChildren().get(col + row*NUM_ROWS);
 
         //add the piece
         squareOnBoard.addPieceToSquare(pieceType,color);
@@ -180,7 +184,7 @@ public class Board3DView extends Application {
                 if (CAMERA == "Cam1") {
                     try {
                         camera.getTransforms().addAll(cam1B.createInverse(),cam1A.createInverse());
-                        board.getTransforms().addAll(cam2D.createInverse(),cam2C.createInverse(),cam2B.createInverse(),cam2A.createInverse());
+                        this.getTransforms().addAll(cam2D.createInverse(),cam2C.createInverse(),cam2B.createInverse(),cam2A.createInverse());
                         CAMERA = "Cam2";
                     } catch (NonInvertibleTransformException e) {
                         e.printStackTrace();
@@ -189,7 +193,7 @@ public class Board3DView extends Application {
                 else if (CAMERA == "Cam2")  {
                     try {
                         camera.getTransforms().addAll(cam1B.createInverse(),cam1A.createInverse());
-                        board.getTransforms().addAll(cam2A,cam2B,cam2C,cam2D);
+                        this.getTransforms().addAll(cam2A,cam2B,cam2C,cam2D);
                     } catch (NonInvertibleTransformException e) {
                         e.printStackTrace();
                     }
@@ -203,10 +207,28 @@ public class Board3DView extends Application {
     }
 
 
-    public static void main(String[] args) {
-        launch(args);
+//    public static void main(String[] args) {
+//        launch(args);
+//    }
+
+
+    @Override
+    public void movePiece(int startRow, int startCol, int endRow, int endCol) {
+        ChessPiece3D removedPiece = removePieceOnBoard(startCol,startRow);
+        createPieceOnBoard(endCol,endRow,removedPiece.getPieceType(),removedPiece.getPieceColor());
     }
 
 
 
+    public BoardSquare3DView getSquareAt(int row, int col) {
+        return (BoardSquare3DView)this.getChildren().get((7-row) * 8 + col);
+    }
+
+//    public StackPane getRoot() {
+//        return root;
+//    }
+
+    public PerspectiveCamera getCamera() {
+        return camera;
+    }
 }

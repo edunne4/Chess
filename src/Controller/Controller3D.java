@@ -5,12 +5,12 @@
  *
  * Name: Ethan Dunne
  * Section: 11am
- * Date: 11/13/19
- * Time: 11:34 AM
+ * Date: 11/26/19
+ * Time: 4:10 PM
  *
  * Project: csci205finalproject
  * Package: Controller
- * Class: Controller
+ * Class: Controller3D
  *
  * Description:
  *
@@ -24,14 +24,15 @@ import ChessParts.Team;
 import Model.GameManager;
 import View.GameView;
 import View.SquareView;
+import View3D.Board3DView;
+import View3D.BoardSquare3DView;
 import javafx.scene.Node;
 
 import java.util.List;
 
-public class Controller {
-
+public class Controller3D {
     /** The view */
-    private GameView theView;
+    private Board3DView theView;
     /** The model */
     private GameManager theModel;
 
@@ -39,7 +40,7 @@ public class Controller {
     private Square currentSquareSelected;
 
 
-    public Controller(GameView theView, GameManager theModel) {
+    public Controller3D(Board3DView theView, GameManager theModel) {
         this.theView = theView;
         this.theModel = theModel;
 
@@ -50,16 +51,16 @@ public class Controller {
     private void makeSquaresClickable() {
 
         for (Node child : theView.getBoard().getChildren()){
-            SquareView squareView = (SquareView) child;
-            squareView.setOnMouseClicked(event -> squareWasClicked((SquareView) event.getSource()));
+            BoardSquare3DView squareView3D = (BoardSquare3DView) child;
+            squareView3D.setOnMouseClicked(event -> squareWasClicked((BoardSquare3DView) event.getSource()));
         }
     }
 
     /**
-     * Function to handle event for when a squareview is clicked
+     * Function to handle event for when a 3D square view is clicked
      * @param squareSelected - the square that was clicked
      */
-    private void squareWasClicked (SquareView squareSelected){
+    private void squareWasClicked (BoardSquare3DView squareSelected){
         System.out.println("Square was clicked");
 
         //get model's corresponding square
@@ -112,15 +113,16 @@ public class Controller {
                 ChessPiece killedPiece = theModel.movePiece(currentSquareSelected, newSquare);
 
                 //if there is a piece at the new location(thisSquare), kill it
-                if (killedPiece != null) {
-                    if (killedPiece.getTeam() == Team.WHITE) {
-                        theView.killPiece(newSquare.getRow(), newSquare.getCol(), theView.getDeadPieceHolderWhite());
-                    } else {
-                        theView.killPiece(newSquare.getRow(), newSquare.getCol(), theView.getDeadPieceHolderBlack());
-                    }
-                }
+//                if (killedPiece != null) {
+//                    if (killedPiece.getTeam() == Team.WHITE) {
+//                        theView.killPiece(newSquare.getRow(), newSquare.getCol(), theView.getDeadPieceHolderWhite());
+//                    } else {
+//                        theView.killPiece(newSquare.getRow(), newSquare.getCol(), theView.getDeadPieceHolderBlack());
+//                    }
+//                }
                 //move piece to the new square in the view
-                theView.getBoard().movePiece(currentSquareSelected.getRow(), currentSquareSelected.getCol(), newSquare.getRow(), newSquare.getCol());
+                //theView.getBoard().movePiece(currentSquareSelected.getRow(), currentSquareSelected.getCol(), newSquare.getRow(), newSquare.getCol());
+                theView.movePiece(currentSquareSelected.getRow(), currentSquareSelected.getCol(), newSquare.getRow(), newSquare.getCol());
             }
             //deselect the square and unhighlight the previous square's legal moves
             highlightSquares(legalMoves, false);
@@ -139,9 +141,9 @@ public class Controller {
         //highlight those positions on the board view
         for (Square pos : legalMoves) {
             if(highlight) {
-                theView.getBoard().getSquareAt(pos.getRow(), pos.getCol()).highlight();
+                theView.getSquareAt(pos.getRow(), pos.getCol()).highlight();
             }else{
-                theView.getBoard().getSquareAt(pos.getRow(), pos.getCol()).unHighlight();
+                theView.getSquareAt(pos.getRow(), pos.getCol()).unHighlight();
             }
         }
     }

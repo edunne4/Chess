@@ -48,7 +48,7 @@ public class SquareView extends StackPane {
             squareColor = BoardView.DARK_HIGHLIGHT_HEX;
         }
         this.setStyle("-fx-background-color: " + squareColor);
-        }
+    }
 
     public void unHighlight(){
         String squareColor;

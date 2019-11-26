@@ -1,13 +1,10 @@
 package View;
 
 import Model.GameManager;
-import javafx.application.Application;
 import javafx.geometry.Insets;
-import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
 public class GameView {
 
@@ -111,7 +108,7 @@ public class GameView {
     }
 
     public void killPiece(int row, int col, FlowPane deadPieceHolder){
-        SquareView oldLocationSquare = (SquareView)board.getSquare(row,col);
+        SquareView oldLocationSquare = (SquareView)board.getSquareAt(row,col);
         deadPieceHolder.getChildren().add(oldLocationSquare.getPiece());
         oldLocationSquare.getChildren().clear();
     }
