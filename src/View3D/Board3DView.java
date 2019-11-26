@@ -7,9 +7,6 @@ package View3D;
 //https://stackoverflow.com/questions/20825935/javafx-get-node-by-row-and-column
 
 import ChessParts.ChessPieces.ChessPiece;
-import Model.GameManager;
-import View.BoardViewInterface;
-import View.SquareView;
 import javafx.animation.RotateTransition;
 import javafx.animation.Transition;
 import javafx.application.Application;
@@ -28,18 +25,9 @@ import javafx.scene.transform.Transform;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 
-import java.awt.image.TileObserver;
 import java.io.IOException;
 
-public class Board3DView extends TilePane implements BoardViewInterface {
-
-    private PerspectiveCamera camera;
-
-    private String CAMERA = "Cam2";
-
-    private Scene scene;
-    //private StackPane root;
-    //private TilePane board;
+public class Board3DView extends TilePane {
 
     private int NUM_ROWS = 8;
 
@@ -48,13 +36,13 @@ public class Board3DView extends TilePane implements BoardViewInterface {
 
     private final Color SQUARE1_COLOR = Color.BLACK;
     private final Color SQUARE2_COLOR = Color.WHITE;
-    private final Color BACKGROUND_COLOR = Color.GRAY;
 
 
-    public Board3DView(GameManager theModel) throws IOException {
+     public Board3DView() {
+
+         super();
 
         //initialize the board
-        super();
         this.setPrefColumns(NUM_ROWS);
         this.setAlignment(Pos.CENTER);
 
@@ -71,27 +59,8 @@ public class Board3DView extends TilePane implements BoardViewInterface {
         removePieceOnBoard(0,0);
         movePieceOnBoard(4,1,4,3);
 
-        //add the board and the pieces to the root
-//        root = new StackPane();
-//        root.getChildren().addAll(this.g);
-//        root.setAlignment(Pos.CENTER);
-
-        //initialize the camera
-        camera = new PerspectiveCamera(true);
-        //camera.setVerticalFieldOfView(false);
-        camera.setNearClip(1.0);
-        camera.setFarClip(10000.0);
-
         //initialize the scene, and set the camera to the scene
-        //scene = new Scene(root);
-        scene.setCamera(camera);
-
-        changeCameraOnClick();
-
-        //show the scene to the user
-        //stage.setScene(scene);
-        scene.setFill(BACKGROUND_COLOR);
-        //stage.show();
+        //changeCameraOnClick();
     }
 
     private void initializeBoardSquares() {
@@ -99,10 +68,10 @@ public class Board3DView extends TilePane implements BoardViewInterface {
             for (int row = 0; row < 8; row++) {
                 BoardSquare3DView square;
                 if ((col+row) % 2 == 0) {
-                    square = new BoardSquare3DView(row, col, SQUARE1_COLOR);
+                    square = new BoardSquare3DView(SQUARE1_COLOR);
                 }
                 else {
-                    square = new BoardSquare3DView(row, col, SQUARE2_COLOR);
+                    square = new BoardSquare3DView(SQUARE2_COLOR);
                 }
                 this.getChildren().add(square);
             }
@@ -162,73 +131,5 @@ public class Board3DView extends TilePane implements BoardViewInterface {
         //add the piece
         squareOnBoard.addPieceToSquare(pieceType,color);
 
-    }
-
-
-    private void changeCameraOnClick() {
-
-        Transform cam1A = new Translate(0,1800,-2000);
-        Transform cam1B = new Rotate(40,Rotate.X_AXIS);
-
-        Transform cam2A = new Translate(0,BoardSquare3DView.SQUARE_SIZE*NUM_ROWS,0);
-        Transform cam2B = new Rotate(180,Rotate.X_AXIS);
-
-        Transform cam2C = new Translate(BoardSquare3DView.SQUARE_SIZE*NUM_ROWS,0,0);
-        Transform cam2D = new Rotate(180,Rotate.Y_AXIS);
-
-        camera.getTransforms().addAll(cam1A,cam1B); //set camera angle for view 1
-
-        scene.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.C) {
-                camera.getTransforms().addAll(cam1A,cam1B);
-                if (CAMERA == "Cam1") {
-                    try {
-                        camera.getTransforms().addAll(cam1B.createInverse(),cam1A.createInverse());
-                        this.getTransforms().addAll(cam2D.createInverse(),cam2C.createInverse(),cam2B.createInverse(),cam2A.createInverse());
-                        CAMERA = "Cam2";
-                    } catch (NonInvertibleTransformException e) {
-                        e.printStackTrace();
-                    }
-                }
-                else if (CAMERA == "Cam2")  {
-                    try {
-                        camera.getTransforms().addAll(cam1B.createInverse(),cam1A.createInverse());
-                        this.getTransforms().addAll(cam2A,cam2B,cam2C,cam2D);
-                    } catch (NonInvertibleTransformException e) {
-                        e.printStackTrace();
-                    }
-                    CAMERA = "Cam1";
-
-                }
-
-                System.out.println(CAMERA);
-            }
-        });
-    }
-
-
-//    public static void main(String[] args) {
-//        launch(args);
-//    }
-
-
-    @Override
-    public void movePiece(int startRow, int startCol, int endRow, int endCol) {
-        ChessPiece3D removedPiece = removePieceOnBoard(startCol,startRow);
-        createPieceOnBoard(endCol,endRow,removedPiece.getPieceType(),removedPiece.getPieceColor());
-    }
-
-
-
-    public BoardSquare3DView getSquareAt(int row, int col) {
-        return (BoardSquare3DView)this.getChildren().get((7-row) * 8 + col);
-    }
-
-//    public StackPane getRoot() {
-//        return root;
-//    }
-
-    public PerspectiveCamera getCamera() {
-        return camera;
     }
 }
