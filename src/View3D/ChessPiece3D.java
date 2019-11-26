@@ -32,7 +32,7 @@ public class ChessPiece3D extends MeshView {
     private PieceEnum pieceType;
     private Color pieceColor;
     private int pieceScale;
-    private boolean isSelected = false;
+    private boolean isSelected;
 
     private final int DEFAULT_SCALE = 2;
 
