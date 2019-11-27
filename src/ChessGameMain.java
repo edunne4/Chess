@@ -1,8 +1,10 @@
 import Controller.Controller;
 import Model.GameManager;
+import View.GameMenu;
 import View.GameView;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.MenuBar;
 import javafx.stage.Stage;
 
 public class ChessGameMain extends Application {
@@ -26,6 +28,8 @@ public class ChessGameMain extends Application {
     @Override
     public void start(Stage primaryStage) {
         theController = new Controller(theView,theModel);
+
+        GameMenu gameMenuBar = new GameMenu();
 
         Scene scene = new Scene(theView.getRoot());
 
