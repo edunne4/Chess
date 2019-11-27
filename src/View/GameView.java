@@ -1,7 +1,9 @@
 package View;
 
 import Model.GameManager;
+import View3D.BoardView3D;
 import javafx.geometry.Insets;
+import javafx.scene.SubScene;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -12,6 +14,7 @@ public class GameView {
     VBox rightSideContainer;
     private int windowHeight = 750;
     private int windowWidth = 900;
+//    BoardView2D board;
     BoardView board;
     private FlowPane deadPieceHolderWhite;
     private FlowPane deadPieceHolderBlack;
@@ -25,14 +28,14 @@ public class GameView {
         root.setMinSize(windowWidth,windowHeight);
 
         //make the board, which is a grid pane on the left
-        board = new BoardView(640);
-        board.initBoard();
+        board = new BoardView3D();//new BoardView2D(640);
+        //board.initPieces();//board.initBoard();
         //add side coords to view
         VBox boardCoordContainer = new VBox();
         HBox sideCoordAndBoardContainer = new HBox();
         sideCoordAndBoardContainer.getChildren().add(makeSideBoardCoords());
         //add the actual board in
-        sideCoordAndBoardContainer.getChildren().add(board);
+        sideCoordAndBoardContainer.getChildren().add(new SubScene(board, 640,640));
         boardCoordContainer.getChildren().add(makeTopBoardCoords());
         boardCoordContainer.getChildren().add(sideCoordAndBoardContainer);
         //put this whole shabang in the root, an HBox
@@ -108,7 +111,7 @@ public class GameView {
     }
 
     public void killPiece(int row, int col, FlowPane deadPieceHolder){
-        SquareView oldLocationSquare = (SquareView)board.getSquareAt(row,col);
+        SquareView2D oldLocationSquare = (SquareView2D)board.getSquareAt(row,col);
         deadPieceHolder.getChildren().add(oldLocationSquare.getPiece());
         oldLocationSquare.getChildren().clear();
     }

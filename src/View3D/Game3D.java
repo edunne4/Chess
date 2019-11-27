@@ -1,14 +1,10 @@
 package View3D;
 
-import View3D.Board3DView;
 import javafx.application.Application;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.NonInvertibleTransformException;
 import javafx.scene.transform.Rotate;
@@ -18,7 +14,7 @@ import javafx.stage.Stage;
 
 public class Game3D extends Application {
 
-    private Board3DView board;
+    private BoardView3D board;
 
     public static void main(String[] args) {
         launch(args);
@@ -37,7 +33,7 @@ public class Game3D extends Application {
     @Override
     public void start(Stage stage) {
 
-        board = new Board3DView();
+        board = new BoardView3D();
 
         root = new Group();
 
@@ -69,10 +65,10 @@ public class Game3D extends Application {
         Transform cam1A = new Translate(0,1800,-2000);
         Transform cam1B = new Rotate(40,Rotate.X_AXIS);
 
-        Transform cam2A = new Translate(0,BoardSquare3DView.SQUARE_SIZE*NUM_ROWS,0);
+        Transform cam2A = new Translate(0, SquareView3D.SQUARE_SIZE*NUM_ROWS,0);
         Transform cam2B = new Rotate(180,Rotate.X_AXIS);
 
-        Transform cam2C = new Translate(BoardSquare3DView.SQUARE_SIZE*NUM_ROWS,0,0);
+        Transform cam2C = new Translate(SquareView3D.SQUARE_SIZE*NUM_ROWS,0,0);
         Transform cam2D = new Rotate(180,Rotate.Y_AXIS);
 
         camera.getTransforms().addAll(cam1A,cam1B); //set camera angle for view 1

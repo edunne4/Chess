@@ -1,8 +1,7 @@
 import Controller.*;
 import Model.GameManager;
 import View.GameView;
-import View3D.Board3DView;
-import View3D.Game3D;
+import View3D.BoardView3D;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
@@ -13,10 +12,10 @@ public class ChessGameMain extends Application {
 
 
     private GameManager theModel;
-    //private GameView theView;
-    private Board3DView theView;
-//    private Controller theController;
-    private Controller3D theController;
+    private GameView theView;
+    //private BoardView3D theView;
+    private Controller theController;
+    //private Controller3D theController;
 
     public static void main(String[] args) {
         launch(args);
@@ -26,17 +25,14 @@ public class ChessGameMain extends Application {
     public void init() throws Exception {
         super.init();
         theModel = new GameManager();
-//        theView  = new GameView(theModel);
-        theView  = new Board3DView();
+        theView  = new GameView(theModel);
     }
 
     @Override
     public void start(Stage primaryStage) {
-        theController = new Controller3D(theView,theModel);
+        theController = new Controller(theView,theModel);
 
-        Scene scene = new Scene(new VBox(new SubScene(theView, 400, 400)));
-        //scene.setCamera(theView.getCamera());
-        System.out.println(scene.toString());
+        Scene scene = new Scene(theView.getRoot());
 
         primaryStage.setTitle("Chess");
         primaryStage.setScene(scene);

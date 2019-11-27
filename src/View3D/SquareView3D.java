@@ -20,6 +20,7 @@
 package View3D;
 
 import ChessParts.ChessPieces.ChessPiece;
+import View.SquareView;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -32,7 +33,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
 
-public class BoardSquare3DView extends StackPane {
+public class SquareView3D extends SquareView {
 
     public static int SQUARE_SIZE = 100;
     public static int SQUARE_DEPTH = 10;
@@ -49,13 +50,13 @@ public class BoardSquare3DView extends StackPane {
     private Box square;
 
 
-    private int row;
-    private int col;
+//    private int row;
+//    private int col;
 
-    BoardSquare3DView(int row, int col, Color color) {
-        super();
-        this.row = row;
-        this.col = col;
+    SquareView3D(int row, int col, Color color) {
+        super(row, col);
+//        this.row = row;
+//        this.col = col;
         this.setAlignment(Pos.CENTER);
         this.color = color;
         this.piece = null;
@@ -153,14 +154,6 @@ public class BoardSquare3DView extends StackPane {
         if (hasPiece) {
             this.piece.deselectPiece();
         }
-    }
-
-    public int getRow() {
-        return row;
-    }
-
-    public int getCol() {
-        return col;
     }
 
 
