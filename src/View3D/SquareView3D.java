@@ -43,7 +43,7 @@ public class SquareView3D extends SquareView {
     private static double SELECTED_BRIGHTNESS_FACTOR = 1.0;
     private static double SELECTED_OPACITY_FACTOR = 0.3;
 
-    private boolean isSelected;
+    //private boolean isSelected;
     private boolean hasPiece;
     private Color color;
     private ChessPiece3D piece;
@@ -54,7 +54,7 @@ public class SquareView3D extends SquareView {
 //    private int col;
 
     SquareView3D(int row, int col, Color color) {
-        super(row, col);
+        super(7-row, col);
 //        this.row = row;
 //        this.col = col;
         this.setAlignment(Pos.CENTER);
@@ -66,13 +66,13 @@ public class SquareView3D extends SquareView {
 
         this.getChildren().addAll(square);
 
-        this.isSelected = false;
+        //this.isSelected = false;
         this.hasPiece = false;
 
         //changeColor();
     }
 
-    public void addPieceToSquare(PieceEnum pieceType, Color color) {
+    public void putPieceToSquare(PieceEnum pieceType, Color color) {
         if (!this.hasPiece) {
             piece = new ChessPiece3D(pieceType, color);
             this.getChildren().add(piece);
@@ -99,46 +99,46 @@ public class SquareView3D extends SquareView {
     }
 
 
-    public boolean isSelected() {
-        return isSelected;
-    }
+//    public boolean isSelected() {
+//        return isSelected;
+//    }
+//
+//    public void changeColor() {
+//        //highlight the piece when it is selected
+//
+//        this.setOnMouseClicked(event -> {
+//            System.out.println("Click!");
+//            if (this.isSelected()) {
+//                deselect();
+//            }
+//            else {
+//                select();
+//            }
+//        });
+//
+//    }
 
-    public void changeColor() {
-        //highlight the piece when it is selected
+//    public void select() {
+//        this.isSelected = true;
+//        this.square.setMaterial(new PhongMaterial(Color.GREEN));
+//
+//        if (hasPiece) {
+//            this.piece.selectPiece();
+//        }
+//
+//        //TODO - fix code so that the color of the piece will change as well
+//    }
 
-        this.setOnMouseClicked(event -> {
-            System.out.println("Click!");
-            if (this.isSelected()) {
-                deselect();
-            }
-            else {
-                select();
-            }
-        });
-
-    }
-
-    public void select() {
-        this.isSelected = true;
-        this.square.setMaterial(new PhongMaterial(Color.GREEN));
-
-        if (hasPiece) {
-            this.piece.selectPiece();
-        }
-
-        //TODO - fix code so that the color of the piece will change as well
-    }
-
-    public void deselect() {
-        this.isSelected = false;
-        this.square.setMaterial(new PhongMaterial(color));
-
-        if (hasPiece) {
-            this.piece.deselectPiece();
-        }
-
-        //TODO - fix code so that the color of the piece will change as well
-    }
+//    public void deselect() {
+//        this.isSelected = false;
+//        this.square.setMaterial(new PhongMaterial(color));
+//
+//        if (hasPiece) {
+//            this.piece.deselectPiece();
+//        }
+//
+//        //TODO - fix code so that the color of the piece will change as well
+//    }
 
     public void highlight() {
         this.square.setMaterial(new PhongMaterial(Color.GREEN));

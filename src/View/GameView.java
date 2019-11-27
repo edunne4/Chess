@@ -3,12 +3,19 @@ package View;
 import Model.GameManager;
 import View3D.BoardView3D;
 import javafx.geometry.Insets;
+import javafx.scene.Group;
+import javafx.scene.PerspectiveCamera;
 import javafx.scene.SubScene;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
+
 public class GameView {
+
+    //TODO - change this
+    private boolean is3D = false;
 
     private HBox root;
     VBox rightSideContainer;
@@ -27,15 +34,40 @@ public class GameView {
         //root.setAlignment(Pos.CENTER);
         root.setMinSize(windowWidth,windowHeight);
 
-        //make the board, which is a grid pane on the left
-        board = new BoardView3D();//new BoardView2D(640);
-        //board.initPieces();//board.initBoard();
+
+
         //add side coords to view
         VBox boardCoordContainer = new VBox();
         HBox sideCoordAndBoardContainer = new HBox();
         sideCoordAndBoardContainer.getChildren().add(makeSideBoardCoords());
-        //add the actual board in
-        sideCoordAndBoardContainer.getChildren().add(new SubScene(board, 640,640));
+
+
+
+        if(is3D) {
+            board = new BoardView3D();
+            //***********************************
+            //Right now this stuff is only for 3D
+            Group miniRoot = new Group();
+
+            //initialize the camera
+            PerspectiveCamera camera = new PerspectiveCamera(true);
+            //camera.setVerticalFieldOfView(false);
+            camera.setNearClip(1.0);
+            camera.setFarClip(10000.0);
+
+            SubScene boardScene = new SubScene(miniRoot, 640, 640);
+            //SubScene boardScene = new SubScene(board, 640,640);
+//        boardScene.setCamera(camera);
+            boardScene.setFill(Color.GRAY);
+            miniRoot.getChildren().add(board);
+
+            sideCoordAndBoardContainer.getChildren().add(boardScene);
+            //***********************************
+        }else {
+            board = new BoardView2D(640);
+            //add the actual board in
+            sideCoordAndBoardContainer.getChildren().add(board);
+        }
         boardCoordContainer.getChildren().add(makeTopBoardCoords());
         boardCoordContainer.getChildren().add(sideCoordAndBoardContainer);
         //put this whole shabang in the root, an HBox
@@ -110,10 +142,15 @@ public class GameView {
         return coords;
     }
 
+    //TODO change this up probably
     public void killPiece(int row, int col, FlowPane deadPieceHolder){
-        SquareView2D oldLocationSquare = (SquareView2D)board.getSquareAt(row,col);
-        deadPieceHolder.getChildren().add(oldLocationSquare.getPiece());
-        oldLocationSquare.getChildren().clear();
+        if(is3D){
+            SquareView2D oldLocationSquare = (SquareView2D)board.getSquareAt(row,col);
+            deadPieceHolder.getChildren().add(oldLocationSquare.getPiece());
+            oldLocationSquare.getChildren().clear();
+        } else {
+
+        }
     }
 
     public BoardView getBoard() {

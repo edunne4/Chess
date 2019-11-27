@@ -26,7 +26,7 @@ import javafx.geometry.Pos;
 public class BoardView2D extends BoardView {
 
     //private TilePane board;
-    private final int SIDE_LENGTH = 8;
+
     static final String LIGHT_COLOR_HEX = "#ede8da";
     static final String DARK_COLOR_HEX = "#949085";
     static final String LIGHT_HIGHLIGHT_HEX = "#b2edb3";
@@ -123,6 +123,6 @@ public class BoardView2D extends BoardView {
 
 
     public SquareView2D getSquareAt(int row, int col) {
-        return (SquareView2D)this.getChildren().get((7-row) * 8 + col);
+        return (SquareView2D)this.getChildren().get((7-row) * SIDE_LENGTH + col);
     }
 }

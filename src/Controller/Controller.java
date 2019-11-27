@@ -65,6 +65,7 @@ public class Controller {
 
         //get model's corresponding square
         Square thisSquare = theModel.getBoard().getSquareAt(squareSelected.getRow(), squareSelected.getCol());
+        System.out.println(thisSquare.toString());
 
         //if it has a piece in it in the model (it's not empty)
         if (!thisSquare.isEmpty()) {

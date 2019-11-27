@@ -13,10 +13,10 @@ import javafx.scene.paint.Color;
 
 public class BoardView3D extends BoardView {
 
-    private int NUM_ROWS = 8;
+    //private int NUM_ROWS = 8;
 
-    private final Color PLAYER1_COLOR = Color.RED;
-    private final Color PLAYER2_COLOR = Color.WHITE;
+    private final Color PLAYER1_COLOR = Color.WHITE;
+    private final Color PLAYER2_COLOR = Color.RED;
 
     private final Color SQUARE1_COLOR = Color.BLACK;
     private final Color SQUARE2_COLOR = Color.WHITE;
@@ -26,12 +26,13 @@ public class BoardView3D extends BoardView {
          super();
 
          //initialize the board
-         this.setPrefColumns(NUM_ROWS);
+         this.setPrefColumns(SIDE_LENGTH);
+         //this.setPrefSize(SIDE_LENGTH*SquareView3D.SQUARE_SIZE,SIDE_LENGTH*SquareView3D.SQUARE_SIZE);
          this.setAlignment(Pos.CENTER);
 
          //center the board in the view
-         this.setTranslateX(SquareView3D.SQUARE_SIZE*-4);
-         this.setTranslateY(SquareView3D.SQUARE_SIZE*-4);
+//         this.setTranslateX(SquareView3D.SQUARE_SIZE*-SIDE_LENGTH/2);
+//         this.setTranslateY(SquareView3D.SQUARE_SIZE*-SIDE_LENGTH/2);
 
          //add all of the squares to the board
          initializeBoardSquares();
@@ -40,15 +41,15 @@ public class BoardView3D extends BoardView {
          initPieces();//initializeBoard();
 
          //TODO - remove these tests
-         removePieceOnBoard(0,0);
-         movePiece(1,4,3,4);
+         //removePieceOnBoard(0,0);
+         //movePiece(1,4,3,4);
 
 
      }
 
     private void initializeBoardSquares() {
-        for (int col = 0; col < 8 ; col++) {
-            for (int row = 0; row < 8; row++) {
+        for (int row = 0; row < SIDE_LENGTH; row++) {
+            for (int col = 0; col < SIDE_LENGTH ; col++) {
                 SquareView3D square;
                 if ((col+row) % 2 == 0) {
                     square = new SquareView3D(row, col, SQUARE1_COLOR);
@@ -63,29 +64,29 @@ public class BoardView3D extends BoardView {
 
     private void initializeBoard() {
         //create the pieces for player1
-        createPieceOnBoard(0,0, PieceEnum.ROOK, PLAYER1_COLOR);
-        createPieceOnBoard(1,0,PieceEnum.KNIGHT, PLAYER1_COLOR);
-        createPieceOnBoard(2,0,PieceEnum.BISHOP, PLAYER1_COLOR);
-        createPieceOnBoard(3,0,PieceEnum.KING, PLAYER1_COLOR);
-        createPieceOnBoard(4,0,PieceEnum.QUEEN, PLAYER1_COLOR);
-        createPieceOnBoard(5,0,PieceEnum.BISHOP, PLAYER1_COLOR);
-        createPieceOnBoard(6,0,PieceEnum.KNIGHT, PLAYER1_COLOR);
-        createPieceOnBoard(7,0,PieceEnum.ROOK, PLAYER1_COLOR);
-        for (int i = 0; i < 8; i++) {
-            createPieceOnBoard(i,1,PieceEnum.PAWN, PLAYER1_COLOR);
+        putPieceOnBoard(0,0, PieceEnum.ROOK, PLAYER1_COLOR);
+        putPieceOnBoard(0,1,PieceEnum.KNIGHT, PLAYER1_COLOR);
+        putPieceOnBoard(0,2,PieceEnum.BISHOP, PLAYER1_COLOR);
+        putPieceOnBoard(0,3,PieceEnum.KING, PLAYER1_COLOR);
+        putPieceOnBoard(0,4,PieceEnum.QUEEN, PLAYER1_COLOR);
+        putPieceOnBoard(0,5,PieceEnum.BISHOP, PLAYER1_COLOR);
+        putPieceOnBoard(0,6,PieceEnum.KNIGHT, PLAYER1_COLOR);
+        putPieceOnBoard(0,7,PieceEnum.ROOK, PLAYER1_COLOR);
+        for (int i = 0; i < SIDE_LENGTH; i++) {
+            putPieceOnBoard(1,i,PieceEnum.PAWN, PLAYER1_COLOR);
         }
 
         //create the pieces for player 2
-        createPieceOnBoard(0,7,PieceEnum.ROOK, PLAYER2_COLOR);
-        createPieceOnBoard(1,7,PieceEnum.KNIGHT, PLAYER2_COLOR);
-        createPieceOnBoard(2,7,PieceEnum.BISHOP, PLAYER2_COLOR);
-        createPieceOnBoard(3,7,PieceEnum.KING, PLAYER2_COLOR);
-        createPieceOnBoard(4,7,PieceEnum.QUEEN, PLAYER2_COLOR);
-        createPieceOnBoard(5,7,PieceEnum.BISHOP, PLAYER2_COLOR);
-        createPieceOnBoard(6,7,PieceEnum.KNIGHT, PLAYER2_COLOR);
-        createPieceOnBoard(7,7,PieceEnum.ROOK, PLAYER2_COLOR);
-        for (int i = 0; i < 8; i++) {
-            createPieceOnBoard(i,6,PieceEnum.PAWN, PLAYER2_COLOR);
+        putPieceOnBoard(7,0,PieceEnum.ROOK, PLAYER2_COLOR);
+        putPieceOnBoard(7,1,PieceEnum.KNIGHT, PLAYER2_COLOR);
+        putPieceOnBoard(7,2,PieceEnum.BISHOP, PLAYER2_COLOR);
+        putPieceOnBoard(7,3,PieceEnum.KING, PLAYER2_COLOR);
+        putPieceOnBoard(7,4,PieceEnum.QUEEN, PLAYER2_COLOR);
+        putPieceOnBoard(7,5,PieceEnum.BISHOP, PLAYER2_COLOR);
+        putPieceOnBoard(7,6,PieceEnum.KNIGHT, PLAYER2_COLOR);
+        putPieceOnBoard(7,7,PieceEnum.ROOK, PLAYER2_COLOR);
+        for (int i = 0; i < SIDE_LENGTH; i++) {
+            putPieceOnBoard(6,i,PieceEnum.PAWN, PLAYER2_COLOR);
         }
     }
 
@@ -94,9 +95,9 @@ public class BoardView3D extends BoardView {
 //        createPieceOnBoard(endingCol,endingRow,removedPiece.getPieceType(),removedPiece.getPieceColor());
 //    }
 
-    public ChessPiece3D removePieceOnBoard(int col, int row) {
+    public ChessPiece3D removePieceOnBoard(int row, int col) {
         //get the square we are looking to remove a piece from
-        SquareView3D squareOnBoard = (SquareView3D) this.getChildren().get(col + row*NUM_ROWS);
+        SquareView3D squareOnBoard = this.getSquareAt(row, col);
 
         //remove the piece
         ChessPiece3D removedPiece = squareOnBoard.removePieceFromSquare();
@@ -105,19 +106,19 @@ public class BoardView3D extends BoardView {
 
     }
 
-    public void createPieceOnBoard(int col, int row, PieceEnum pieceType, Color color) {
+    public void putPieceOnBoard(int row, int col, PieceEnum pieceType, Color color) {
         //get the square we are looking to add a piece to
-        SquareView3D squareOnBoard = (SquareView3D) this.getChildren().get(col + row*NUM_ROWS);
+        SquareView3D squareOnBoard = (SquareView3D) this.getSquareAt(row, col);
 
         //add the piece
-        squareOnBoard.addPieceToSquare(pieceType,color);
+        squareOnBoard.putPieceToSquare(pieceType,color);
 
     }
 
     @Override
     public void movePiece(int startRow, int startCol, int endRow, int endCol) {
-        ChessPiece3D removedPiece = removePieceOnBoard(startCol,startRow);
-        createPieceOnBoard(endCol,endRow,removedPiece.getPieceType(),removedPiece.getPieceColor());
+        ChessPiece3D removedPiece = removePieceOnBoard(startRow,startCol);
+        putPieceOnBoard(endRow,endCol,removedPiece.getPieceType(),removedPiece.getPieceColor());
     }
 
     @Override
@@ -125,7 +126,7 @@ public class BoardView3D extends BoardView {
         initializeBoard();
     }
 
-    public SquareView getSquareAt(int row, int col){
-        return (SquareView)this.getChildren().get((7-row) * 8 + col);
+    public SquareView3D getSquareAt(int row, int col){
+        return (SquareView3D)this.getChildren().get((7-row) * SIDE_LENGTH + col);
     }
 }
