@@ -106,13 +106,13 @@ public class GameView {
         Text deadPieceHolderBlackName = new Text();
         deadPieceHolderBlackName.setFont(new Font(20));
         deadPieceHolderWhiteName.setFont(new Font(20));
-        deadPieceHolderBlackName.setText("Captured White Pieces:");
-        deadPieceHolderWhiteName.setText("Captured Black Pieces:");
+        deadPieceHolderBlackName.setText("Captured Black Pieces:");
+        deadPieceHolderWhiteName.setText("Captured White Pieces:");
 
-        rightSideContainer.getChildren().add(deadPieceHolderBlackName);
-        rightSideContainer.getChildren().add(deadPieceHolderBlack);
         rightSideContainer.getChildren().add(deadPieceHolderWhiteName);
         rightSideContainer.getChildren().add(deadPieceHolderWhite);
+        rightSideContainer.getChildren().add(deadPieceHolderBlackName);
+        rightSideContainer.getChildren().add(deadPieceHolderBlack);
     }
 
     public VBox makeSideBoardCoords(){
@@ -144,7 +144,7 @@ public class GameView {
 
     //TODO change this up probably
     public void killPiece(int row, int col, FlowPane deadPieceHolder){
-        if(is3D){
+        if(!is3D){
             SquareView2D oldLocationSquare = (SquareView2D)board.getSquareAt(row,col);
             deadPieceHolder.getChildren().add(oldLocationSquare.getPiece());
             oldLocationSquare.getChildren().clear();
