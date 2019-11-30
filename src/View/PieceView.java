@@ -26,6 +26,11 @@ public class PieceView{
 
     ImageView view;
 
+    /**
+     * Creates an ImageView object from a file or url that will fit onto the squareview
+     *
+     * @param imageFileName the filename or url
+     */
     public PieceView(String imageFileName){
         // load the image
         Image image = new Image(imageFileName,60,60,false,false);
@@ -36,6 +41,9 @@ public class PieceView{
         view.setFitWidth(80);
     }
 
+    /**
+     * @return the ImageView Object for the piece
+     */
     public ImageView getView(){
         return view;
     }
