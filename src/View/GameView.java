@@ -41,32 +41,19 @@ public class GameView {
         //put this whole shabang in the root, an HBox
         root.getChildren().add(boardCoordContainer);
 
-        //these four lines demonstrate some board methods
-        /*
-        board.movePiece(0,0,4,5);
-        board.getSquare(0,2).highlight();
-        board.getSquare(0,2).unHighlight();
-        board.getSquare(4,5).highlight();
-        */
+
         rightSideContainer = new VBox();
         createDeadPieceHolders();
         root.getChildren().add(rightSideContainer);
 
-        //demonstrating killPiece method
-        /*
-        killPiece(0,4,deadPieceHolderWhite);
-        killPiece(0,5,deadPieceHolderWhite);
-        killPiece(0,6,deadPieceHolderWhite);
-        killPiece(0,7,deadPieceHolderWhite);
-        killPiece(1,4,deadPieceHolderWhite);
-        killPiece(1,5,deadPieceHolderWhite);
-        killPiece(7,4,deadPieceHolderBlack);
-        killPiece(7,7,deadPieceHolderBlack);
-        */
     }
 
+    /**Creates 2 flowpanes
+     * Each flowpane contains the dead/captured pieces for each team
+     * Adds each flowpane to the rightside Container
+     */
     private void createDeadPieceHolders() {
-        //make right side, which is a vbox containing importnant information and menus
+
         //make the flowpanes for dead pieces
         deadPieceHolderWhite = new FlowPane();
         deadPieceHolderBlack = new FlowPane();
@@ -83,6 +70,10 @@ public class GameView {
         rightSideContainer.getChildren().add(deadPieceHolderWhite);
     }
 
+    /**
+     * makes the side board coords
+     * @return a Vbox containing the coords
+     */
     public VBox makeSideBoardCoords(){
         VBox sideBoardCoords = new VBox(56);
         sideBoardCoords.setPadding(new Insets(10));
@@ -95,6 +86,11 @@ public class GameView {
         return sideBoardCoords;
     }
 
+
+    /**
+     * makes the top board coords
+     * @return a Hbox containing the coords
+     */
     public HBox makeTopBoardCoords(){
         HBox coords = new HBox(67);
         coords.setPadding(new Insets(10));
@@ -110,6 +106,12 @@ public class GameView {
         return coords;
     }
 
+    /**
+     * grabs the piece image at the specified spot and puts it in its respective deadpiece holder depending on team
+     * @param row the row of the square
+     * @param col the coumn of the square
+     * @param deadPieceHolder the correct team's dead piece holder
+     */
     public void killPiece(int row, int col, FlowPane deadPieceHolder){
         SquareView oldLocationSquare = (SquareView)board.getSquare(row,col);
         deadPieceHolder.getChildren().add(oldLocationSquare.getPiece());
