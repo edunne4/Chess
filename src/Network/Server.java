@@ -38,12 +38,14 @@ public class Server {
     static DataInputStream in;
     //Port number for Server
     private static final int portNum = 7778;
+    private Scanner s;
 
-    public Server() {
+    public Server() throws IOException {
+        connect();
     }
 
     public void connect() throws IOException {
-        Scanner s = new Scanner(System.in);
+        s = new Scanner(System.in);
         setUpServerClientConnection();
     }
 
@@ -56,5 +58,21 @@ public class Server {
         System.out.println("S: Your port: " + portNum);
         out = new DataOutputStream(socket.getOutputStream());
         in = new DataInputStream(socket.getInputStream());
+        if (socket.isConnected()){
+            System.out.println("S: Connection successful...");
+        }
+    }
+
+
+    public void sendObjectToClient(Object o){
+
+    }
+    /**
+     * Writes a string to the client
+     * @param message
+     * @throws IOException
+     */
+    public void writeStringToClient(String message) throws IOException {
+        out.writeUTF(message);
     }
 }
