@@ -29,11 +29,10 @@ public class ChessGameMain extends Application {
     public void start(Stage primaryStage) {
         theController = new Controller(theView,theModel);
 
-        MenuBar menuBar = new MenuBar();
+        //MenuBar menuBar = new MenuBar();
         //GameMenu gameMenuBar = new GameMenu();
 
         Scene scene = new Scene(theView.getRoot());
-
         primaryStage.setTitle("Chess");
         primaryStage.setScene(scene);
         primaryStage.sizeToScene();
