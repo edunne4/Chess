@@ -36,8 +36,12 @@ public class GameManager {
     /** Current board being played on */
     private ChessBoard board;
 
+    /**  */
+    private RuleMaster ruleMaster;
+
     public GameManager() {
         this.board = new ChessBoard();
+        this.ruleMaster = new RuleMaster();
     }
 
     /**

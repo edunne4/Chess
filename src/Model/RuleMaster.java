@@ -38,16 +38,12 @@ public class RuleMaster {
     //ArrayList that holds all the squares that have pieces that have a potential move to check the White King
     private ArrayList<Square> squaresThatHaveWhitePiecesThatAreCheckingBlackKing = new ArrayList<>();
 
-    //The board that we are playing on
-    private ChessBoard board;
 
     //The number of turns that have been made
     private int turnCount = 0;
 
 
-    public RuleMaster(ChessBoard board) {
-        this.board = board;
-    }
+
 
     public boolean isIsCheckedBlack() {
         return isCheckedBlack.get();
