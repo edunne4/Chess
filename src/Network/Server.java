@@ -13,14 +13,13 @@
  * Class: Server
  *
  * Description:
- *
+ * A server class that can read and write objects to a client
+ * https://stackoverflow.com/questions/30878881/how-i-can-send-a-object-from-server-to-client-in-java
  * ****************************************
  */
 package Network;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -33,12 +32,15 @@ public class Server {
     //Client socket
     static Socket socket;
     //Establishes an output stream so we can send info to client
-    static DataOutputStream out;
+    static ObjectOutputStream out;
     //Establishes an input stream to get info from the client
-    static DataInputStream in;
+    static ObjectInputStream in;
     //Port number for Server
     private static final int portNum = 7778;
+    //Scanner to get input
     private Scanner s;
+    //To see if the server is connected to client
+    public static boolean isConnected = false;
 
     public Server() throws IOException {
         connect();
@@ -56,23 +58,32 @@ public class Server {
         String IPAdress = inetAddress.getHostAddress();
         System.out.println("S: Your Address " + IPAdress);
         System.out.println("S: Your port: " + portNum);
-        out = new DataOutputStream(socket.getOutputStream());
-        in = new DataInputStream(socket.getInputStream());
+        out = new ObjectOutputStream(socket.getOutputStream());
+        in = new ObjectInputStream(socket.getInputStream());
         if (socket.isConnected()){
             System.out.println("S: Connection successful...");
+            isConnected = true;
         }
     }
 
-
-    public void sendObjectToClient(Object o){
-
-    }
     /**
-     * Writes a string to the client
-     * @param message
+     * Writes an object to a client server
+     * @param o
      * @throws IOException
      */
-    public void writeStringToClient(String message) throws IOException {
-        out.writeUTF(message);
+    public void sendObjectToClient(Object o) throws IOException {
+        out.writeObject(o);
+        out.flush();
+    }
+
+    /**
+     * Reads an object from the client
+     * @return
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    public Object readObjectFromCient() throws IOException, ClassNotFoundException {
+        Object obj = in.readObject();
+        return obj;
     }
 }

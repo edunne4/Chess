@@ -13,24 +13,24 @@
  * Class: Client
  *
  * Description:
- *
+ *  A Client class took object reading and writing from stack overflow
+ *  https://stackoverflow.com/questions/30878881/how-i-can-send-a-object-from-server-to-client-in-java
  * ****************************************
  */
 package Network;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
 
 public class Client {
     static Socket socket;
-    static DataInputStream in;
-    static DataOutputStream out;
+    static ObjectInputStream in;
+    static ObjectOutputStream out;
     public static String serverIPAdress;
     private int portNum = 7778;
     private String lastMessageFromClient;
+    private boolean isConnected = false;
 
     public Client(String serverIPAdress) throws IOException {
         this.serverIPAdress = serverIPAdress;
@@ -50,18 +50,27 @@ public class Client {
         System.out.println("C: Connection... ");
         portNum = 7778;
         socket = new Socket(serverIPAdress, portNum);
-        System.out.println("C: Connection successful...");
-        out = new DataOutputStream(socket.getOutputStream());
-        in = new DataInputStream(socket.getInputStream());
+        if (socket.isConnected()) {
+            System.out.println("C: Connection successful...");
+            isConnected = true;
+        }
+        out = new ObjectOutputStream(socket.getOutputStream());
+        in = new ObjectInputStream(socket.getInputStream());
     }
 
     /**
-     * Reads a string from the server and prints it to the
-     * terminal
+     * Reads an object from the server, and returns it
+     * @return
      * @throws IOException
      */
-    public void readStringFromServer() throws IOException {
-        lastMessageFromClient = in.readUTF();
-        System.out.println(lastMessageFromClient);
+    public Object readObjectFromServer() throws IOException {
+        Object obj = in.read();
+        return obj;
+    }
+
+    public void sendObjectToServer(Object o) throws IOException {
+        out.writeObject(o);
+        out.flush();
+        out.close();
     }
 }
