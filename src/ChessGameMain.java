@@ -29,7 +29,8 @@ public class ChessGameMain extends Application {
     public void start(Stage primaryStage) {
         theController = new Controller(theView,theModel);
 
-        GameMenu gameMenuBar = new GameMenu();
+        MenuBar menuBar = new MenuBar();
+        //GameMenu gameMenuBar = new GameMenu();
 
         Scene scene = new Scene(theView.getRoot());
 
