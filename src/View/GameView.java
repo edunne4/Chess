@@ -1,7 +1,10 @@
 package View;
 
 import Model.GameManager;
-import View3D.BoardView3D;
+import View.BoardView;
+import View.View2D.BoardView2D;
+import View.View2D.SquareView2D;
+import View.View3D.BoardView3D;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;

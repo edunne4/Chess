@@ -16,13 +16,14 @@
  *
  * ****************************************
  */
-package View;
+package View.View2D;
 
+import View.PieceEnum;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 
-public class PieceView{
+public class PieceView2D {
 
     ImageView view;
 
@@ -31,9 +32,19 @@ public class PieceView{
      *
      * @param imageFileName the filename or url
      */
-    public PieceView(String imageFileName){
+    public PieceView2D(PieceEnum imageFileName){
         // load the image
-        Image image = new Image(imageFileName,60,60,false,false);
+        Image image = new Image(imageFileName.getFilename2D(),60,60,false,false);
+        //make the imageview
+        view = new ImageView(image);
+        //these are temporary
+        view.setFitHeight(80);
+        view.setFitWidth(80);
+    }
+
+    public PieceView2D(String imageFileName){
+        // load the image
+        Image image = new Image(imageFileName ,60,60,false,false);
         //make the imageview
         view = new ImageView(image);
         //these are temporary

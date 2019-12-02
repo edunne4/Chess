@@ -1,13 +1,13 @@
 //A portion of this code was taken from http://www.interactivemesh.org/models/jfx3dimporter.html
 //The camera motion aspects of this code were taken from https://stackoverflow.com/questions/28731460/javafx-moving-3d-objects-with-mouse-on-a-virtual-plane
 
-package View3D;
+package View.View3D;
 
 //https://stackoverflow.com/questions/31148690/get-real-position-of-a-node-in-javafx
 //https://stackoverflow.com/questions/20825935/javafx-get-node-by-row-and-column
 
 import View.BoardView;
-import View.SquareView;
+import View.PieceEnum;
 import javafx.geometry.Pos;
 import javafx.scene.paint.Color;
 

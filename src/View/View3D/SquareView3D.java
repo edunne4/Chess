@@ -10,25 +10,18 @@
  * Time: 12:51 PM
  *
  * Project: csci205FinalProject
- * Package: View3D.STLParser
+ * Package: View.View3D.STLParser
  * Class: BoardSquare3DView
  *
  * Description:
  *
  * ****************************************
  */
-package View3D;
+package View.View3D;
 
-import ChessParts.ChessPieces.ChessPiece;
+import View.PieceEnum;
 import View.SquareView;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;

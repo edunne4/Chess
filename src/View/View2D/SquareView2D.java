@@ -16,10 +16,10 @@
  *
  * ****************************************
  */
-package View;
+package View.View2D;
 
+import View.SquareView;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.StackPane;
 
 public class SquareView2D extends SquareView {
 

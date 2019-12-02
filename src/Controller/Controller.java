@@ -24,7 +24,6 @@ import ChessParts.Team;
 import Model.GameManager;
 import View.GameView;
 import View.SquareView;
-import View.SquareView2D;
 import javafx.scene.Node;
 
 import java.util.List;
