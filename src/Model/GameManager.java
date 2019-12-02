@@ -36,8 +36,12 @@ public class GameManager {
     /** Current board being played on */
     private ChessBoard board;
 
+    /**  */
+    private RuleMaster ruleMaster;
+
     public GameManager() {
         this.board = new ChessBoard();
+        this.ruleMaster = new RuleMaster();
     }
 
     /**
@@ -54,8 +58,11 @@ public class GameManager {
         //put the piece moved in the new location
         newLocation.setCurrentPiece(currentLocation.getCurrentPiece());
 
+
         //remove piece from old location
         currentLocation.setCurrentPiece(null);
+
+        System.out.println(board.toString());
 
         //add killed piece to pieces captured
         if(pieceKilled != null) {

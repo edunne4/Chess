@@ -1,15 +1,21 @@
 package View;
 
 import Model.GameManager;
-import javafx.application.Application;
+import View3D.BoardView3D;
 import javafx.geometry.Insets;
-import javafx.scene.Scene;
+import javafx.scene.Group;
+import javafx.scene.PerspectiveCamera;
+import javafx.scene.SubScene;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
+
 
 public class GameView {
+
+    //TODO - change this
+    private boolean is3D = false;
 
     private HBox root;
     VBox rightSideContainer;
@@ -27,46 +33,58 @@ public class GameView {
         //root.setAlignment(Pos.CENTER);
         root.setMinSize(windowWidth,windowHeight);
 
-        //make the board, which is a grid pane on the left
-        board = new BoardView(640);
-        board.initBoard();
+
+
         //add side coords to view
         VBox boardCoordContainer = new VBox();
         HBox sideCoordAndBoardContainer = new HBox();
         sideCoordAndBoardContainer.getChildren().add(makeSideBoardCoords());
-        //add the actual board in
-        sideCoordAndBoardContainer.getChildren().add(board);
+
+
+
+        if(is3D) {
+            board = new BoardView3D();
+            //***********************************
+            //Right now this stuff is only for 3D
+            Group miniRoot = new Group();
+
+            //initialize the camera
+            PerspectiveCamera camera = new PerspectiveCamera(true);
+            //camera.setVerticalFieldOfView(false);
+            camera.setNearClip(1.0);
+            camera.setFarClip(10000.0);
+
+            SubScene boardScene = new SubScene(miniRoot, 640, 640);
+            //SubScene boardScene = new SubScene(board, 640,640);
+//        boardScene.setCamera(camera);
+            boardScene.setFill(Color.GRAY);
+            miniRoot.getChildren().add(board);
+
+            sideCoordAndBoardContainer.getChildren().add(boardScene);
+            //***********************************
+        }else {
+            board = new BoardView2D(640);
+            //add the actual board in
+            sideCoordAndBoardContainer.getChildren().add(board);
+        }
         boardCoordContainer.getChildren().add(makeTopBoardCoords());
         boardCoordContainer.getChildren().add(sideCoordAndBoardContainer);
         //put this whole shabang in the root, an HBox
         root.getChildren().add(boardCoordContainer);
 
-        //these four lines demonstrate some board methods
-        /*
-        board.movePiece(0,0,4,5);
-        board.getSquare(0,2).highlight();
-        board.getSquare(0,2).unHighlight();
-        board.getSquare(4,5).highlight();
-        */
+
         rightSideContainer = new VBox();
         createDeadPieceHolders();
         root.getChildren().add(rightSideContainer);
 
-        //demonstrating killPiece method
-        /*
-        killPiece(0,4,deadPieceHolderWhite);
-        killPiece(0,5,deadPieceHolderWhite);
-        killPiece(0,6,deadPieceHolderWhite);
-        killPiece(0,7,deadPieceHolderWhite);
-        killPiece(1,4,deadPieceHolderWhite);
-        killPiece(1,5,deadPieceHolderWhite);
-        killPiece(7,4,deadPieceHolderBlack);
-        killPiece(7,7,deadPieceHolderBlack);
-        */
     }
 
+    /**Creates 2 flowpanes
+     * Each flowpane contains the dead/captured pieces for each team
+     * Adds each flowpane to the rightside Container
+     */
     private void createDeadPieceHolders() {
-        //make right side, which is a vbox containing importnant information and menus
+
         //make the flowpanes for dead pieces
         deadPieceHolderWhite = new FlowPane();
         deadPieceHolderBlack = new FlowPane();
@@ -74,15 +92,19 @@ public class GameView {
         Text deadPieceHolderBlackName = new Text();
         deadPieceHolderBlackName.setFont(new Font(20));
         deadPieceHolderWhiteName.setFont(new Font(20));
-        deadPieceHolderBlackName.setText("Captured White Pieces:");
-        deadPieceHolderWhiteName.setText("Captured Black Pieces:");
+        deadPieceHolderBlackName.setText("Captured Black Pieces:");
+        deadPieceHolderWhiteName.setText("Captured White Pieces:");
 
-        rightSideContainer.getChildren().add(deadPieceHolderBlackName);
-        rightSideContainer.getChildren().add(deadPieceHolderBlack);
         rightSideContainer.getChildren().add(deadPieceHolderWhiteName);
         rightSideContainer.getChildren().add(deadPieceHolderWhite);
+        rightSideContainer.getChildren().add(deadPieceHolderBlackName);
+        rightSideContainer.getChildren().add(deadPieceHolderBlack);
     }
 
+    /**
+     * makes the side board coords
+     * @return a Vbox containing the coords
+     */
     public VBox makeSideBoardCoords(){
         VBox sideBoardCoords = new VBox(56);
         sideBoardCoords.setPadding(new Insets(10));
@@ -95,6 +117,11 @@ public class GameView {
         return sideBoardCoords;
     }
 
+
+    /**
+     * makes the top board coords
+     * @return a Hbox containing the coords
+     */
     public HBox makeTopBoardCoords(){
         HBox coords = new HBox(67);
         coords.setPadding(new Insets(10));
@@ -110,10 +137,21 @@ public class GameView {
         return coords;
     }
 
+    //TODO change this up probably
+    /**
+     * grabs the piece image at the specified spot and puts it in its respective deadpiece holder depending on team
+     * @param row the row of the square
+     * @param col the coumn of the square
+     * @param deadPieceHolder the correct team's dead piece holder
+     */
     public void killPiece(int row, int col, FlowPane deadPieceHolder){
-        SquareView oldLocationSquare = (SquareView)board.getSquare(row,col);
-        deadPieceHolder.getChildren().add(oldLocationSquare.getPiece());
-        oldLocationSquare.getChildren().clear();
+        if(!is3D){
+            SquareView2D oldLocationSquare = (SquareView2D)board.getSquareAt(row,col);
+            deadPieceHolder.getChildren().add(oldLocationSquare.getPiece());
+            oldLocationSquare.getChildren().clear();
+        } else {
+
+        }
     }
 
     public BoardView getBoard() {
