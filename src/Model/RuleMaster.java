@@ -112,12 +112,11 @@ public class RuleMaster {
                 ChessPiece currentPiece = possibleMove.getCurrentPiece();
                 //If it can possibly capture a king, and the king is on the other team
                 //Then check the King of that team
-                if ((currentPiece.getClass() == King.class) && (currentPiece.getTeam() != team)) {
+                if (currentPiece instanceof King && currentPiece.getTeam() != team) {
                     if( team == Team.BLACK){
                         isCheckedWhite.setValue(true);
                         checkedKing = true;
                         squaresThatHaveBlackPiecesThatAreCheckingWhiteKing.add(currentSquare);
-
                     } else {
                         isCheckedBlack.setValue(true);
                         checkedKing = true;
@@ -126,7 +125,7 @@ public class RuleMaster {
                 }
         }
             //If there is a King in Check Break from the loop
-            if (checkedKing = true) {break;}
+            if (checkedKing == true) {break;}
     }
         //If there is no piece checking the King than we need to uncheck the King if
         //it was checked from a move before
