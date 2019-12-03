@@ -20,16 +20,20 @@ package View.View2D;
 
 import View.BoardView;
 import View.PieceEnum;
+import javafx.scene.paint.Color;
 
 /**
  * This class is the container for the TilePane that contains all the squares on the board.
  */
 public class BoardView2D extends BoardView {
 
-    static final String LIGHT_COLOR_HEX = "#ede8da";
-    static final String DARK_COLOR_HEX = "#949085";
+    static final String SQUARE1_COLOR = "#ede8da";
+    static final String SQUARE2_COLOR = "#949085";
     static final String LIGHT_HIGHLIGHT_HEX = "#b2edb3";
     static final String DARK_HIGHLIGHT_HEX = "#7bbd7b";
+
+    private static Color PLAYER1_COLOR = Color.GREEN;
+    private final Color PLAYER2_COLOR = Color.RED;
 
 
     /**
@@ -62,9 +66,9 @@ public class BoardView2D extends BoardView {
         //pick color of square
         String squareColor;
         if ((row + col) % 2 != 0) {
-            squareColor = LIGHT_COLOR_HEX;
+            squareColor = SQUARE1_COLOR;
         } else {
-            squareColor = DARK_COLOR_HEX;
+            squareColor = SQUARE2_COLOR;
         }
         //set square color
         square.setStyle("-fx-background-color: " + squareColor);
@@ -88,17 +92,17 @@ public class BoardView2D extends BoardView {
         //top side
         for (int i = 0; i < SIDE_LENGTH*2; i++) {
             //black rooks
-            if(i == 0 || i == 7) {piece = new PieceView2D("https://upload.wikimedia.org/wikipedia/commons/a/a0/Chess_rdt60.png");}
+            if(i == 0 || i == 7) {piece = new PieceView2D(PieceEnum.ROOK, PLAYER2_COLOR);}
             //queen
-            if(i == 4){piece = new PieceView2D("https://upload.wikimedia.org/wikipedia/commons/a/af/Chess_qdt60.png");}
+            if(i == 4){piece = new PieceView2D(PieceEnum.QUEEN, PLAYER2_COLOR);}
             //king
-            if(i == 3){piece = new PieceView2D("https://upload.wikimedia.org/wikipedia/commons/e/e3/Chess_kdt60.png");}
+            if(i == 3){piece = new PieceView2D(PieceEnum.KING, PLAYER2_COLOR);}
             //black bishops
-            if(i == 2 || i == 5) {piece = new PieceView2D("https://upload.wikimedia.org/wikipedia/commons/8/81/Chess_bdt60.png");}
+            if(i == 2 || i == 5) {piece = new PieceView2D(PieceEnum.BISHOP, PLAYER2_COLOR);}
             //knights
-            if(i == 1 || i == 6) {piece = new PieceView2D("https://upload.wikimedia.org/wikipedia/commons/f/f1/Chess_ndt60.png");}
+            if(i == 1 || i == 6) {piece = new PieceView2D(PieceEnum.KNIGHT, PLAYER2_COLOR);}
             //black pawns
-            if(i >=8) {piece = new PieceView2D("https://upload.wikimedia.org/wikipedia/commons/c/cd/Chess_pdt60.png");}
+            if(i >=8) {piece = new PieceView2D(PieceEnum.PAWN, PLAYER2_COLOR);}
 
             SquareView2D square = (SquareView2D)this.getChildren().get(i);
             square.addImageView(piece.getView());
@@ -108,28 +112,32 @@ public class BoardView2D extends BoardView {
     /**
      * initializes white pieces in correct spots on the board
      */
-    private void initWhitePieces() {
+    private void initWhitePieces()  {
         PieceView2D piece = new PieceView2D("https://via.placeholder.com/60");
         //bottom side
         for (int i = 0; i < SIDE_LENGTH*2; i++) {
 
             //white pawns
-            if(i < 8) {piece = new PieceView2D(PieceEnum.PAWN);}
-            //white rooks
-            if(i == 8 || i ==15){piece = new PieceView2D(PieceEnum.ROOK);}
+            if(i < 8) { piece = new PieceView2D(PieceEnum.PAWN, PLAYER1_COLOR);}
+            if(i == 8 || i ==15){piece = new PieceView2D(PieceEnum.ROOK, PLAYER1_COLOR);}
             //queen
-            if(i == 12){piece = new PieceView2D(PieceEnum.QUEEN);}
+            if(i == 12){piece = new PieceView2D(PieceEnum.QUEEN, PLAYER1_COLOR);}
             //king
-            if(i == 11){piece = new PieceView2D(PieceEnum.KING);}
+            if(i == 11){piece = new PieceView2D(PieceEnum.KING, PLAYER1_COLOR);}
             //bishops
-            if(i == 10 || i == 13) {piece = new PieceView2D(PieceEnum.BISHOP);}
+            if(i == 10 || i == 13) {piece = new PieceView2D(PieceEnum.BISHOP, PLAYER1_COLOR);}
             //knights
-            if(i == 9 || i == 14) {piece = new PieceView2D(PieceEnum.KNIGHT);}
+            if(i == 9 || i == 14) {piece = new PieceView2D(PieceEnum.KNIGHT, PLAYER1_COLOR);}
+
             int offset = SIDE_LENGTH*SIDE_LENGTH - SIDE_LENGTH*2;
             SquareView2D square = (SquareView2D)this.getChildren().get(i + offset);
             square.addImageView(piece.getView());
+
+            }
+            //white rooks
+
         }
-    }
+
 
     /**
      * Moves a piece's image from one squareView to a new squareview on the baord

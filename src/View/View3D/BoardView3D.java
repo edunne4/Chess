@@ -13,8 +13,6 @@ import javafx.scene.paint.Color;
 
 public class BoardView3D extends BoardView {
 
-    //private int NUM_ROWS = 8;
-
     private final Color PLAYER1_COLOR = Color.WHITE;
     private final Color PLAYER2_COLOR = Color.RED;
 

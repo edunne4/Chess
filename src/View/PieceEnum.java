@@ -1,12 +1,12 @@
 package View;
 
 public enum PieceEnum {
-    ROOK("View/View2D/chessPiecesPNG/rook.png","stlModels/rook.stl"),
-    KNIGHT("View/View2D/chessPiecesPNG/knight.png","stlModels/knight.stl"),
-    BISHOP("View/View2D/chessPiecesPNG/bishop.png","stlModels/bishop.stl"),
-    KING("View/View2D/chessPiecesPNG/king.png","stlModels/king.stl"),
-    QUEEN("View/View2D/chessPiecesPNG/queen.png","stlModels/queen.stl"),
-    PAWN("View/View2D/chessPiecesPNG/pawn.png","stlModels/pawn.stl");
+    ROOK("https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Chess_tile_rl-whitebg.svg/600px-Chess_tile_rl-whitebg.svg.png","stlModels/rook.stl"),
+    KNIGHT("https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Chess_clt45.svg/600px-Chess_clt45.svg.png","stlModels/knight.stl"),
+    BISHOP("https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Chess_blt45.svg/600px-Chess_blt45.svg.png","stlModels/bishop.stl"),
+    KING("https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Chess_klt45.svg/600px-Chess_klt45.svg.png","stlModels/king.stl"),
+    QUEEN("https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Chess_qlt45.svg/600px-Chess_qlt45.svg.png","stlModels/queen.stl"),
+    PAWN("https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Chess_plt45.svg/600px-Chess_plt45.svg.png","stlModels/pawn.stl");
 
     private final String fileName2D;
     private final String fileName3D;
