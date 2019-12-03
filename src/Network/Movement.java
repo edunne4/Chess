@@ -28,4 +28,12 @@ public class Movement {
         this.intitialSquare = intitialSquare;
         this.finalSquare = finalSquare;
     }
+
+    public Square getIntitialSquare() {
+        return intitialSquare;
+    }
+
+    public Square getFinalSquare() {
+        return finalSquare;
+    }
 }

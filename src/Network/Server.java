@@ -42,6 +42,9 @@ public class Server {
     //To see if the server is connected to client
     public static boolean isConnected = false;
 
+    //IP Address
+    private static String IPAddress;
+
     public Server() throws IOException {
         connect();
     }
@@ -52,11 +55,7 @@ public class Server {
     }
 
     private void setUpServerClientConnection() throws IOException {
-        //Get IP address of the Server
-        InetAddress inetAddress = InetAddress.getLocalHost();
-        //Get String representation of the internet address
-        String IPAdress = inetAddress.getHostAddress();
-        System.out.println("S: Your Address " + IPAdress);
+        System.out.println("S: Your Address " + IPAddress);
         System.out.println("S: Your port: " + portNum);
         out = new ObjectOutputStream(socket.getOutputStream());
         in = new ObjectInputStream(socket.getInputStream());
@@ -65,6 +64,14 @@ public class Server {
             isConnected = true;
         }
     }
+
+    private void findIPAddress() throws UnknownHostException {
+        //Get IP address of the Server
+        InetAddress inetAddress = InetAddress.getLocalHost();
+        //Get String representation of the internet address
+        this.IPAddress = inetAddress.getHostAddress();
+    }
+
 
     /**
      * Writes an object to a client server
@@ -85,5 +92,9 @@ public class Server {
     public Object readObjectFromCient() throws IOException, ClassNotFoundException {
         Object obj = in.readObject();
         return obj;
+    }
+
+    public static String getIPAddress() {
+        return IPAddress;
     }
 }
