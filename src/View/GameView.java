@@ -25,6 +25,8 @@ public class GameView {
     private FlowPane deadPieceHolderWhite;
     private FlowPane deadPieceHolderBlack;
     GameManager gm;
+    Text inCheckTextBlack;
+    Text inCheckTextWhite;
 
     public GameView(GameManager model) {
         this.gm = model;
@@ -75,6 +77,7 @@ public class GameView {
 
         rightSideContainer = new VBox();
         createDeadPieceHolders();
+        makeInCheckText();
         root.getChildren().add(rightSideContainer);
 
     }
@@ -152,6 +155,30 @@ public class GameView {
         } else {
 
         }
+    }
+
+    /**
+     * Makes text object for showing if a player is in check
+     */
+    private void makeInCheckText() {
+        inCheckTextBlack = new Text();
+        inCheckTextWhite = new Text();
+        inCheckTextBlack.setFont(new Font(40));
+        inCheckTextWhite.setFont(new Font(40));
+        inCheckTextBlack.setFill(Color.RED);
+        inCheckTextWhite.setFill(Color.RED);
+        inCheckTextBlack.setText("");
+        inCheckTextWhite.setText("");
+        rightSideContainer.getChildren().add(inCheckTextBlack);
+        rightSideContainer.getChildren().add(inCheckTextWhite);
+    }
+
+    public Text getInCheckTextBlack() {
+        return inCheckTextBlack;
+    }
+
+    public Text getInCheckTextWhite() {
+        return inCheckTextWhite;
     }
 
     public BoardView getBoard() {

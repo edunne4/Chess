@@ -4,4 +4,5 @@ module csci205finalproject {
     requires javafx.fxml;
     requires javafx.base;
     requires java.desktop;
+    opens src;
 }

@@ -73,7 +73,8 @@ public class GameManager {
         if(!newLocation.isEmpty()){
             newLocation.getCurrentPiece().setHasMoved(true);
         }
-
+        ruleMaster.checkAllPiecesIfCheckKing(board,Team.BLACK);
+        ruleMaster.checkAllPiecesIfCheckKing(board,Team.WHITE);
         switchTurn();
         return pieceKilled;
     }
@@ -114,5 +115,7 @@ public class GameManager {
         return currentTurn;
     }
 
-
+    public RuleMaster getRuleMaster() {
+        return ruleMaster;
+    }
 }
