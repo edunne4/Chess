@@ -15,7 +15,7 @@ import javafx.scene.text.Text;
 public class GameView {
 
     //TODO - change this
-    private boolean is3D = false;
+    private boolean is3D = true;
 
     private HBox root;
     VBox rightSideContainer;
@@ -56,7 +56,7 @@ public class GameView {
 
             SubScene boardScene = new SubScene(miniRoot, 640, 640);
             //SubScene boardScene = new SubScene(board, 640,640);
-//        boardScene.setCamera(camera);
+            boardScene.setCamera(camera);
             boardScene.setFill(Color.GRAY);
             miniRoot.getChildren().add(board);
 
