@@ -1,4 +1,4 @@
-package View3D;
+package View.View3D;
 
 import javafx.application.Application;
 import javafx.scene.Group;

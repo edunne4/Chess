@@ -1,5 +1,5 @@
 //Code taken from http://www.interactivemesh.org/models/jfx3dimporter.html
-package View3D.STLParser;
+package View.View3D.STLParser;
 
 import com.interactivemesh.jfx.importer.ModelImporter;
 import com.interactivemesh.jfx.importer.stl.StlMeshImporter;
