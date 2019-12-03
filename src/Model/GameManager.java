@@ -75,8 +75,6 @@ public class GameManager {
         }
         ruleMaster.checkAllPiecesIfCheckKing(board,Team.BLACK);
         ruleMaster.checkAllPiecesIfCheckKing(board,Team.WHITE);
-        System.out.println("Black in check? " + ruleMaster.isIsCheckedBlack());
-        System.out.println("White in check? " + ruleMaster.isIsCheckedWhite());
         switchTurn();
         return pieceKilled;
     }
@@ -117,5 +115,7 @@ public class GameManager {
         return currentTurn;
     }
 
-
+    public RuleMaster getRuleMaster() {
+        return ruleMaster;
+    }
 }

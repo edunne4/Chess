@@ -22,9 +22,11 @@ import ChessParts.ChessPieces.ChessPiece;
 import ChessParts.Square;
 import ChessParts.Team;
 import Model.GameManager;
+import Model.RuleMaster;
 import View.GameView;
 import View.SquareView;
 import View.SquareView2D;
+import javafx.beans.binding.Bindings;
 import javafx.scene.Node;
 
 import java.util.List;
@@ -46,6 +48,7 @@ public class Controller {
 
 
         makeSquaresClickable();
+        displayIfInCheck();
     }
 
     private void makeSquaresClickable() {
@@ -147,4 +150,18 @@ public class Controller {
             }
         }
     }
+
+    /**
+     * change inChecktext if a player is in check
+     */
+    private void displayIfInCheck(){
+        RuleMaster rules = theModel.getRuleMaster();
+        theView.getInCheckTextBlack().textProperty().bind(Bindings.when(rules.isCheckedBlackProperty())
+                .then("Black Is In Check")
+                .otherwise(""));
+        theView.getInCheckTextWhite().textProperty().bind(Bindings.when(rules.isCheckedWhiteProperty())
+                .then("White Is In Check")
+                .otherwise(""));
+    }
+
 }
