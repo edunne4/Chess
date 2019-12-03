@@ -6,6 +6,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.SubScene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -15,7 +16,7 @@ import javafx.scene.text.Text;
 public class GameView {
 
     //TODO - change this
-    private boolean is3D = true;
+    private boolean is3D = false;
 
     private HBox root;
     VBox rightSideContainer;
@@ -36,6 +37,12 @@ public class GameView {
         root.setMinSize(windowWidth,windowHeight);
 
 
+        //TODO - find a different background texture
+        String imageLink = "https://images.freecreatives.com/wp-content/uploads/2016/01/Free-Photoshop-Purity-Wood-Texture.jpg";//"https://images.freecreatives.com/wp-content/uploads/2016/01/High-Quality-Oak-Seamless-Wood-Texture.jpg";
+        BackgroundImage bgImage = new BackgroundImage(new Image(imageLink), BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        Background background = new Background(bgImage);
+
+        root.setBackground(background);
 
         //add side coords to view
         VBox boardCoordContainer = new VBox();
