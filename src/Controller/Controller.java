@@ -25,7 +25,7 @@ import Model.GameManager;
 import Model.RuleMaster;
 import View.GameView;
 import View.SquareView;
-import View.SquareView2D;
+import View.View2D.SquareView2D;
 import javafx.beans.binding.Bindings;
 import javafx.scene.Node;
 

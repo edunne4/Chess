@@ -9,6 +9,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.SubScene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -18,7 +19,7 @@ import javafx.scene.text.Text;
 public class GameView {
 
     //TODO - change this
-    private boolean is3D = false;
+    private boolean is3D = true;
 
     private HBox root;
     VBox rightSideContainer;
@@ -44,7 +45,6 @@ public class GameView {
         VBox boardCoordContainer = new VBox();
         HBox sideCoordAndBoardContainer = new HBox();
         sideCoordAndBoardContainer.getChildren().add(makeSideBoardCoords());
-
 
 
         if(is3D) {

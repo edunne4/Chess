@@ -3,6 +3,8 @@ import Model.GameManager;
 import View.GameView;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.MenuBar;
 import javafx.stage.Stage;
 
 public class ChessGameMain extends Application {
