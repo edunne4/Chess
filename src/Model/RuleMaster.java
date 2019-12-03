@@ -101,7 +101,7 @@ public class RuleMaster {
      * team that checks the King, if so report to the variable isChecked-THEOPPOSITETEAM-,
      * than the team specified, that their King is in Check.
      * @param board Takes in the Chessboard that the user is playing on
-     * @param team, the team that we want to see if is checking the other teams King
+     * @param team, the team that possibly checking other teams King
      */
     public void checkAllPiecesIfCheckKing(ChessBoard board, Team team){
 

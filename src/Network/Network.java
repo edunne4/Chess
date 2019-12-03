@@ -28,6 +28,9 @@ public class Network {
         this.server = new Server();
         String IPAddress = server.getIPAddress();
         this.client = new Client(IPAddress);
+        if(server.isConnected && client.isConnected){
+            System.out.println("yippie");
+        }
     }
 
 }

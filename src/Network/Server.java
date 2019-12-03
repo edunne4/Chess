@@ -54,17 +54,24 @@ public class Server {
         setUpServerClientConnection();
     }
 
+    /**
+     * Sets up the server
+     * @throws IOException
+     */
     private void setUpServerClientConnection() throws IOException {
+        findIPAddress();
         System.out.println("S: Your Address " + IPAddress);
         System.out.println("S: Your port: " + portNum);
+        serverSocket = new ServerSocket(portNum);
+        socket = serverSocket.accept();
         out = new ObjectOutputStream(socket.getOutputStream());
         in = new ObjectInputStream(socket.getInputStream());
-        if (socket.isConnected()){
-            System.out.println("S: Connection successful...");
-            isConnected = true;
-        }
     }
 
+    /**
+     * Finds the IPAdress of this server
+     * @throws UnknownHostException
+     */
     private void findIPAddress() throws UnknownHostException {
         //Get IP address of the Server
         InetAddress inetAddress = InetAddress.getLocalHost();

@@ -2,6 +2,7 @@ package Network;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
@@ -12,15 +13,18 @@ class NetworkTest {
 
     @BeforeEach
     void setUp(){
-        try {
-            network = new Network();
-        } catch (IOException e) {
-            System.out.println("Something is messed up with IO's");
-        }
     }
     @AfterEach
     void tearDown(){
     }
 
-    void testConnection(){}
+    @Test
+    void testConnection(){
+        try {
+            network = new Network();
+        } catch (IOException e) {
+            System.out.println("Something is messed up with IO's");
+        }
+
+    }
 }

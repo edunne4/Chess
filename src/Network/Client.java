@@ -30,7 +30,7 @@ public class Client {
     public static String serverIPAdress;
     private int portNum = 7778;
     private String lastMessageFromClient;
-    private boolean isConnected = false;
+    public static boolean isConnected = false;
 
     public Client(String serverIPAdress) throws IOException {
         this.serverIPAdress = serverIPAdress;
@@ -40,6 +40,12 @@ public class Client {
     public void connect() throws IOException {
         Scanner s = new Scanner(System.in);
         setUpClientSeverConnection();
+//        while(isConnected == false){
+//            if (socket.isConnected()) {
+//                System.out.println("C: Connection successful...");
+//                isConnected = true;
+//            }
+//        }
     }
 
     /**
@@ -50,10 +56,6 @@ public class Client {
         System.out.println("C: Connection... ");
         portNum = 7778;
         socket = new Socket(serverIPAdress, portNum);
-        if (socket.isConnected()) {
-            System.out.println("C: Connection successful...");
-            isConnected = true;
-        }
         out = new ObjectOutputStream(socket.getOutputStream());
         in = new ObjectInputStream(socket.getInputStream());
     }
