@@ -94,9 +94,9 @@ public class BoardView2D extends BoardView {
             //black rooks
             if(i == 0 || i == 7) {piece = new PieceView2D(PieceEnum.ROOK, PLAYER2_COLOR);}
             //queen
-            if(i == 4){piece = new PieceView2D(PieceEnum.QUEEN, PLAYER2_COLOR);}
+            if(i == 3){piece = new PieceView2D(PieceEnum.QUEEN, PLAYER2_COLOR);}
             //king
-            if(i == 3){piece = new PieceView2D(PieceEnum.KING, PLAYER2_COLOR);}
+            if(i == 4){piece = new PieceView2D(PieceEnum.KING, PLAYER2_COLOR);}
             //black bishops
             if(i == 2 || i == 5) {piece = new PieceView2D(PieceEnum.BISHOP, PLAYER2_COLOR);}
             //knights
@@ -121,9 +121,9 @@ public class BoardView2D extends BoardView {
             if(i < 8) { piece = new PieceView2D(PieceEnum.PAWN, PLAYER1_COLOR);}
             if(i == 8 || i ==15){piece = new PieceView2D(PieceEnum.ROOK, PLAYER1_COLOR);}
             //queen
-            if(i == 12){piece = new PieceView2D(PieceEnum.QUEEN, PLAYER1_COLOR);}
+            if(i == 11){piece = new PieceView2D(PieceEnum.QUEEN, PLAYER1_COLOR);}
             //king
-            if(i == 11){piece = new PieceView2D(PieceEnum.KING, PLAYER1_COLOR);}
+            if(i == 12){piece = new PieceView2D(PieceEnum.KING, PLAYER1_COLOR);}
             //bishops
             if(i == 10 || i == 13) {piece = new PieceView2D(PieceEnum.BISHOP, PLAYER1_COLOR);}
             //knights

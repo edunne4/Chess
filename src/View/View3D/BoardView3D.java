@@ -65,8 +65,8 @@ public class BoardView3D extends BoardView {
         putPieceOnBoard(0,0, PieceEnum.ROOK, PLAYER1_COLOR);
         putPieceOnBoard(0,1,PieceEnum.KNIGHT, PLAYER1_COLOR);
         putPieceOnBoard(0,2,PieceEnum.BISHOP, PLAYER1_COLOR);
-        putPieceOnBoard(0,3,PieceEnum.KING, PLAYER1_COLOR);
-        putPieceOnBoard(0,4,PieceEnum.QUEEN, PLAYER1_COLOR);
+        putPieceOnBoard(0,3,PieceEnum.QUEEN, PLAYER1_COLOR);
+        putPieceOnBoard(0,4,PieceEnum.KING, PLAYER1_COLOR);
         putPieceOnBoard(0,5,PieceEnum.BISHOP, PLAYER1_COLOR);
         putPieceOnBoard(0,6,PieceEnum.KNIGHT, PLAYER1_COLOR);
         putPieceOnBoard(0,7,PieceEnum.ROOK, PLAYER1_COLOR);
@@ -78,8 +78,8 @@ public class BoardView3D extends BoardView {
         putPieceOnBoard(7,0,PieceEnum.ROOK, PLAYER2_COLOR);
         putPieceOnBoard(7,1,PieceEnum.KNIGHT, PLAYER2_COLOR);
         putPieceOnBoard(7,2,PieceEnum.BISHOP, PLAYER2_COLOR);
-        putPieceOnBoard(7,3,PieceEnum.KING, PLAYER2_COLOR);
-        putPieceOnBoard(7,4,PieceEnum.QUEEN, PLAYER2_COLOR);
+        putPieceOnBoard(7,3,PieceEnum.QUEEN, PLAYER2_COLOR);
+        putPieceOnBoard(7,4,PieceEnum.KING, PLAYER2_COLOR);
         putPieceOnBoard(7,5,PieceEnum.BISHOP, PLAYER2_COLOR);
         putPieceOnBoard(7,6,PieceEnum.KNIGHT, PLAYER2_COLOR);
         putPieceOnBoard(7,7,PieceEnum.ROOK, PLAYER2_COLOR);
