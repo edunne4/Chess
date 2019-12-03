@@ -1,8 +1,13 @@
-import Controller.Controller;
+import Controller.*;
 import Model.GameManager;
+import View.GameMenu;
 import View.GameView;
+import View3D.BoardView3D;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.SubScene;
+import javafx.scene.layout.VBox;
+import javafx.scene.control.MenuBar;
 import javafx.stage.Stage;
 
 public class ChessGameMain extends Application {
@@ -10,7 +15,9 @@ public class ChessGameMain extends Application {
 
     private GameManager theModel;
     private GameView theView;
+    //private BoardView3D theView;
     private Controller theController;
+    //private Controller3D theController;
 
     public static void main(String[] args) {
         launch(args);
@@ -27,8 +34,10 @@ public class ChessGameMain extends Application {
     public void start(Stage primaryStage) {
         theController = new Controller(theView,theModel);
 
-        Scene scene = new Scene(theView.getRoot());
+        //MenuBar menuBar = new MenuBar();
+        //GameMenu gameMenuBar = new GameMenu();
 
+        Scene scene = new Scene(theView.getRoot());
         primaryStage.setTitle("Chess");
         primaryStage.setScene(scene);
         primaryStage.sizeToScene();

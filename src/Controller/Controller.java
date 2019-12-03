@@ -24,6 +24,7 @@ import ChessParts.Team;
 import Model.GameManager;
 import View.GameView;
 import View.SquareView;
+import View.SquareView2D;
 import javafx.scene.Node;
 
 import java.util.List;
@@ -64,6 +65,7 @@ public class Controller {
 
         //get model's corresponding square
         Square thisSquare = theModel.getBoard().getSquareAt(squareSelected.getRow(), squareSelected.getCol());
+        System.out.println(thisSquare.toString());
 
         //if it has a piece in it in the model (it's not empty)
         if (!thisSquare.isEmpty()) {
@@ -139,9 +141,9 @@ public class Controller {
         //highlight those positions on the board view
         for (Square pos : legalMoves) {
             if(highlight) {
-                theView.getBoard().getSquare(pos.getRow(), pos.getCol()).highlight();
+                theView.getBoard().getSquareAt(pos.getRow(), pos.getCol()).highlight();
             }else{
-                theView.getBoard().getSquare(pos.getRow(), pos.getCol()).unHighlight();
+                theView.getBoard().getSquareAt(pos.getRow(), pos.getCol()).unHighlight();
             }
         }
     }
