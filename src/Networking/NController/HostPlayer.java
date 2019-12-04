@@ -54,7 +54,10 @@ public class HostPlayer extends Player{
         server.connect();
     }
 
-
+    /**
+     * Check out our lambda function
+     * https://stackoverflow.com/questions/17850191/why-am-i-getting-java-lang-illegalstateexception-not-on-fx-application-thread
+     */
     @Override
     public void run() {
         while(!gameOver){
