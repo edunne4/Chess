@@ -22,6 +22,7 @@ import ChessParts.Movement;
 import ChessParts.Player;
 import ChessParts.Team;
 import Networking.Sockets.Client;
+import javafx.application.Platform;
 
 import java.io.IOException;
 
@@ -60,7 +61,12 @@ public class ClientPlayer extends Player{
         while(!gameOver){
             try {
                 Movement move = client.readMovementFromServer();
-                nController.simulateClick(move);
+                Platform.runLater(
+                        () -> {
+                            nController.simulateClick(move);
+
+                        }
+                );
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (ClassNotFoundException e) {
