@@ -25,7 +25,7 @@ import Networking.Sockets.Server;
 
 import java.io.IOException;
 
-public class HostPlayer extends Player implements Runnable{
+public class HostPlayer extends Player{
     private Server server;
     private boolean gameOver = false;
     private NController nController;

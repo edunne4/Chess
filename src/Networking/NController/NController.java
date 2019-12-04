@@ -51,17 +51,13 @@ public class NController extends Controller {
         if (isHost){
             this.player = new HostPlayer(this);
             player.connect();
+            player.run();
         } else {
             this.player = new ClientPlayer("localhost", this);
             player.connect();
+            player.run();
         }
     }
-
-//    @Override
-//    public void run(){
-//
-//    }
-
 
     @Override
     protected void makeSquaresClickable() {

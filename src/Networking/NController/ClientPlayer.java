@@ -25,7 +25,7 @@ import Networking.Sockets.Client;
 
 import java.io.IOException;
 
-public class ClientPlayer extends Player implements Runnable{
+public class ClientPlayer extends Player{
     private Client client;
     //TODO - extract these to parent class
     private boolean gameOver = false;

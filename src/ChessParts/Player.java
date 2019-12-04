@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public abstract class Player {
+public abstract class Player implements Runnable{
     public boolean isTurn = false;
     private Team team;
     public Player(Team team) {
