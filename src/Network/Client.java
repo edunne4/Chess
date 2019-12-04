@@ -19,60 +19,106 @@
  */
 package Network;
 
+import ChessParts.Movement;
+
 import java.io.*;
 import java.net.Socket;
-import java.util.Scanner;
 
 public class Client {
-    static Socket socket;
+    //IPAddress of host server
+    private String serverIPAddress;
+    //Socket client that is connection to the server socket
+    static Socket clientSocket;
     static ObjectInputStream in;
     static ObjectOutputStream out;
-    public static String serverIPAdress;
-    private int portNum = 7778;
-    private String lastMessageFromClient;
-    public static boolean isConnected = false;
+    //Port number for the serverSocket, arbitrary
+    private static final int portNum = 7778;
+    //So we can see if it is connected
+    public boolean isConnected = false;
 
-    public Client(String serverIPAdress) throws IOException {
-        this.serverIPAdress = serverIPAdress;
-        connect();
-    }
-
-    public void connect() throws IOException {
-        Scanner s = new Scanner(System.in);
-        setUpClientSeverConnection();
-//        while(isConnected == false){
-//            if (socket.isConnected()) {
-//                System.out.println("C: Connection successful...");
-//                isConnected = true;
-//            }
-//        }
+    /**
+     * Constructor, passes in the server IP Address so that it can connect to the
+     * serverSocket
+     * @param serverIPAddress, IPAddress of host
+     * @throws IOException
+     */
+    public Client(String serverIPAddress) throws IOException {
+        this.serverIPAddress = serverIPAddress;
     }
 
     /**
-     * Connects server to client
+     * Sets up the connection between the client and the server
+     * @throws IOException
+     */
+    public void connect() throws IOException {
+        setUpClientSeverConnection();
+    }
+
+    /**
+     * Connects the socket of the client to the server through the server socket,
+     * creates and input and output object streams so that we can write information back and forth
      * @throws IOException
      */
     private void setUpClientSeverConnection() throws IOException {
-        System.out.println("C: Connection... ");
-        portNum = 7778;
-        socket = new Socket(serverIPAdress, portNum);
-        out = new ObjectOutputStream(socket.getOutputStream());
-        in = new ObjectInputStream(socket.getInputStream());
+        //Displays host IP and port info
+        System.out.println("C: Waiting for Connection... ");
+        System.out.println("C: Server IP Address: "+ serverIPAddress);
+        System.out.println("C: Server Port Number: "+ portNum);
+
+        //Connects clientSocket to serverSocket
+        clientSocket = new Socket(serverIPAddress, portNum);
+        System.out.println("C: Connected");
+        isConnected = true;
+
+        //Create a way to communicate via the clientSocket
+        createInputOutputObjectStreams();
     }
 
     /**
-     * Reads an object from the server, and returns it
-     * @return
+     * Creates the two streams needed, 'out' an output stream that can write to the client socket,
+     * and 'in' an input stream that can read from the socket.
      * @throws IOException
      */
-    public Object readObjectFromServer() throws IOException {
-        Object obj = in.read();
-        return obj;
+    private void createInputOutputObjectStreams() throws IOException {
+        out = new ObjectOutputStream(clientSocket.getOutputStream());
+        in = new ObjectInputStream(clientSocket.getInputStream());
     }
 
-    public void sendObjectToServer(Object o) throws IOException {
-        out.writeObject(o);
+    /**
+     * Reads an object from the server, checks to make sure that it is a,
+     * movement object, than casts what it reads to a movement object if the former
+     * is true, returns this.
+     * @return move, the movement of the person who sends it
+     * @throws IOException
+     */
+    public Movement readMovementFromServer() throws IOException, ClassNotFoundException {
+        Object obj = in.readObject();
+        if (obj instanceof Movement){
+            Movement move = (Movement) obj;
+            return move;
+        }
+        return null;
+    }
+
+    /**
+     * Sends a movement object to the server through the socket
+     * @param move, a Movement object that holds the move to be made
+     * @throws IOException
+     */
+    public void sendMovementToServer(Movement move) throws IOException {
+        out.writeObject(move);
         out.flush();
-        out.close();
+    }
+
+
+    /** Below this line is remnants of testing methods **/
+
+
+    /**
+     * Reads a message from the server, through the socket
+     */
+    public String readStringFromServer() throws IOException {
+        String message = in.readUTF();
+        return message;
     }
 }

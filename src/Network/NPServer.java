@@ -13,24 +13,22 @@
  * Class: Network
  *
  * Description:
- *
+ * Stands for Network Protocol Server
  * ****************************************
  */
 package Network;
 
+import ChessParts.Square;
+
 import java.io.IOException;
 
-public class Network {
+public class NPServer {
     Client client;
     Server server;
 
-    public Network() throws IOException {
-        this.server = new Server();
-        String IPAddress = server.getIPAddress();
-        this.client = new Client(IPAddress);
-        if(server.isConnected && client.isConnected){
-            System.out.println("yippie");
-        }
+    public static void main(String[] args) throws IOException {
+
     }
+
 
 }

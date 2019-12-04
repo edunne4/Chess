@@ -19,57 +19,64 @@
  */
 package Network;
 
+import ChessParts.Movement;
+
 import java.io.*;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.Scanner;
 
 public class Server {
     //serverSocket for the Server
-    static ServerSocket serverSocket;
+    private ServerSocket serverSocket;
     //Client socket
-    static Socket socket;
+    private Socket clientSocket;
     //Establishes an output stream so we can send info to client
-    static ObjectOutputStream out;
+    private ObjectOutputStream out;
     //Establishes an input stream to get info from the client
-    static ObjectInputStream in;
+    private ObjectInputStream in;
     //Port number for Server
     private static final int portNum = 7778;
-    //Scanner to get input
-    private Scanner s;
     //To see if the server is connected to client
-    public static boolean isConnected = false;
-
+    public boolean isConnected = false;
     //IP Address
     private static String IPAddress;
 
+
     public Server() throws IOException {
-        connect();
     }
 
+    /**
+     * Connects to a client socket.
+     * @throws IOException
+     */
     public void connect() throws IOException {
-        s = new Scanner(System.in);
         setUpServerClientConnection();
     }
 
     /**
-     * Sets up the server
+     * Finds the ip address of the server, shows this to the player,
+     * shows the portNumber, makes a serverSocket with this portNumber,
+     * and then accepts a client socket.
      * @throws IOException
      */
     private void setUpServerClientConnection() throws IOException {
+        //Shows information to the player, and stores them
         findIPAddress();
         System.out.println("S: Your Address " + IPAddress);
         System.out.println("S: Your port: " + portNum);
+
         serverSocket = new ServerSocket(portNum);
-        socket = serverSocket.accept();
-        out = new ObjectOutputStream(socket.getOutputStream());
-        in = new ObjectInputStream(socket.getInputStream());
+        clientSocket = serverSocket.accept();
+        isConnected = true;
+
+        //Create a way to communicate via the clientSocket
+        createInputOutputObjectStreams();
     }
 
     /**
-     * Finds the IPAdress of this server
+     * Finds the IPAddress of this server
      * @throws UnknownHostException
      */
     private void findIPAddress() throws UnknownHostException {
@@ -79,29 +86,70 @@ public class Server {
         this.IPAddress = inetAddress.getHostAddress();
     }
 
-
     /**
-     * Writes an object to a client server
-     * @param o
+     * Creates the two streams needed, 'out' an output stream that can write to the client socket,
+     * and 'in' an input stream that can read from the socket.
      * @throws IOException
      */
-    public void sendObjectToClient(Object o) throws IOException {
-        out.writeObject(o);
+    private void createInputOutputObjectStreams() throws IOException {
+        out = new ObjectOutputStream(clientSocket.getOutputStream());
+        in = new ObjectInputStream(clientSocket.getInputStream());
+    }
+
+
+    /**
+     * Writes a movement object to the client
+     * @param move, the movement of the player
+     * @throws IOException
+     */
+    public void sendMovementToClient(Movement move) throws IOException {
+        while (isConnected == false){
+            continue;
+        }
+        out.writeObject(move);
         out.flush();
     }
 
     /**
-     * Reads an object from the client
-     * @return
+     * Reads an object from the client, checks to make sure that it is a,
+     * movement object, than casts what it reads to a movement object if the former
+     * is true, returns this.
+     * @return move, the movement received from the client
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    public Object readObjectFromCient() throws IOException, ClassNotFoundException {
+    public Movement readMovementFromClient() throws IOException, ClassNotFoundException {
         Object obj = in.readObject();
-        return obj;
+        if (obj instanceof Movement){
+            Movement move = (Movement) obj;
+            return move;
+        }
+        return null;
+    }
+
+    /**
+     * Closes the server socket so that it is not longer accessible
+     * @throws IOException
+     */
+    public void closeServerSocket() throws IOException {
+        //Close the serverSocket so that only one client can connect at a time
+        serverSocket.close();
     }
 
     public static String getIPAddress() {
         return IPAddress;
     }
+
+    /**Below this line are remnants of testing methods**/
+
+    /**
+     * Using for testing the connection between server and client
+     * Writes a message to the client
+     */
+    public void writeToClient(String message) throws IOException {
+        out.writeUTF(message);
+        out.flush();
+    }
+
+
 }

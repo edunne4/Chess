@@ -130,7 +130,7 @@ public class RuleMaster {
                 }
         }
             //If there is a King in Check Break from the loop
-            if (checkedKing = true) {break;}
+            if (checkedKing == true) {break;}
     }
         //If there is no piece checking the King than we need to uncheck the King if
         //it was checked from a move before
