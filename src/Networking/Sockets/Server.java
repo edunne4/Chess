@@ -37,7 +37,7 @@ public class Server {
     //Establishes an input stream to get info from the client
     private ObjectInputStream in;
     //Port number for Server
-    private static final int portNum = 7778;
+    private static final int portNum = 4444;
     //To see if the server is connected to client
     public boolean isConnected = false;
     //IP Address

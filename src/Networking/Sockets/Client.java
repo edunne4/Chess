@@ -32,7 +32,7 @@ public class Client {
     static ObjectInputStream in;
     static ObjectOutputStream out;
     //Port number for the serverSocket, arbitrary
-    private static final int portNum = 7778;
+    private static final int portNum = 4444;
     //So we can see if it is connected
     public boolean isConnected = false;
 

@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class ChessGameMain extends Application {
+public class ChessGameMain2 extends Application {
 
 
     private GameManager theModel;
@@ -32,7 +32,7 @@ public class ChessGameMain extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException, ClassNotFoundException {
-        theController = new NController(theView,theModel, true);
+        theController = new NController(theView,theModel, false);
 
         //MenuBar menuBar = new MenuBar();
         //GameMenu gameMenuBar = new GameMenu();

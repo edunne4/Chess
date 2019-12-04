@@ -29,7 +29,7 @@ public class HostPlayer extends Player {
     private Server server;
     public HostPlayer() throws IOException {
         super(Team.BLACK);
-        server.connect();
+        this.server = new Server();
     }
 
     @Override
@@ -41,6 +41,11 @@ public class HostPlayer extends Player {
     @Override
     public void sendMove(Movement moveMade) throws IOException {
         server.sendMovementToClient(moveMade);
+    }
+
+    @Override
+    public void connect() throws IOException {
+        server.connect();
     }
 
 

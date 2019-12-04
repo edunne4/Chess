@@ -30,7 +30,6 @@ public class ClientPlayer extends Player {
     public ClientPlayer(String IPAddress) throws IOException {
         super(Team.WHITE);
         this.client = new Client(IPAddress);
-        client.connect();
     }
 
 
@@ -43,5 +42,10 @@ public class ClientPlayer extends Player {
     @Override
     public void sendMove(Movement moveMade) throws IOException {
         client.sendMovementToServer(moveMade);
+    }
+
+    @Override
+    public void connect() throws IOException {
+        client.connect();
     }
 }

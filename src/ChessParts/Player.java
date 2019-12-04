@@ -39,6 +39,8 @@ public abstract class Player {
 
     public abstract void sendMove(Movement moveMade) throws IOException;
 
+    public abstract void connect() throws IOException;
+
 
 //    /**
 //     * Retrurns an array list, first two indexes are the indexes of the piece that

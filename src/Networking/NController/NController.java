@@ -37,16 +37,19 @@ public class NController extends Controller {
     public NController(GameView theView, GameManager theModel, boolean isHost) throws IOException, ClassNotFoundException {
         super(theView, theModel);
         this.isHost = isHost;
-        try {
-            if (isHost){
-                this.player = new HostPlayer();
-            } else {
-                this.player = new ClientPlayer("localhost");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+
+    }
+
+    public void makeConnection() throws IOException, ClassNotFoundException {
+        if (isHost){
+            this.player = new HostPlayer();
+            player.connect();
+        } else {
+            this.player = new ClientPlayer("localhost");
+            player.connect();
         }
-        if (!isHost){
+
+        if (isHost){
             Movement move = player.waitForMove();
         }
     }
