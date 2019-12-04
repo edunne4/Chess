@@ -35,6 +35,7 @@ public class HostPlayer extends Player {
     @Override
     public Movement waitForMove() throws IOException, ClassNotFoundException {
         Movement move = server.readMovementFromClient();
+        System.out.println(move);
         return move;
     }
 

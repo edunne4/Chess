@@ -51,6 +51,7 @@ public class NController extends Controller {
 
         if (isHost){
             Movement move = player.waitForMove();
+            theModel.movePiece(move);
         }
     }
 
@@ -74,10 +75,14 @@ public class NController extends Controller {
     protected void squareWasClickedNetwork(SquareView squareSelected) throws IOException, ClassNotFoundException {
         if (theModel.getCurrentTurn() == player.getTeam()){
             Movement moveMade = squareWasClicked(squareSelected);
-            if(moveMade != null){
-                player.sendMove(moveMade);
-                theModel.movePiece(player.waitForMove());
-            }
+            makeMove(moveMade);
+        }
+    }
+
+    private void makeMove(Movement moveMade) throws IOException, ClassNotFoundException {
+        if(moveMade != null){
+            player.sendMove(moveMade);
+            theModel.movePiece(player.waitForMove());
         }
     }
 }

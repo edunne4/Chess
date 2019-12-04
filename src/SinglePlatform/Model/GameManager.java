@@ -51,6 +51,10 @@ public class GameManager {
      * @return the piece that is killed in the new location, if there is one
      */
     public ChessPiece movePiece(Square currentLocation, Square newLocation) {
+        //make sure the squarwes are from this game's board
+        currentLocation = board.getSquareAt(currentLocation.getRow(), currentLocation.getCol());
+        newLocation = board.getSquareAt(newLocation.getRow(), newLocation.getCol());
+
         //if there is a piece in the new location, kill it
         ChessPiece pieceKilled = newLocation.getCurrentPiece();
 

@@ -36,12 +36,14 @@ public class ClientPlayer extends Player {
     @Override
     public Movement waitForMove() throws IOException, ClassNotFoundException {
         Movement moveMade = client.readMovementFromServer();
+        System.out.println(moveMade);
         return moveMade;
     }
 
     @Override
     public void sendMove(Movement moveMade) throws IOException {
         client.sendMovementToServer(moveMade);
+        System.out.println(moveMade);
     }
 
     @Override

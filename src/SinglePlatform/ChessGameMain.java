@@ -8,6 +8,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.IOException;
 
 public class ChessGameMain extends Application {
@@ -32,7 +33,6 @@ public class ChessGameMain extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException, ClassNotFoundException {
-        theController = new NController(theView,theModel, true);
 
         //MenuBar menuBar = new MenuBar();
         //GameMenu gameMenuBar = new GameMenu();
@@ -42,6 +42,8 @@ public class ChessGameMain extends Application {
         primaryStage.setScene(scene);
         primaryStage.sizeToScene();
         primaryStage.show();
+
+        theController = new NController(theView,theModel, true);
         theController.makeConnection();
     }
 }
