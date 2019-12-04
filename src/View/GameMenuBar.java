@@ -28,9 +28,9 @@ import javafx.scene.shape.Shape;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameMenu extends MenuBar {
+public class GameMenuBar extends MenuBar {
 
-    public GameMenu() {
+    public GameMenuBar() {
 
         super();
 

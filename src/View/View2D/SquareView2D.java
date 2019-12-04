@@ -16,10 +16,10 @@
  *
  * ****************************************
  */
-package View;
+package View.View2D;
 
+import View.SquareView;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.StackPane;
 
 public class SquareView2D extends SquareView {
 
@@ -72,9 +72,9 @@ public class SquareView2D extends SquareView {
     public void unHighlight(){
         String squareColor;
         if ((row + col) % 2 == 0) {
-            squareColor = BoardView2D.LIGHT_COLOR_HEX;
+            squareColor = BoardView2D.SQUARE1_COLOR;
         } else {
-            squareColor = BoardView2D.DARK_COLOR_HEX;
+            squareColor = BoardView2D.SQUARE2_COLOR;
         }
         this.setStyle("-fx-background-color: " + squareColor);
     }

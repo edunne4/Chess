@@ -17,8 +17,9 @@
  *
  * ****************************************
  */
-package View3D;
+package View.View3D;
 
+import View.PieceEnum;
 import com.interactivemesh.jfx.importer.ImportException;
 import com.interactivemesh.jfx.importer.stl.StlMeshImporter;
 import javafx.scene.paint.Color;
@@ -57,7 +58,7 @@ public class ChessPiece3D extends MeshView {
         //create a StlMeshImporter object and try parsing with the filename
         StlMeshImporter stlImporter = new StlMeshImporter();
         try {
-            stlImporter.read(this.getClass().getResource(piece.getFilename()));
+            stlImporter.read(this.getClass().getResource(piece.getFilename2D()));
         }
         catch (ImportException e) {
             System.err.println("Error. STL file does not exist.");
