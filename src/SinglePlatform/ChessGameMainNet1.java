@@ -11,13 +11,13 @@ import javafx.stage.Stage;
 import java.awt.*;
 import java.io.IOException;
 
-public class ChessGameMain extends Application {
+public class ChessGameMainNet1 extends Application {
 
 
     private GameManager theModel;
     private GameView theView;
     //private BoardView3D theView;
-    private Controller theController;
+    private NController theController;
     //private Controller3D theController;
 
     public static void main(String[] args) {
@@ -36,7 +36,6 @@ public class ChessGameMain extends Application {
 
         //MenuBar menuBar = new MenuBar();
         //GameMenu gameMenuBar = new GameMenu();
-        theController = new Controller(theView,theModel);
 
         Scene scene = new Scene(theView.getRoot());
         primaryStage.setTitle("Chess");
@@ -44,5 +43,7 @@ public class ChessGameMain extends Application {
         primaryStage.sizeToScene();
         primaryStage.show();
 
+        theController = new NController(theView,theModel, true);
+        theController.makeConnection();
     }
 }

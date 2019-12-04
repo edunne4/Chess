@@ -152,4 +152,7 @@ public class Server {
     }
 
 
+    public Socket getClientSocket() {
+        return clientSocket;
+    }
 }

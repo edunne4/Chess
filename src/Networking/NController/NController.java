@@ -40,6 +40,12 @@ public class NController extends Controller {
 
     }
 
+    private void simulateClick(Movement opponentsMove) {
+        currentSquareSelected = opponentsMove.getInitialSquare();
+        SquareView squareViewClicked = theView.getBoard().getSquareAt(opponentsMove.getFinalSquare().getRow(), opponentsMove.getFinalSquare().getCol());
+        squareWasClicked(squareViewClicked);
+    }
+
     public void makeConnection() throws IOException, ClassNotFoundException {
         if (isHost){
             this.player = new HostPlayer();
@@ -54,6 +60,12 @@ public class NController extends Controller {
             theModel.movePiece(move);
         }
     }
+
+//    @Override
+//    public void run(){
+//
+//    }
+
 
     @Override
     protected void makeSquaresClickable() {
@@ -82,7 +94,13 @@ public class NController extends Controller {
     private void makeMove(Movement moveMade) throws IOException, ClassNotFoundException {
         if(moveMade != null){
             player.sendMove(moveMade);
-            theModel.movePiece(player.waitForMove());
+
+            Movement opponentsMove = player.waitForMove();
+            simulateClick(opponentsMove);
+
+            //theModel.movePiece();
         }
     }
+
+
 }

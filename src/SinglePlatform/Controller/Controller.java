@@ -31,7 +31,8 @@ import javafx.scene.Node;
 
 import java.util.List;
 
-public class Controller {
+public class Controller{
+
 
     /** The view */
     protected GameView theView;

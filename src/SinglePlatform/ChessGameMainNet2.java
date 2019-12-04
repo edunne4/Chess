@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class ChessGameMain2 extends Application {
+public class ChessGameMainNet2 extends Application {
 
 
     private GameManager theModel;
