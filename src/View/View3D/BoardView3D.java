@@ -1,19 +1,17 @@
 //A portion of this code was taken from http://www.interactivemesh.org/models/jfx3dimporter.html
 //The camera motion aspects of this code were taken from https://stackoverflow.com/questions/28731460/javafx-moving-3d-objects-with-mouse-on-a-virtual-plane
 
-package View3D;
+package View.View3D;
 
 //https://stackoverflow.com/questions/31148690/get-real-position-of-a-node-in-javafx
 //https://stackoverflow.com/questions/20825935/javafx-get-node-by-row-and-column
 
 import View.BoardView;
-import View.SquareView;
+import View.PieceEnum;
 import javafx.geometry.Pos;
 import javafx.scene.paint.Color;
 
 public class BoardView3D extends BoardView {
-
-    //private int NUM_ROWS = 8;
 
     private final Color PLAYER1_COLOR = Color.WHITE;
     private final Color PLAYER2_COLOR = Color.RED;
@@ -67,8 +65,8 @@ public class BoardView3D extends BoardView {
         putPieceOnBoard(0,0, PieceEnum.ROOK, PLAYER1_COLOR);
         putPieceOnBoard(0,1,PieceEnum.KNIGHT, PLAYER1_COLOR);
         putPieceOnBoard(0,2,PieceEnum.BISHOP, PLAYER1_COLOR);
-        putPieceOnBoard(0,3,PieceEnum.KING, PLAYER1_COLOR);
-        putPieceOnBoard(0,4,PieceEnum.QUEEN, PLAYER1_COLOR);
+        putPieceOnBoard(0,3,PieceEnum.QUEEN, PLAYER1_COLOR);
+        putPieceOnBoard(0,4,PieceEnum.KING, PLAYER1_COLOR);
         putPieceOnBoard(0,5,PieceEnum.BISHOP, PLAYER1_COLOR);
         putPieceOnBoard(0,6,PieceEnum.KNIGHT, PLAYER1_COLOR);
         putPieceOnBoard(0,7,PieceEnum.ROOK, PLAYER1_COLOR);
@@ -80,8 +78,8 @@ public class BoardView3D extends BoardView {
         putPieceOnBoard(7,0,PieceEnum.ROOK, PLAYER2_COLOR);
         putPieceOnBoard(7,1,PieceEnum.KNIGHT, PLAYER2_COLOR);
         putPieceOnBoard(7,2,PieceEnum.BISHOP, PLAYER2_COLOR);
-        putPieceOnBoard(7,3,PieceEnum.KING, PLAYER2_COLOR);
-        putPieceOnBoard(7,4,PieceEnum.QUEEN, PLAYER2_COLOR);
+        putPieceOnBoard(7,3,PieceEnum.QUEEN, PLAYER2_COLOR);
+        putPieceOnBoard(7,4,PieceEnum.KING, PLAYER2_COLOR);
         putPieceOnBoard(7,5,PieceEnum.BISHOP, PLAYER2_COLOR);
         putPieceOnBoard(7,6,PieceEnum.KNIGHT, PLAYER2_COLOR);
         putPieceOnBoard(7,7,PieceEnum.ROOK, PLAYER2_COLOR);

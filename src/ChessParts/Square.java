@@ -20,12 +20,13 @@ package ChessParts;
 
 import ChessParts.ChessPieces.ChessPiece;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * Representation of a single space on a chess board
  */
-public class Square {
+public class Square implements Serializable {
 
     /** The current piece located on this square */
     private ChessPiece currentPiece;

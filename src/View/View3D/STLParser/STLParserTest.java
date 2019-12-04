@@ -1,7 +1,7 @@
 //A portion of this code was taken from http://www.interactivemesh.org/models/jfx3dimporter.html
 //The camera motion aspects of this code were taken from https://stackoverflow.com/questions/28731460/javafx-moving-3d-objects-with-mouse-on-a-virtual-plane
 
-package View3D.STLParser;
+package View.View3D.STLParser;
 
 import com.interactivemesh.jfx.importer.ImportException;
 import com.interactivemesh.jfx.importer.stl.StlMeshImporter;

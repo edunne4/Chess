@@ -1,6 +1,6 @@
 //Code taken from http://www.interactivemesh.org/models/jfx3dimporter.html
 
-package View3D.STLParser;
+package View.View3D.STLParser;
 
 import javafx.scene.SubScene;
 import javafx.scene.layout.Pane;

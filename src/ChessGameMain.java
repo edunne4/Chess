@@ -1,12 +1,9 @@
 import Controller.*;
 import Model.GameManager;
-import View.GameMenu;
 import View.GameView;
-import View3D.BoardView3D;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.SubScene;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
 import javafx.stage.Stage;
 

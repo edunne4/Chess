@@ -1,11 +1,16 @@
 package View;
 
 import Model.GameManager;
-import View3D.BoardView3D;
+import View.BoardView;
+import View.View2D.BoardView2D;
+import View.View2D.SquareView2D;
+import View.View3D.BoardView3D;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.SubScene;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -38,12 +43,19 @@ public class GameView {
         root.setMinSize(windowWidth,windowHeight);
 
 
+        //***************************************************************
+        //Background stuff
+        //TODO - find a different background texture
+        String imageLink = "https://images.freecreatives.com/wp-content/uploads/2016/01/Free-Photoshop-Purity-Wood-Texture.jpg";//"https://images.freecreatives.com/wp-content/uploads/2016/01/High-Quality-Oak-Seamless-Wood-Texture.jpg";//"https://tr.rbxcdn.com/7324f5e7134f93c9c9e41e30c4d5bb0a/420/420/Decal/Png";
+        BackgroundImage bgImage = new BackgroundImage(new Image(imageLink), BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        Background background = new Background(bgImage);
+        root.setBackground(background);
+        //***************************************************************
 
         //add side coords to view
         VBox boardCoordContainer = new VBox();
         HBox sideCoordAndBoardContainer = new HBox();
         //sideCoordAndBoardContainer.getChildren().add(makeSideBoardCoords());
-
 
 
         if(is3D) {
@@ -60,7 +72,7 @@ public class GameView {
 
             SubScene boardScene = new SubScene(miniRoot, 640, 640);
             //SubScene boardScene = new SubScene(board, 640,640);
-//        boardScene.setCamera(camera);
+            boardScene.setCamera(camera);
             boardScene.setFill(Color.GRAY);
             miniRoot.getChildren().add(board);
 
