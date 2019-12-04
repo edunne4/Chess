@@ -51,11 +51,13 @@ public class NController extends Controller {
         if (isHost){
             this.player = new HostPlayer(this);
             player.connect();
-            player.run();
+            Thread thread = new Thread(player);
+            thread.start();
         } else {
             this.player = new ClientPlayer("localhost", this);
             player.connect();
-            player.run();
+            Thread thread = new Thread(player);
+            thread.start();
         }
     }
 
