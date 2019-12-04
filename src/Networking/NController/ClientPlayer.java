@@ -25,10 +25,14 @@ import Networking.Sockets.Client;
 
 import java.io.IOException;
 
-public class ClientPlayer extends Player {
+public class ClientPlayer extends Player implements Runnable{
     private Client client;
-    public ClientPlayer(String IPAddress) throws IOException {
+    //TODO - extract these to parent class
+    private boolean gameOver = false;
+    private NController nController;
+    public ClientPlayer(String IPAddress, NController nController) throws IOException {
         super(Team.WHITE);
+        this.nController = nController;
         this.client = new Client(IPAddress);
     }
 
@@ -49,5 +53,19 @@ public class ClientPlayer extends Player {
     @Override
     public void connect() throws IOException {
         client.connect();
+    }
+
+    @Override
+    public void run() {
+        while(!gameOver){
+            try {
+                Movement move = client.readMovementFromServer();
+                nController.simulateClick(move);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

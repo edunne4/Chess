@@ -25,10 +25,14 @@ import Networking.Sockets.Server;
 
 import java.io.IOException;
 
-public class HostPlayer extends Player {
+public class HostPlayer extends Player implements Runnable{
     private Server server;
-    public HostPlayer() throws IOException {
+    private boolean gameOver = false;
+    private NController nController;
+
+    public HostPlayer(NController nController) throws IOException {
         super(Team.BLACK);
+        this.nController = nController;
         this.server = new Server();
     }
 
@@ -50,4 +54,17 @@ public class HostPlayer extends Player {
     }
 
 
+    @Override
+    public void run() {
+        while(!gameOver){
+            try {
+                Movement move = server.readMovementFromClient();
+                nController.simulateClick(move);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

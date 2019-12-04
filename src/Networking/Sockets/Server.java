@@ -20,6 +20,7 @@
 package Networking.Sockets;
 
 import ChessParts.Movement;
+import Networking.NController.NController;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -27,7 +28,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-public class Server {
+public class Server{
     //serverSocket for the Server
     private ServerSocket serverSocket;
     //Client socket
@@ -42,10 +43,9 @@ public class Server {
     public boolean isConnected = false;
     //IP Address
     private static String IPAddress;
+    //Network Controller
+    private NController nController;
 
-
-    public Server() throws IOException {
-    }
 
     /**
      * Connects to a client socket.
@@ -149,10 +149,5 @@ public class Server {
     public void writeToClient(String message) throws IOException {
         out.writeUTF(message);
         out.flush();
-    }
-
-
-    public Socket getClientSocket() {
-        return clientSocket;
     }
 }
