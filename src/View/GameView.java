@@ -32,6 +32,8 @@ public class GameView {
         this.gm = model;
         //make root which is a set of horizontal boxes
         root = new HBox();
+        root.setSpacing(40);
+        root.setPadding(new Insets(20));
         //root.setAlignment(Pos.CENTER);
         root.setMinSize(windowWidth,windowHeight);
 
@@ -40,7 +42,7 @@ public class GameView {
         //add side coords to view
         VBox boardCoordContainer = new VBox();
         HBox sideCoordAndBoardContainer = new HBox();
-        sideCoordAndBoardContainer.getChildren().add(makeSideBoardCoords());
+        //sideCoordAndBoardContainer.getChildren().add(makeSideBoardCoords());
 
 
 
@@ -69,7 +71,7 @@ public class GameView {
             //add the actual board in
             sideCoordAndBoardContainer.getChildren().add(board);
         }
-        boardCoordContainer.getChildren().add(makeTopBoardCoords());
+        //boardCoordContainer.getChildren().add(makeTopBoardCoords());
         boardCoordContainer.getChildren().add(sideCoordAndBoardContainer);
         //put this whole shabang in the root, an HBox
         root.getChildren().add(boardCoordContainer);
@@ -104,42 +106,43 @@ public class GameView {
         rightSideContainer.getChildren().add(deadPieceHolderBlack);
     }
 
-    /**
-     * makes the side board coords
-     * @return a Vbox containing the coords
-     */
-    public VBox makeSideBoardCoords(){
-        VBox sideBoardCoords = new VBox(56);
-        sideBoardCoords.setPadding(new Insets(10));
-        for (int i = 0; i < 8; i++) {
-            Text coord = new Text();
-            coord.setFont(new Font(20));
-            coord.setText(String.valueOf(i));
-            sideBoardCoords.getChildren().add(coord);
-        }
-        return sideBoardCoords;
-    }
-
-
-    /**
-     * makes the top board coords
-     * @return a Hbox containing the coords
-     */
-    public HBox makeTopBoardCoords(){
-        HBox coords = new HBox(67);
-        coords.setPadding(new Insets(10));
-        Region spacer = new Region();
-        spacer.setPrefWidth(0);
-        coords.getChildren().add(spacer);
-        for (int i = 0; i < 8; i++) {
-            Text coord = new Text();
-            coord.setFont(new Font(20));
-            coord.setText(String.valueOf(i));
-            coords.getChildren().add(coord);
-        }
-        return coords;
-    }
-
+//
+//    /**
+//     * makes the side board coords
+//     * @return a Vbox containing the coords
+//     */
+//    public VBox makeSideBoardCoords(){
+//        VBox sideBoardCoords = new VBox(56);
+//        sideBoardCoords.setPadding(new Insets(10));
+//        for (int i = 0; i < 8; i++) {
+//            Text coord = new Text();
+//            coord.setFont(new Font(20));
+//            coord.setText(String.valueOf(i));
+//            sideBoardCoords.getChildren().add(coord);
+//        }
+//        return sideBoardCoords;
+//    }
+//
+//
+//    /**
+//     * makes the top board coords
+//     * @return a Hbox containing the coords
+//     */
+//    public HBox makeTopBoardCoords(){
+//        HBox coords = new HBox(67);
+//        coords.setPadding(new Insets(10));
+//        Region spacer = new Region();
+//        spacer.setPrefWidth(0);
+//        coords.getChildren().add(spacer);
+//        for (int i = 0; i < 8; i++) {
+//            Text coord = new Text();
+//            coord.setFont(new Font(20));
+//            coord.setText(String.valueOf(i));
+//            coords.getChildren().add(coord);
+//        }
+//        return coords;
+//    }
+//
     //TODO change this up probably
     /**
      * grabs the piece image at the specified spot and puts it in its respective deadpiece holder depending on team
