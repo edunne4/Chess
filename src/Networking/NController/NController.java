@@ -41,7 +41,8 @@ public class NController extends Controller {
     }
 
     private void simulateClick(Movement opponentsMove) {
-        currentSquareSelected = opponentsMove.getInitialSquare();
+        currentSquareSelected = theModel.getBoard().getSquareAt(opponentsMove.getInitialSquare().getRow(),
+                opponentsMove.getInitialSquare().getCol());
         SquareView squareViewClicked = theView.getBoard().getSquareAt(opponentsMove.getFinalSquare().getRow(), opponentsMove.getFinalSquare().getCol());
         squareWasClicked(squareViewClicked);
     }
