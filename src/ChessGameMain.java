@@ -1,5 +1,6 @@
 import Controller.*;
 import Model.GameManager;
+import View.GameMenuBar;
 import View.GameView;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -30,9 +31,6 @@ public class ChessGameMain extends Application {
     @Override
     public void start(Stage primaryStage) {
         theController = new Controller(theView,theModel);
-
-        //MenuBar menuBar = new MenuBar();
-        //GameMenu gameMenuBar = new GameMenu();
 
         Scene scene = new Scene(theView.getRoot());
         primaryStage.setTitle("Chess");

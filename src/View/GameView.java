@@ -1,7 +1,6 @@
 package View;
 
 import Model.GameManager;
-import View.BoardView;
 import View.View2D.BoardView2D;
 import View.View2D.SquareView2D;
 import View.View3D.BoardView3D;
@@ -9,7 +8,6 @@ import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.SubScene;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -22,7 +20,8 @@ public class GameView {
     //TODO - change this
     private boolean is3D = false;
 
-    private HBox root;
+    private HBox gameHBox;
+    private VBox root;
     VBox rightSideContainer;
     private int windowHeight = 750;
     private int windowWidth = 900;
@@ -35,10 +34,11 @@ public class GameView {
 
     public GameView(GameManager model) {
         this.gm = model;
-        //make root which is a set of horizontal boxes
-        root = new HBox();
+        //make gameHBox which is a set of horizontal boxes
+        gameHBox = new HBox();
+
         //root.setAlignment(Pos.CENTER);
-        root.setMinSize(windowWidth,windowHeight);
+        gameHBox.setMinSize(windowWidth,windowHeight);
 
 
         //***************************************************************
@@ -47,7 +47,7 @@ public class GameView {
         String imageLink = "https://images.freecreatives.com/wp-content/uploads/2016/01/Free-Photoshop-Purity-Wood-Texture.jpg";//"https://images.freecreatives.com/wp-content/uploads/2016/01/High-Quality-Oak-Seamless-Wood-Texture.jpg";//"https://tr.rbxcdn.com/7324f5e7134f93c9c9e41e30c4d5bb0a/420/420/Decal/Png";
         BackgroundImage bgImage = new BackgroundImage(new Image(imageLink), BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
         Background background = new Background(bgImage);
-        root.setBackground(background);
+        gameHBox.setBackground(background);
         //***************************************************************
 
         //add side coords to view
@@ -84,13 +84,18 @@ public class GameView {
         boardCoordContainer.getChildren().add(makeTopBoardCoords());
         boardCoordContainer.getChildren().add(sideCoordAndBoardContainer);
         //put this whole shabang in the root, an HBox
-        root.getChildren().add(boardCoordContainer);
+        gameHBox.getChildren().add(boardCoordContainer);
 
 
         rightSideContainer = new VBox();
         createDeadPieceHolders();
         makeInCheckText();
-        root.getChildren().add(rightSideContainer);
+        gameHBox.getChildren().add(rightSideContainer);
+
+        //make the menu bar and add the menu bar and the gameHBox to the root
+        GameMenuBar gameMenuBar = new GameMenuBar();
+        root = new VBox();
+        root.getChildren().addAll(gameMenuBar,gameHBox);
 
     }
 
@@ -197,7 +202,7 @@ public class GameView {
         return board;
     }
 
-    public HBox getRoot() {
+    public VBox getRoot() {
         return root;
     }
 

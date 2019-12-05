@@ -34,7 +34,7 @@ public class GameMenuBar extends MenuBar {
 
         super();
 
-        Menu view = new Menu("View (2D/3D");
+        Menu view = new Menu("View (2D/3D)");
         MenuItem view2D = new MenuItem("2D");
         MenuItem view3D = new MenuItem("3D");
         view.getItems().addAll(view2D,view3D);
@@ -53,7 +53,7 @@ public class GameMenuBar extends MenuBar {
         MenuItem quitGame = new MenuItem("Quit");
         quitMenu.getItems().addAll(quitSaveGame,quitGame);
 
-        this.getMenus().add(quitMenu);
+        this.getMenus().addAll(gameSettingsMenu,quitMenu);
 
 
     }
