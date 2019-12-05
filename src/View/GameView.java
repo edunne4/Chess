@@ -18,7 +18,7 @@ import javafx.scene.text.Text;
 public class GameView {
 
     //TODO - change this
-    private boolean is3D = false;
+    private boolean is3D = true;
 
     private HBox gameHBox;
     private VBox root;
