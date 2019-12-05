@@ -4,15 +4,22 @@ import Model.GameManager;
 import View.View2D.BoardView2D;
 import View.View2D.SquareView2D;
 import View.View3D.BoardView3D;
+import View.View3D.SquareView3D;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
+import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.transform.NonInvertibleTransformException;
+import javafx.scene.transform.Rotate;
+import javafx.scene.transform.Transform;
+import javafx.scene.transform.Translate;
 
 
 public class GameView {
@@ -31,6 +38,9 @@ public class GameView {
     GameManager gm;
     Text inCheckTextBlack;
     Text inCheckTextWhite;
+
+    private PerspectiveCamera camera;
+    private String CAMERA = "Cam2";
 
     public GameView(GameManager model) {
         this.gm = model;
@@ -59,11 +69,12 @@ public class GameView {
         if(is3D) {
             board = new BoardView3D();
             //***********************************
-            //Right now this stuff is only for 3D
+            //Right now this stuff is only
+            // for 3D
             Group miniRoot = new Group();
 
             //initialize the camera
-            PerspectiveCamera camera = new PerspectiveCamera(true);
+            camera = new PerspectiveCamera(true);
             //camera.setVerticalFieldOfView(false);
             camera.setNearClip(1.0);
             camera.setFarClip(10000.0);
@@ -73,6 +84,7 @@ public class GameView {
             boardScene.setCamera(camera);
             boardScene.setFill(Color.GRAY);
             miniRoot.getChildren().add(board);
+            changeCameraOnClick(boardScene);
 
             sideCoordAndBoardContainer.getChildren().add(boardScene);
             //***********************************
@@ -188,6 +200,49 @@ public class GameView {
         inCheckTextWhite.setText("");
         rightSideContainer.getChildren().add(inCheckTextBlack);
         rightSideContainer.getChildren().add(inCheckTextWhite);
+    }
+
+    private void changeCameraOnClick(SubScene scene) {
+
+        Transform cam1A = new Translate(0,1800,-2000);
+        Transform cam1B = new Rotate(40,Rotate.X_AXIS);
+
+        Transform cam2A = new Translate(0,SquareView3D.SQUARE_SIZE*8,0);
+        Transform cam2B = new Rotate(180,Rotate.X_AXIS);
+
+        Transform cam2C = new Translate(SquareView3D.SQUARE_SIZE*8,0,0);
+        Transform cam2D = new Rotate(180,Rotate.Y_AXIS);
+
+        camera.getTransforms().addAll(cam1A,cam1B); //set camera angle for view 1
+
+        scene.setOnKeyPressed(event -> {
+            System.out.println(CAMERA);
+            if (event.getCode() == KeyCode.C) {
+
+                camera.getTransforms().addAll(cam1A,cam1B);
+                if (CAMERA == "Cam1") {
+                    try {
+                        camera.getTransforms().addAll(cam1B.createInverse(),cam1A.createInverse());
+                        board.getTransforms().addAll(cam2D.createInverse(),cam2C.createInverse(),cam2B.createInverse(),cam2A.createInverse());
+                        CAMERA = "Cam2";
+                    } catch (NonInvertibleTransformException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else if (CAMERA == "Cam2")  {
+                    try {
+                        camera.getTransforms().addAll(cam1B.createInverse(),cam1A.createInverse());
+                        board.getTransforms().addAll(cam2A,cam2B,cam2C,cam2D);
+                    } catch (NonInvertibleTransformException e) {
+                        e.printStackTrace();
+                    }
+                    CAMERA = "Cam1";
+
+                }
+
+                System.out.println(CAMERA);
+            }
+        });
     }
 
     public Text getInCheckTextBlack() {
