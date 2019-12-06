@@ -16,7 +16,7 @@ public enum PieceEnum {
         this.fileName3D = fileName3D;
     }
 
-    public String getFilename2D() {
+    public String getFileName2D() {
         return fileName2D;
     }
 

@@ -58,7 +58,7 @@ public class ChessPiece3D extends MeshView {
         //create a StlMeshImporter object and try parsing with the filename
         StlMeshImporter stlImporter = new StlMeshImporter();
         try {
-            stlImporter.read(this.getClass().getResource(piece.getFilename2D()));
+            stlImporter.read(this.getClass().getResource(piece.getFileName3D()));
         }
         catch (ImportException e) {
             System.err.println("Error. STL file does not exist.");

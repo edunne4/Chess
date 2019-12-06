@@ -1,26 +1,34 @@
-package SinglePlatform.View;
+package View;
 
-import SinglePlatform.Model.GameManager;
-import SinglePlatform.View.View2D.BoardView2D;
-import SinglePlatform.View.View2D.SquareView2D;
-import SinglePlatform.View.View3D.BoardView3D;
+import Model.GameManager;
+import View.BoardView;
+import View.View2D.BoardView2D;
+import View.View2D.SquareView2D;
+import View.View3D.BoardView3D;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
+import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.transform.NonInvertibleTransformException;
+import javafx.scene.transform.Rotate;
+import javafx.scene.transform.Transform;
+import javafx.scene.transform.Translate;
 
 
 public class GameView {
 
     //TODO - change this
-    private boolean is3D = false;
+    private boolean is3D = true;
 
-    private HBox root;
+    private HBox gameHBox;
+    private VBox root;
     VBox rightSideContainer;
     private int windowHeight = 750;
     private int windowWidth = 900;
@@ -31,12 +39,16 @@ public class GameView {
     Text inCheckTextBlack;
     Text inCheckTextWhite;
 
+    private PerspectiveCamera camera;
+    private String CAMERA = "Cam2";
+
     public GameView(GameManager model) {
         this.gm = model;
-        //make root which is a set of horizontal boxes
-        root = new HBox();
+        //make gameHBox which is a set of horizontal boxes
+        gameHBox = new HBox();
+
         //root.setAlignment(Pos.CENTER);
-        root.setMinSize(windowWidth,windowHeight);
+        gameHBox.setMinSize(windowWidth,windowHeight);
 
 
         //***************************************************************
@@ -45,7 +57,7 @@ public class GameView {
         String imageLink = "https://images.freecreatives.com/wp-content/uploads/2016/01/Free-Photoshop-Purity-Wood-Texture.jpg";//"https://images.freecreatives.com/wp-content/uploads/2016/01/High-Quality-Oak-Seamless-Wood-Texture.jpg";//"https://tr.rbxcdn.com/7324f5e7134f93c9c9e41e30c4d5bb0a/420/420/Decal/Png";
         BackgroundImage bgImage = new BackgroundImage(new Image(imageLink), BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
         Background background = new Background(bgImage);
-        root.setBackground(background);
+        gameHBox.setBackground(background);
         //***************************************************************
 
         //add side coords to view
@@ -57,11 +69,12 @@ public class GameView {
         if(is3D) {
             board = new BoardView3D();
             //***********************************
-            //Right now this stuff is only for 3D
+            //Right now this stuff is only
+            // for 3D
             Group miniRoot = new Group();
 
             //initialize the camera
-            PerspectiveCamera camera = new PerspectiveCamera(true);
+            camera = new PerspectiveCamera(true);
             //camera.setVerticalFieldOfView(false);
             camera.setNearClip(1.0);
             camera.setFarClip(10000.0);
@@ -71,6 +84,7 @@ public class GameView {
             boardScene.setCamera(camera);
             boardScene.setFill(Color.GRAY);
             miniRoot.getChildren().add(board);
+            changeCameraOnClick(boardScene);
 
             sideCoordAndBoardContainer.getChildren().add(boardScene);
             //***********************************
@@ -82,13 +96,18 @@ public class GameView {
         boardCoordContainer.getChildren().add(makeTopBoardCoords());
         boardCoordContainer.getChildren().add(sideCoordAndBoardContainer);
         //put this whole shabang in the root, an HBox
-        root.getChildren().add(boardCoordContainer);
+        gameHBox.getChildren().add(boardCoordContainer);
 
 
         rightSideContainer = new VBox();
         createDeadPieceHolders();
         makeInCheckText();
-        root.getChildren().add(rightSideContainer);
+        gameHBox.getChildren().add(rightSideContainer);
+
+        //make the menu bar and add the menu bar and the gameHBox to the root
+        GameMenuBar gameMenuBar = new GameMenuBar();
+        root = new VBox();
+        root.getChildren().addAll(gameMenuBar,gameHBox);
 
     }
 
@@ -183,6 +202,49 @@ public class GameView {
         rightSideContainer.getChildren().add(inCheckTextWhite);
     }
 
+    private void changeCameraOnClick(SubScene scene) {
+
+        Transform cam1A = new Translate(0,1800,-2000);
+        Transform cam1B = new Rotate(40,Rotate.X_AXIS);
+
+        Transform cam2A = new Translate(0,SquareView3D.SQUARE_SIZE*8,0);
+        Transform cam2B = new Rotate(180,Rotate.X_AXIS);
+
+        Transform cam2C = new Translate(SquareView3D.SQUARE_SIZE*8,0,0);
+        Transform cam2D = new Rotate(180,Rotate.Y_AXIS);
+
+        camera.getTransforms().addAll(cam1A,cam1B); //set camera angle for view 1
+
+        scene.setOnKeyPressed(event -> {
+            System.out.println(CAMERA);
+            if (event.getCode() == KeyCode.C) {
+
+                camera.getTransforms().addAll(cam1A,cam1B);
+                if (CAMERA == "Cam1") {
+                    try {
+                        camera.getTransforms().addAll(cam1B.createInverse(),cam1A.createInverse());
+                        board.getTransforms().addAll(cam2D.createInverse(),cam2C.createInverse(),cam2B.createInverse(),cam2A.createInverse());
+                        CAMERA = "Cam2";
+                    } catch (NonInvertibleTransformException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else if (CAMERA == "Cam2")  {
+                    try {
+                        camera.getTransforms().addAll(cam1B.createInverse(),cam1A.createInverse());
+                        board.getTransforms().addAll(cam2A,cam2B,cam2C,cam2D);
+                    } catch (NonInvertibleTransformException e) {
+                        e.printStackTrace();
+                    }
+                    CAMERA = "Cam1";
+
+                }
+
+                System.out.println(CAMERA);
+            }
+        });
+    }
+
     public Text getInCheckTextBlack() {
         return inCheckTextBlack;
     }
@@ -195,7 +257,7 @@ public class GameView {
         return board;
     }
 
-    public HBox getRoot() {
+    public VBox getRoot() {
         return root;
     }
 

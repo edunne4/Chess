@@ -44,7 +44,7 @@ public class PieceView2D {
 
         BufferedImage bufferedImage;
         try {
-            bufferedImage = ImageIO.read(new URL(piece.getFilename2D()));
+            bufferedImage = ImageIO.read(new URL(piece.getFileName2D()));
             BufferedImage coloredImage = colorImage(bufferedImage,color);
             Image image = SwingFXUtils.toFXImage(coloredImage, null);
             view = new ImageView(image);

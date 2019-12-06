@@ -1,4 +1,4 @@
-package SinglePlatform.View;/* *****************************************
+package View;/* *****************************************
  * CSCI205 - Software Engineering and Design
  * Fall 2019
  * Instructor: Prof. Brian King
@@ -10,17 +10,15 @@ package SinglePlatform.View;/* *****************************************
  * Time: 11:43 PM
  *
  * Project: csci205FinalProject
- * Package: SinglePlatform.View
- * Class: SinglePlatform.View.GameMenu
+ * Package: View
+ * Class: View.GameMenu
  *
  * Description:
  *
  * ****************************************
  */
 
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
@@ -30,19 +28,21 @@ import java.util.List;
 
 public class GameMenuBar extends MenuBar {
 
+    //TODO - set selected RadioMenuButtons on game load.
     public GameMenuBar() {
 
         super();
 
-        Menu view = new Menu("SinglePlatform.View (2D/3D");
+        Menu view = new Menu("View (2D/3D");
         MenuItem view2D = new MenuItem("2D");
         MenuItem view3D = new MenuItem("3D");
         view.getItems().addAll(view2D,view3D);
+        viewGroup.getToggles().addAll(view2D,view3D);
 
-        Menu player1PieceColorMenu = new Menu("ChessParts.Player 1 Piece Color");
+        Menu player1PieceColorMenu = new Menu("Player 1 Piece Color");
         createColorOptions(player1PieceColorMenu);
 
-        Menu player2PieceColorMenu = new Menu("ChessParts.Player 2 Piece Color");
+        Menu player2PieceColorMenu = new Menu("Player 2 Piece Color");
         createColorOptions(player2PieceColorMenu);
 
         Menu gameSettingsMenu = new Menu("Settings");
@@ -53,7 +53,7 @@ public class GameMenuBar extends MenuBar {
         MenuItem quitGame = new MenuItem("Quit");
         quitMenu.getItems().addAll(quitSaveGame,quitGame);
 
-        this.getMenus().add(quitMenu);
+        this.getMenus().addAll(gameSettingsMenu,quitMenu);
 
 
     }
@@ -63,17 +63,23 @@ public class GameMenuBar extends MenuBar {
         List<Color> colorList = new ArrayList<>();
 
         colorList.add(Color.RED);
-        colorList.add(Color.BLUE);
-        colorList.add(Color.GREEN);
-        colorList.add(Color.YELLOW);
-        colorList.add(Color.PURPLE);
         colorList.add(Color.ORANGE);
+        colorList.add(Color.YELLOW);
+        colorList.add(Color.GREEN);
+        colorList.add(Color.BLUE);
+        colorList.add(Color.PURPLE);
+        colorList.add(Color.WHITE);
+
 
         for (Color color : colorList) {
-            MenuItem menuItem = new MenuItem(color.toString());
+            RadioMenuItem menuItem = new RadioMenuItem(String.valueOf(color.toString()));
+            ToggleGroup toggleGroup = new ToggleGroup();
+
             Shape icon = new Circle(iconSize,color);
             menuItem.setGraphic(icon);
+            icon.setStroke(Color.BLACK);
 
+            toggleGroup.getToggles().add(menuItem);
             menu.getItems().add(menuItem);
         }
 

@@ -1,15 +1,12 @@
-package SinglePlatform;
-
-import Networking.NController.NController;
-import SinglePlatform.Controller.*;
-import SinglePlatform.Model.GameManager;
-import SinglePlatform.View.GameView;
+import Controller.*;
+import Model.GameManager;
+import View.GameMenuBar;
+import View.GameView;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.MenuBar;
 import javafx.stage.Stage;
-
-import java.awt.*;
-import java.io.IOException;
 
 public class ChessGameMain extends Application {
 
@@ -32,17 +29,16 @@ public class ChessGameMain extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws IOException, ClassNotFoundException {
+    public void start(Stage primaryStage) {
+        theController = new Controller(theView,theModel);
 
         //MenuBar menuBar = new MenuBar();
         //GameMenu gameMenuBar = new GameMenu();
-        theController = new Controller(theView,theModel);
 
         Scene scene = new Scene(theView.getRoot());
         primaryStage.setTitle("Chess");
         primaryStage.setScene(scene);
         primaryStage.sizeToScene();
         primaryStage.show();
-
     }
 }
