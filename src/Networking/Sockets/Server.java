@@ -20,7 +20,7 @@
 package Networking.Sockets;
 
 import ChessParts.Movement;
-import Networking.NController.NController;
+import MVC.Controller.NetController;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -44,7 +44,7 @@ public class Server{
     //IP Address
     private static String IPAddress;
     //Network Controller
-    private NController nController;
+    private NetController netController;
 
 
     /**
