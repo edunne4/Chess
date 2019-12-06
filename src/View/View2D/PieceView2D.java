@@ -27,7 +27,6 @@ import javafx.scene.paint.Color;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.awt.image.WritableRaster;
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
@@ -45,7 +44,7 @@ public class PieceView2D {
 
         BufferedImage bufferedImage;
         try {
-            bufferedImage = ImageIO.read(new URL(piece.getFilename2D()));
+            bufferedImage = ImageIO.read(new URL(piece.getFileName2D()));
             BufferedImage coloredImage = colorImage(bufferedImage,color);
             Image image = SwingFXUtils.toFXImage(coloredImage, null);
             view = new ImageView(image);
