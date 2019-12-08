@@ -19,6 +19,7 @@
 package Controller;
 
 import ChessParts.ChessPieces.ChessPiece;
+import ChessParts.ChessPieces.King;
 import ChessParts.Square;
 import ChessParts.Team;
 import Model.GameManager;
@@ -119,10 +120,13 @@ public class Controller {
                 //if there is a piece at the new location(thisSquare), kill it
                 if (killedPiece != null) {
                     if (killedPiece.getTeam() == Team.WHITE) {
+                        if(killedPiece instanceof King){theView.createEndGameWindow(Team.BLACK);}
                         theView.killPiece(newSquare.getRow(), newSquare.getCol(), theView.getDeadPieceHolderWhite());
                     } else {
+                        if(killedPiece instanceof King){theView.createEndGameWindow(Team.WHITE);}
                         theView.killPiece(newSquare.getRow(), newSquare.getCol(), theView.getDeadPieceHolderBlack());
                     }
+                    //if its a king. the game's over.
                 }
                 //move piece to the new square in the view
                 theView.getBoard().movePiece(currentSquareSelected.getRow(), currentSquareSelected.getCol(), newSquare.getRow(), newSquare.getCol());

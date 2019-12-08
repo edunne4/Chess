@@ -1,5 +1,6 @@
 package View;
 
+import ChessParts.Team;
 import Model.GameManager;
 import View.View2D.BoardView2D;
 import View.View2D.SquareView2D;
@@ -20,12 +21,13 @@ import javafx.scene.transform.NonInvertibleTransformException;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Transform;
 import javafx.scene.transform.Translate;
+import javafx.stage.Stage;
 
 
 public class GameView {
 
     //TODO - change this
-    private boolean is3D = true;
+    private boolean is3D = false;
 
     private HBox gameHBox;
     private VBox root;
@@ -267,5 +269,24 @@ public class GameView {
 
     public FlowPane getDeadPieceHolderBlack() {
         return deadPieceHolderBlack;
+    }
+
+    public void createEndGameWindow(Team winner){
+        String s = winner.toString() + " wins!";
+
+        Text endGameText = new Text(s);
+        endGameText.setFont(new Font(72));
+
+        VBox secondaryLayout = new VBox();
+        secondaryLayout.getChildren().add(endGameText);
+
+        Scene secondScene = new Scene(secondaryLayout, 400, 100);
+
+        // New window (Stage)
+        Stage endGameWindow = new Stage();
+        endGameWindow.setTitle("Game Over!");
+        endGameWindow.setScene(secondScene);
+
+        endGameWindow.show();
     }
 }
