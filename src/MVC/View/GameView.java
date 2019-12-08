@@ -1,14 +1,13 @@
 package MVC.View;
 
 import MVC.Model.GameManager;
+import MVC.View.NetworkingPopUps.HostGamePopUp;
 import MVC.View.View2D.PieceView2D;
 import MVC.View.View3D.ChessPiece3D;
 import MVC.View.View3D.SquareView3D;
 import MVC.View.View2D.BoardView2D;
 import MVC.View.View2D.SquareView2D;
 import MVC.View.View3D.BoardView3D;
-import MVC.View.networkingPopUps.HostGamePopUp;
-import MVC.View.networkingPopUps.JoinGamePopUp;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
@@ -50,6 +49,8 @@ public class GameView {
     private final GameMenuBar gameMenuBar;
 
     public GameView(GameManager model) throws UnknownHostException {
+
+        new HostGamePopUp();
 
         this.gm = model;
         //make gameHBox which is a set of horizontal boxes

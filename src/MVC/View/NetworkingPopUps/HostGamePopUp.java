@@ -17,7 +17,7 @@
  *
  * ****************************************
  */
-package MVC.View.networkingPopUps;
+package MVC.View.NetworkingPopUps;
 
 //Resource: https://alvinalexander.com/java/joptionpane-showinputdialog-examples
 
@@ -30,9 +30,17 @@ import java.net.UnknownHostException;
 
 public class HostGamePopUp {
 
-    InetAddress ip = InetAddress.getLocalHost();
+    InetAddress ip;
 
-    public HostGamePopUp() throws UnknownHostException {
+    {
+        try {
+            ip = InetAddress.getLocalHost();
+        } catch (UnknownHostException e) {
+            System.err.println("Unknown Host. Better check that out!");
+        }
+    }
+
+    public HostGamePopUp()  {
 
         JFrame frame = new JFrame("Host a Game");
 

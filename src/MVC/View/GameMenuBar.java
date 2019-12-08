@@ -40,7 +40,7 @@ public class GameMenuBar extends MenuBar {
 
         //create the game settings menu
         Menu view = new Menu("View (2D/3D)");
-        ToggleGroup viewGroup = new ToggleGroup();
+        viewGroup = new ToggleGroup();
         RadioMenuItem view2D = new RadioMenuItem("2D");
         RadioMenuItem view3D = new RadioMenuItem("3D");
         view.getItems().addAll(view2D,view3D);
@@ -112,12 +112,10 @@ public class GameMenuBar extends MenuBar {
             menu.getItems().add(menuItem);
         }
 
-    }
 
+    }
 
     public ToggleGroup getViewGroup() {
         return viewGroup;
     }
-
-
 }

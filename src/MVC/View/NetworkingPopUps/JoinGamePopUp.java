@@ -17,7 +17,7 @@
  *
  * ****************************************
  */
-package MVC.View.networkingPopUps;
+package MVC.View.NetworkingPopUps;
 
 //Resource: https://alvinalexander.com/java/joptionpane-showinputdialog-examples
 
