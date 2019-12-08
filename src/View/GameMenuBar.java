@@ -28,13 +28,15 @@ import java.util.List;
 
 public class GameMenuBar extends MenuBar {
 
+    private final ToggleGroup viewGroup;
+
     //TODO - set selected RadioMenuButtons on game load.
     public GameMenuBar() {
 
         super();
 
         Menu view = new Menu("View (2D/3D)");
-        ToggleGroup viewGroup = new ToggleGroup();
+        viewGroup = new ToggleGroup();
         RadioMenuItem view2D = new RadioMenuItem("2D");
         RadioMenuItem view3D = new RadioMenuItem("3D");
         view.getItems().addAll(view2D,view3D);
@@ -56,7 +58,6 @@ public class GameMenuBar extends MenuBar {
 
         this.getMenus().addAll(gameSettingsMenu,quitMenu);
 
-
     }
 
     private void createColorOptions(Menu menu) {
@@ -71,10 +72,10 @@ public class GameMenuBar extends MenuBar {
         colorList.add(Color.PURPLE);
         colorList.add(Color.WHITE);
 
+        ToggleGroup toggleGroup = new ToggleGroup();
 
         for (Color color : colorList) {
-            RadioMenuItem menuItem = new RadioMenuItem(String.valueOf(color.toString()));
-            ToggleGroup toggleGroup = new ToggleGroup();
+            RadioMenuItem menuItem = new RadioMenuItem(String.valueOf(color));
 
             Shape icon = new Circle(iconSize,color);
             menuItem.setGraphic(icon);
@@ -86,4 +87,11 @@ public class GameMenuBar extends MenuBar {
 
 
     }
+
+
+    public ToggleGroup getViewGroup() {
+        return viewGroup;
+    }
+
+
 }

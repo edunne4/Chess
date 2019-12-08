@@ -37,10 +37,6 @@ public class ChessPiece3D extends MeshView {
 
     private final int DEFAULT_SCALE = 2;
 
-    public void setPieceScale(int pieceScale) {
-        this.pieceScale = pieceScale;
-    }
-
     /**
      * A constructor to create a MeshView object from an STL file.
      * @param piece the STL file to be parsed and converted to a JavaFX MesView object
@@ -103,6 +99,10 @@ public class ChessPiece3D extends MeshView {
 
     public Color getPieceColor() {
         return pieceColor;
+    }
+
+    public void setPieceScale(int pieceScale) {
+        this.pieceScale = pieceScale;
     }
 
 

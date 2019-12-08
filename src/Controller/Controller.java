@@ -25,9 +25,9 @@ import Model.GameManager;
 import Model.RuleMaster;
 import View.GameView;
 import View.SquareView;
-import View.View2D.SquareView2D;
 import javafx.beans.binding.Bindings;
 import javafx.scene.Node;
+import javafx.scene.control.RadioMenuItem;
 
 import java.util.List;
 
@@ -46,9 +46,18 @@ public class Controller {
         this.theView = theView;
         this.theModel = theModel;
 
+        //set default values for menus
+        RadioMenuItem enable2DBtn = (RadioMenuItem)theView.getGameMenuBar().getViewGroup().getToggles().get(0);
+        enable2DBtn.setSelected(true);
+        restartGameAndView();
+    }
+
+    private void restartGameAndView() {
+        theView.reloadGameView();
 
         makeSquaresClickable();
         displayIfInCheck();
+        setUpMenuBar();
     }
 
     private void makeSquaresClickable() {
@@ -57,6 +66,34 @@ public class Controller {
             SquareView squareView = (SquareView) child;
             squareView.setOnMouseClicked(event -> squareWasClicked((SquareView) event.getSource()));
         }
+    }
+
+    private void setUpMenuBar() {
+        setUp2Dvs3DMenuClicksHandler();
+        bindColorsToPieces();
+    }
+
+    private void setUp2Dvs3DMenuClicksHandler() {
+        //TODO
+        //handle 2D button press
+        //must be an event handler because the view must be reloaded
+        RadioMenuItem enable2DBtn = (RadioMenuItem)theView.getGameMenuBar().getViewGroup().getToggles().get(0);
+        enable2DBtn.setOnAction(event -> {
+            theView.is3DProperty().setValue(false);
+            restartGameAndView();
+        });
+
+        //handle 3D button press
+        RadioMenuItem enable3DBtn = (RadioMenuItem)theView.getGameMenuBar().getViewGroup().getToggles().get(1);
+        enable3DBtn.setOnAction(event -> {
+            theView.is3DProperty().setValue(true);
+            restartGameAndView();
+        });
+
+    }
+
+    private void bindColorsToPieces() {
+        //TODO
     }
 
     /**

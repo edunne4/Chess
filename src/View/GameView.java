@@ -2,9 +2,12 @@ package View;
 
 import Model.GameManager;
 import View.View2D.BoardView2D;
+import View.View2D.PieceView2D;
 import View.View2D.SquareView2D;
 import View.View3D.BoardView3D;
+import View.View3D.ChessPiece3D;
 import View.View3D.SquareView3D;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
@@ -25,11 +28,12 @@ import javafx.scene.transform.Translate;
 public class GameView {
 
     //TODO - change this
-    private boolean is3D = true;
+    private SimpleBooleanProperty is3D = new SimpleBooleanProperty(false);
 
     private HBox gameHBox;
     private VBox root;
     VBox rightSideContainer;
+    private HBox sideCoordAndBoardContainer;
     private int windowHeight = 750;
     private int windowWidth = 900;
     BoardView board;
@@ -41,6 +45,7 @@ public class GameView {
 
     private PerspectiveCamera camera;
     private String CAMERA = "Cam2";
+    private final GameMenuBar gameMenuBar;
 
     public GameView(GameManager model) {
         this.gm = model;
@@ -62,15 +67,38 @@ public class GameView {
 
         //add side coords to view
         VBox boardCoordContainer = new VBox();
-        HBox sideCoordAndBoardContainer = new HBox();
+        sideCoordAndBoardContainer = new HBox();
+
+        reloadGameView();
+
+        boardCoordContainer.getChildren().add(sideCoordAndBoardContainer);
+        //put this whole shabang in the root, an HBox
+        gameHBox.getChildren().add(boardCoordContainer);
+
+
+        rightSideContainer = new VBox();
+        createDeadPieceHolders();
+        makeInCheckText();
+        gameHBox.getChildren().add(rightSideContainer);
+
+        //make the menu bar and add the menu bar and the gameHBox to the root
+        gameMenuBar = new GameMenuBar();
+        root = new VBox();
+        root.getChildren().addAll(gameMenuBar,gameHBox);
+
+    }
+
+    public void reloadGameView(){
+        sideCoordAndBoardContainer.getChildren().clear();
+
         sideCoordAndBoardContainer.getChildren().add(makeSideBoardCoords());
 
+        //TODO - reset game model
+        this.gm.resetGame();
 
-        if(is3D) {
+        if(is3D.getValue()) {
             board = new BoardView3D();
             //***********************************
-            //Right now this stuff is only
-            // for 3D
             Group miniRoot = new Group();
 
             //initialize the camera
@@ -93,21 +121,6 @@ public class GameView {
             //add the actual board in
             sideCoordAndBoardContainer.getChildren().add(board);
         }
-        boardCoordContainer.getChildren().add(makeTopBoardCoords());
-        boardCoordContainer.getChildren().add(sideCoordAndBoardContainer);
-        //put this whole shabang in the root, an HBox
-        gameHBox.getChildren().add(boardCoordContainer);
-
-
-        rightSideContainer = new VBox();
-        createDeadPieceHolders();
-        makeInCheckText();
-        gameHBox.getChildren().add(rightSideContainer);
-
-        //make the menu bar and add the menu bar and the gameHBox to the root
-        GameMenuBar gameMenuBar = new GameMenuBar();
-        root = new VBox();
-        root.getChildren().addAll(gameMenuBar,gameHBox);
 
     }
 
@@ -124,8 +137,8 @@ public class GameView {
         Text deadPieceHolderBlackName = new Text();
         deadPieceHolderBlackName.setFont(new Font(20));
         deadPieceHolderWhiteName.setFont(new Font(20));
-        deadPieceHolderBlackName.setText("Captured Black Pieces:");
-        deadPieceHolderWhiteName.setText("Captured White Pieces:");
+        deadPieceHolderBlackName.setText("Captured Player Two Pieces:");
+        deadPieceHolderWhiteName.setText("Captured Player One Pieces:");
 
         rightSideContainer.getChildren().add(deadPieceHolderWhiteName);
         rightSideContainer.getChildren().add(deadPieceHolderWhite);
@@ -173,16 +186,19 @@ public class GameView {
     /**
      * grabs the piece image at the specified spot and puts it in its respective deadpiece holder depending on team
      * @param row the row of the square
-     * @param col the coumn of the square
+     * @param col the column of the square
      * @param deadPieceHolder the correct team's dead piece holder
      */
     public void killPiece(int row, int col, FlowPane deadPieceHolder){
-        if(!is3D){
+        if(is3D.getValue()){
+            SquareView3D oldLocationSquare = (SquareView3D)board.getSquareAt(row,col);
+            ChessPiece3D pieceKilled = oldLocationSquare.removePieceFromSquare();
+
+            deadPieceHolder.getChildren().add(new PieceView2D(pieceKilled.getPieceType(), pieceKilled.getPieceColor()).getView());
+        } else {
             SquareView2D oldLocationSquare = (SquareView2D)board.getSquareAt(row,col);
             deadPieceHolder.getChildren().add(oldLocationSquare.getPiece());
             oldLocationSquare.getChildren().clear();
-        } else {
-
         }
     }
 
@@ -267,5 +283,17 @@ public class GameView {
 
     public FlowPane getDeadPieceHolderBlack() {
         return deadPieceHolderBlack;
+    }
+
+    public boolean is3D() {
+        return is3D.get();
+    }
+
+    public SimpleBooleanProperty is3DProperty() {
+        return is3D;
+    }
+
+    public GameMenuBar getGameMenuBar() {
+        return gameMenuBar;
     }
 }
