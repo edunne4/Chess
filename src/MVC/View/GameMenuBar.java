@@ -31,6 +31,8 @@ import java.util.List;
 
 public class GameMenuBar extends MenuBar {
 
+    private final ToggleGroup viewGroup;
+
     //TODO - set selected RadioMenuButtons on game load.
     public GameMenuBar() {
 
@@ -97,10 +99,10 @@ public class GameMenuBar extends MenuBar {
         colorList.add(Color.BLACK);
         colorList.add(Color.DARKRED);
 
+        ToggleGroup toggleGroup = new ToggleGroup();
 
         for (Color color : colorList) {
-            RadioMenuItem menuItem = new RadioMenuItem(String.valueOf(color.toString()));
-            ToggleGroup toggleGroup = new ToggleGroup();
+            RadioMenuItem menuItem = new RadioMenuItem(String.valueOf(color));
 
             Shape icon = new Circle(iconSize,color);
             menuItem.setGraphic(icon);
@@ -111,4 +113,11 @@ public class GameMenuBar extends MenuBar {
         }
 
     }
+
+
+    public ToggleGroup getViewGroup() {
+        return viewGroup;
+    }
+
+
 }

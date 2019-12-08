@@ -40,6 +40,11 @@ public class GameManager {
     private RuleMaster ruleMaster;
 
     public GameManager() {
+        resetGame();
+    }
+
+    public void resetGame(){
+        currentTurn = Team.WHITE;
         this.board = new ChessBoard();
         this.ruleMaster = new RuleMaster();
     }
