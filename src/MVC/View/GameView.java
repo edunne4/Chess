@@ -5,6 +5,8 @@ import MVC.View.View3D.SquareView3D;
 import MVC.View.View2D.BoardView2D;
 import MVC.View.View2D.SquareView2D;
 import MVC.View.View3D.BoardView3D;
+import MVC.View.networkingPopUps.HostGamePopUp;
+import MVC.View.networkingPopUps.JoinGamePopUp;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
@@ -19,6 +21,8 @@ import javafx.scene.transform.NonInvertibleTransformException;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Transform;
 import javafx.scene.transform.Translate;
+
+import java.net.UnknownHostException;
 
 
 public class GameView {
@@ -41,7 +45,8 @@ public class GameView {
     private PerspectiveCamera camera;
     private String CAMERA = "Cam2";
 
-    public GameView(GameManager model) {
+    public GameView(GameManager model) throws UnknownHostException {
+
         this.gm = model;
         //make gameHBox which is a set of horizontal boxes
         gameHBox = new HBox();
