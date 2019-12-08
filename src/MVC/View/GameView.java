@@ -1,11 +1,6 @@
 package MVC.View;
 
 import ChessParts.Team;
-import Model.GameManager;
-import View.View2D.BoardView2D;
-import View.View2D.SquareView2D;
-import View.View3D.BoardView3D;
-import View.View3D.SquareView3D;
 import MVC.Model.GameManager;
 import MVC.View.NetworkingPopUps.HostGamePopUp;
 import MVC.View.View2D.PieceView2D;
@@ -32,7 +27,6 @@ import javafx.scene.transform.Transform;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 
-import java.net.UnknownHostException;
 
 
 public class GameView {
