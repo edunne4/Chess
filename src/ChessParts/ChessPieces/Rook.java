@@ -21,19 +21,21 @@ package ChessParts.ChessPieces;
 import ChessParts.ChessBoard;
 import ChessParts.Square;
 import ChessParts.Team;
+import MVC.View.PieceEnum;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Rooke extends ChessPiece {
-    private int[] movement = {1,1};
-    private boolean lateralMovementOnly = true;
-    private boolean diagonalMovementOnly = false;
-    private boolean canExtrapolateMovement = true;
-    private static final int POSSIBLEMOVES = 8;
+public class Rook extends ChessPiece {
+//    private int[] movement = {1,1};
+//    private boolean lateralMovementOnly = true;
+//    private boolean diagonalMovementOnly = false;
+//    private boolean canExtrapolateMovement = true;
+//    private static final int POSSIBLEMOVES = 8;
 
-    public Rooke(Team team) {
+    public Rook(Team team) {
         super(team);
+        pieceType = PieceEnum.ROOK;
     }
 
     /**

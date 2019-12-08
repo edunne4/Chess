@@ -50,10 +50,10 @@ public class BoardView3D extends BoardView {
             for (int col = 0; col < SIDE_LENGTH ; col++) {
                 SquareView3D square;
                 if ((col+row) % 2 == 0) {
-                    square = new SquareView3D(row, col, SQUARE1_COLOR);
+                    square = new SquareView3D(row, col, SQUARE2_COLOR);
                 }
                 else {
-                    square = new SquareView3D(row, col, SQUARE2_COLOR);
+                    square = new SquareView3D(row, col, SQUARE1_COLOR);
                 }
                 this.getChildren().add(square);
             }

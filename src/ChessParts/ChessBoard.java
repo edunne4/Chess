@@ -63,14 +63,14 @@ public class ChessBoard {
         //set up white team
         final int WHITE_ROW = 0;
         final int WHITE_PAWN_ROW = 1;
-        putPiece(new Rooke(Team.WHITE), WHITE_ROW,0);
+        putPiece(new Rook(Team.WHITE), WHITE_ROW,0);
         putPiece(new Knight(Team.WHITE), WHITE_ROW, 1);
         putPiece(new Bishop(Team.WHITE), WHITE_ROW, 2);
         putPiece(new Queen(Team.WHITE), WHITE_ROW, 3);
         putPiece(new King(Team.WHITE), WHITE_ROW, 4);
         putPiece(new Knight(Team.WHITE), WHITE_ROW, 6);
         putPiece(new Bishop(Team.WHITE), WHITE_ROW, 5);
-        putPiece(new Rooke(Team.WHITE), WHITE_ROW,7);
+        putPiece(new Rook(Team.WHITE), WHITE_ROW,7);
         for (int col = 0; col < BOARD_WIDTH; col++) {
             putPiece(new Pawn(Team.WHITE), WHITE_PAWN_ROW, col);
         }
@@ -78,14 +78,14 @@ public class ChessBoard {
         //set up black team
         final int BLACK_ROW = 7;
         final int BLACK_PAWN_ROW = 6;
-        putPiece(new Rooke(Team.BLACK), BLACK_ROW,0);
+        putPiece(new Rook(Team.BLACK), BLACK_ROW,0);
         putPiece(new Knight(Team.BLACK), BLACK_ROW, 1);
         putPiece(new Bishop(Team.BLACK), BLACK_ROW, 2);
         putPiece(new Queen(Team.BLACK), BLACK_ROW, 3);
         putPiece(new King(Team.BLACK), BLACK_ROW, 4);
         putPiece(new Knight(Team.BLACK), BLACK_ROW, 6);
         putPiece(new Bishop(Team.BLACK), BLACK_ROW, 5);
-        putPiece(new Rooke(Team.BLACK), BLACK_ROW,7);
+        putPiece(new Rook(Team.BLACK), BLACK_ROW,7);
         for (int col = 0; col < BOARD_WIDTH; col++) {
             putPiece(new Pawn(Team.BLACK), BLACK_PAWN_ROW, col);
         }

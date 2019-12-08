@@ -7,6 +7,7 @@ import MVC.View.View3D.SquareView3D;
 import MVC.View.View2D.BoardView2D;
 import MVC.View.View2D.SquareView2D;
 import MVC.View.View3D.BoardView3D;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
@@ -26,7 +27,7 @@ import javafx.scene.transform.Translate;
 public class GameView {
 
     //TODO - change this
-    private boolean is3D = true;
+    private SimpleBooleanProperty is3D = new SimpleBooleanProperty(false);
 
     private HBox gameHBox;
     private VBox root;
@@ -94,7 +95,7 @@ public class GameView {
         //TODO - reset game model
         this.gm.resetGame();
 
-        if(is3D) {
+        if(is3D.get()) {
             board = new BoardView3D();
             //***********************************
             Group miniRoot = new Group();
@@ -188,7 +189,7 @@ public class GameView {
      * @param deadPieceHolder the correct team's dead piece holder
      */
     public void killPiece(int row, int col, FlowPane deadPieceHolder){
-        if(is3D){
+        if(is3D.get()){
             SquareView3D oldLocationSquare = (SquareView3D)board.getSquareAt(row,col);
             ChessPiece3D pieceKilled = oldLocationSquare.removePieceFromSquare();
 
@@ -284,12 +285,16 @@ public class GameView {
     }
 
     public boolean is3D() {
+        return is3D.get();
+    }
+
+    public SimpleBooleanProperty is3DProperty() {
         return is3D;
     }
 
-    public void setIs3D(boolean is3D) {
-        this.is3D = is3D;
-    }
+//    public void setIs3D(boolean is3D) {
+//        this.is3D.setValue(is3D);
+//    }
 
     public GameMenuBar getGameMenuBar() {
         return gameMenuBar;

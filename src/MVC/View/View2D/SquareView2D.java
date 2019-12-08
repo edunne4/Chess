@@ -58,9 +58,9 @@ public class SquareView2D extends SquareView {
     public void highlight() {
         String squareColor;
         if ((row + col) % 2 == 0) {
-            squareColor = BoardView2D.LIGHT_HIGHLIGHT_HEX;
-        } else {
             squareColor = BoardView2D.DARK_HIGHLIGHT_HEX;
+        } else {
+            squareColor = BoardView2D.LIGHT_HIGHLIGHT_HEX;
         }
         this.setStyle("-fx-background-color: " + squareColor);
     }

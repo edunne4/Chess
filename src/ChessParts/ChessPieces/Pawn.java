@@ -23,6 +23,7 @@ package ChessParts.ChessPieces;
 import ChessParts.ChessBoard;
 import ChessParts.Square;
 import ChessParts.Team;
+import MVC.View.PieceEnum;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,7 @@ public class Pawn extends ChessPiece{
 
     public Pawn(Team team) {
         super(team);
+        pieceType = PieceEnum.PAWN;
     }
 
     /**

@@ -47,8 +47,12 @@ public class Controller {
         this.theView = theView;
         this.theModel = theModel;
 
-        //set default values for menus
+
+
         RadioMenuItem enable2DBtn = (RadioMenuItem)theView.getGameMenuBar().getViewGroup().getToggles().get(0);
+        //bind is3D to !2Dselected (or to 3DSelected, either one works)
+        theView.is3DProperty().bind(enable2DBtn.selectedProperty().not());
+        //set default values for menus
         enable2DBtn.setSelected(true);
         restartGameAndView();
     }
@@ -80,14 +84,12 @@ public class Controller {
         //must be an event handler because the view must be reloaded
         RadioMenuItem enable2DBtn = (RadioMenuItem)theView.getGameMenuBar().getViewGroup().getToggles().get(0);
         enable2DBtn.setOnAction(event -> {
-            theView.setIs3D(false);
             restartGameAndView();
         });
 
         //handle 3D button press
         RadioMenuItem enable3DBtn = (RadioMenuItem)theView.getGameMenuBar().getViewGroup().getToggles().get(1);
         enable3DBtn.setOnAction(event -> {
-            theView.setIs3D(true);
             restartGameAndView();
         });
 
@@ -149,6 +151,7 @@ public class Controller {
      */
     protected Movement attemptMovementTo(Square newSquare){
         Movement move = null;
+        //if there's currently a square selected
         if(currentSquareSelected != null) {
             //get the legal moves of the current square
             List<Square> legalMoves = theModel.getLegalMoves(currentSquareSelected);

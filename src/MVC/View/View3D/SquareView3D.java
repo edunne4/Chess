@@ -134,7 +134,12 @@ public class SquareView3D extends SquareView {
 //    }
 
     public void highlight() {
-        this.square.setMaterial(new PhongMaterial(Color.GREEN));
+
+        if ((row + col) % 2 == 0) {
+            this.square.setMaterial(new PhongMaterial(Color.GREEN));
+        } else {
+            this.square.setMaterial(new PhongMaterial(Color.LIGHTGREEN));
+        }
 
         if (hasPiece) {
             this.piece.selectPiece();

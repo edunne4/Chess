@@ -22,6 +22,7 @@ package ChessParts.ChessPieces;
 import ChessParts.ChessBoard;
 import ChessParts.Square;
 import ChessParts.Team;
+import MVC.View.PieceEnum;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,7 @@ import java.util.List;
 public class Queen extends ChessPiece {
     public Queen(Team team) {
         super(team);
+        pieceType = PieceEnum.QUEEN;
     }
 
     /**
