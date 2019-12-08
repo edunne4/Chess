@@ -21,17 +21,19 @@ package ChessParts.ChessPieces;
 import ChessParts.ChessBoard;
 import ChessParts.Square;
 import ChessParts.Team;
+import MVC.View.PieceEnum;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Knight extends ChessPiece{
-    private boolean lateralMovementOnly = true;
-    private boolean diagonalMovementOnly = false;
-    private boolean canExtrapolateMovement = true;
+//    private boolean lateralMovementOnly = true;
+//    private boolean diagonalMovementOnly = false;
+//    private boolean canExtrapolateMovement = true;
 
     public Knight(Team team) {
         super(team);
+        pieceType = PieceEnum.KNIGHT;
     }
 
 
@@ -61,23 +63,15 @@ public class Knight extends ChessPiece{
         int col = currentSquare.getCol();
         // Options based off the knights movement patterns
         //Can move in 1 vertical and 2 horizontal directions or 1 horizontal and 2 vertical
-        Square option1 = board.getSquareAt(row + 1, col + 2);
-        Square option2 = board.getSquareAt(row + 2, col + 1);
-        Square option3 = board.getSquareAt(row + 1, col - 2);
-        Square option4 = board.getSquareAt(row + 2, col - 1);
-        Square option5 = board.getSquareAt(row - 1, col + 2);
-        Square option6 = board.getSquareAt(row - 2, col + 1);
-        Square option7 = board.getSquareAt(row - 1, col - 2);
-        Square option8 = board.getSquareAt(row - 2, col - 1);
+        allMoves.add(board.getSquareAt(row + 1, col + 2));
+        allMoves.add(board.getSquareAt(row + 2, col + 1));
+        allMoves.add(board.getSquareAt(row + 1, col - 2));
+        allMoves.add(board.getSquareAt(row + 2, col - 1));
+        allMoves.add(board.getSquareAt(row - 1, col + 2));
+        allMoves.add(board.getSquareAt(row - 2, col + 1));
+        allMoves.add(board.getSquareAt(row - 1, col - 2));
+        allMoves.add(board.getSquareAt(row - 2, col - 1));
         //Add each option to the collection of all ideally possible moves
-        allMoves.add(option1);
-        allMoves.add(option2);
-        allMoves.add(option3);
-        allMoves.add(option4);
-        allMoves.add(option5);
-        allMoves.add(option6);
-        allMoves.add(option7);
-        allMoves.add(option8);
         return allMoves;
     }
 

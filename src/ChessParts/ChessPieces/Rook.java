@@ -6,15 +6,14 @@
  * Name: James Campbell
  * Section: 11 am
  * Date: 11/10/19
- * Time: 1:42 PM
+ * Time: 12:11 PM
  *
  * Project: CSCI205FinalProject
- * Package: ChessParts.ChessPieces
- * Class: Queen
+ * Package: ChessParts
+ * Class: Rooke
  *
  * Description:
- * A Queen piece class that holds the team of queen and can calculate the moves. Queen can move diagnolly as many pieces
- * and horizontally or vertically as many pieces.
+ * A rooke piece that is allowed to move in 4 lateral directions as many spaces as it wants
  * ****************************************
  */
 package ChessParts.ChessPieces;
@@ -27,10 +26,16 @@ import MVC.View.PieceEnum;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Queen extends ChessPiece {
-    public Queen(Team team) {
+public class Rook extends ChessPiece {
+//    private int[] movement = {1,1};
+//    private boolean lateralMovementOnly = true;
+//    private boolean diagonalMovementOnly = false;
+//    private boolean canExtrapolateMovement = true;
+//    private static final int POSSIBLEMOVES = 8;
+
+    public Rook(Team team) {
         super(team);
-        pieceType = PieceEnum.QUEEN;
+        pieceType = PieceEnum.ROOK;
     }
 
     /**
@@ -44,26 +49,22 @@ public class Queen extends ChessPiece {
     public List<Square> getLegalMoves(Square currentSquare, ChessBoard board) {
         List<Square> legalMoves = new ArrayList<>();
 
-        //Get horizontal and vertical directions
+
         legalMoves.addAll(checkDirection(currentSquare, board, 0, 1, MAX_DISTANCE)); //check forward
         legalMoves.addAll(checkDirection(currentSquare, board, 1, 0, MAX_DISTANCE)); //check right
         legalMoves.addAll(checkDirection(currentSquare, board, 0, -1, MAX_DISTANCE)); //check backward
         legalMoves.addAll(checkDirection(currentSquare, board, -1, 0, MAX_DISTANCE)); //check left
 
-        //Get Diagonal Directions
-        //check up and to the right
-        legalMoves.addAll(checkDirection(currentSquare, board, 1,1, MAX_DISTANCE));
-        //check down and to the right
-        legalMoves.addAll(checkDirection(currentSquare, board, -1,1, MAX_DISTANCE));
-        //check down and to the left
-        legalMoves.addAll(checkDirection(currentSquare, board, -1,-1, MAX_DISTANCE));
-        //check up and to the left
-        legalMoves.addAll(checkDirection(currentSquare, board, 1,-1, MAX_DISTANCE));
 
         return legalMoves;
     }
+
+
+
+
     @Override
     public String toString() {
-        return "Q" + team.toString().substring(0,1);
+
+        return "R" + team.toString().substring(0,1);
     }
 }

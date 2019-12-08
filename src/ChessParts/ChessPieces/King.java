@@ -21,21 +21,23 @@ package ChessParts.ChessPieces;
 import ChessParts.ChessBoard;
 import ChessParts.Square;
 import ChessParts.Team;
+import MVC.View.PieceEnum;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class King extends ChessPiece{
-    //How much the King can move on the chess Board
-    private int[] movement = {1,1};
-    //Says if the King can move anything more special than laterally
-    private boolean lateralMovementOnly = true;
-    //Says if the Piece can multiply movement
-    private boolean canExtrapolateMovement = false;
-    private boolean diagonalMovementOnly = false;
+//    //How much the King can move on the chess Board
+//    private int[] movement = {1,1};
+//    //Says if the King can move anything more special than laterally
+//    private boolean lateralMovementOnly = true;
+//    //Says if the Piece can multiply movement
+//    private boolean canExtrapolateMovement = false;
+//    private boolean diagonalMovementOnly = false;
 
     public King(Team team) {
         super(team);
+        pieceType = PieceEnum.KING;
     }
 
     /**

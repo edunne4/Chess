@@ -21,6 +21,7 @@ package ChessParts.ChessPieces;
 import ChessParts.ChessBoard;
 import ChessParts.Square;
 import ChessParts.Team;
+import MVC.View.PieceEnum;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,7 @@ public class Bishop extends ChessPiece{
 
     public Bishop(Team team) {
         super(team);
+        pieceType = PieceEnum.BISHOP;
     }
 
     /**
