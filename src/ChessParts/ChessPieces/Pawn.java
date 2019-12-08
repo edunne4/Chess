@@ -85,7 +85,7 @@ public class Pawn extends ChessPiece{
         // if it has not moved, add the extra 2 movement to possible moves
         if (!hasMoved){
             Square twoInFront = board.getSquareAt(row + direction*2, col);
-            if(twoInFront != null){
+            if(twoInFront != null && frontSquare.isEmpty()){
                 //only if it is empty can a pawn move onto the spot in front of them
                 if(twoInFront.isEmpty()){
                     legalMoves.add(twoInFront);
