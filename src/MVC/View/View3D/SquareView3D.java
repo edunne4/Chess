@@ -65,7 +65,7 @@ public class SquareView3D extends SquareView {
         //changeColor();
     }
 
-    public void putPieceToSquare(PieceEnum pieceType, Color color) {
+    public void putPieceOnSquare(PieceEnum pieceType, Color color) {
         if (!this.hasPiece) {
             piece = new ChessPiece3D(pieceType, color);
             this.getChildren().add(piece);

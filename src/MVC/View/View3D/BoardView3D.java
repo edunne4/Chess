@@ -6,6 +6,9 @@ package MVC.View.View3D;
 //https://stackoverflow.com/questions/31148690/get-real-position-of-a-node-in-javafx
 //https://stackoverflow.com/questions/20825935/javafx-get-node-by-row-and-column
 
+import ChessParts.ChessBoard;
+import ChessParts.ChessPieces.ChessPiece;
+import ChessParts.Team;
 import MVC.View.BoardView;
 import MVC.View.PieceEnum;
 import javafx.geometry.Pos;
@@ -20,7 +23,7 @@ public class BoardView3D extends BoardView {
     private final Color SQUARE2_COLOR = Color.WHITE;
 
 
-     public BoardView3D() {
+     public BoardView3D(ChessBoard modelBoard) {
          super();
 
          //initialize the board
@@ -35,12 +38,9 @@ public class BoardView3D extends BoardView {
          //add all of the squares to the board
          initializeBoardSquares();
 
-         //setup the board in a traditional chess fashion
-         initPieces();//initializeBoard();
+         //setup the board based on the state of the board passed in
+         initPiecesFromBoard(modelBoard);
 
-         //TODO - remove these tests
-         //removePieceOnBoard(0,0);
-         //movePiece(1,4,3,4);
 
 
      }
@@ -60,7 +60,40 @@ public class BoardView3D extends BoardView {
         }
     }
 
-    private void initializeBoard() {
+
+//    public void movePieceOnBoard(int startingCol,int startingRow,int endingCol,int endingRow) {
+//        ChessPiece3D removedPiece = removePieceOnBoard(startingCol,startingRow);
+//        createPieceOnBoard(endingCol,endingRow,removedPiece.getPieceType(),removedPiece.getPieceColor());
+//    }
+
+    public ChessPiece3D removePieceOnBoard(int row, int col) {
+        //get the square we are looking to remove a piece from
+        SquareView3D squareOnBoard = this.getSquareAt(row, col);
+
+        //remove the piece
+        ChessPiece3D removedPiece = squareOnBoard.removePieceFromSquare();
+
+        return removedPiece;
+
+    }
+
+    public void putPieceOnBoard(int row, int col, PieceEnum pieceType, Color color) {
+        //get the square we are looking to add a piece to
+        SquareView3D squareOnBoard = (SquareView3D) this.getSquareAt(row, col);
+
+        //add the piece
+        squareOnBoard.putPieceOnSquare(pieceType,color);
+
+    }
+
+    @Override
+    public void movePiece(int startRow, int startCol, int endRow, int endCol) {
+        ChessPiece3D removedPiece = removePieceOnBoard(startRow,startCol);
+        putPieceOnBoard(endRow,endCol,removedPiece.getPieceType(),removedPiece.getPieceColor());
+    }
+
+    @Override
+    public void initPieces() {
         //create the pieces for player1
         putPieceOnBoard(0,0, PieceEnum.ROOK, PLAYER1_COLOR);
         putPieceOnBoard(0,1,PieceEnum.KNIGHT, PLAYER1_COLOR);
@@ -88,40 +121,26 @@ public class BoardView3D extends BoardView {
         }
     }
 
-//    public void movePieceOnBoard(int startingCol,int startingRow,int endingCol,int endingRow) {
-//        ChessPiece3D removedPiece = removePieceOnBoard(startingCol,startingRow);
-//        createPieceOnBoard(endingCol,endingRow,removedPiece.getPieceType(),removedPiece.getPieceColor());
-//    }
-
-    public ChessPiece3D removePieceOnBoard(int row, int col) {
-        //get the square we are looking to remove a piece from
-        SquareView3D squareOnBoard = this.getSquareAt(row, col);
-
-        //remove the piece
-        ChessPiece3D removedPiece = squareOnBoard.removePieceFromSquare();
-
-        return removedPiece;
-
-    }
-
-    public void putPieceOnBoard(int row, int col, PieceEnum pieceType, Color color) {
-        //get the square we are looking to add a piece to
-        SquareView3D squareOnBoard = (SquareView3D) this.getSquareAt(row, col);
-
-        //add the piece
-        squareOnBoard.putPieceToSquare(pieceType,color);
-
-    }
-
     @Override
-    public void movePiece(int startRow, int startCol, int endRow, int endCol) {
-        ChessPiece3D removedPiece = removePieceOnBoard(startRow,startCol);
-        putPieceOnBoard(endRow,endCol,removedPiece.getPieceType(),removedPiece.getPieceColor());
-    }
+    public void initPiecesFromBoard(ChessBoard modelBoard) {
+        // loop through the entire board and create 2D pieces where necessary
+        for (int row = 0; row < SIDE_LENGTH; row++) {
+            for (int col = 0; col < SIDE_LENGTH; col++) {
+                //if the current square has a piece, make a 2D representation of it
+                if(!modelBoard.getSquareAt(row, col).isEmpty()){
+                    ChessPiece currentPiece = modelBoard.getSquareAt(row, col).getCurrentPiece();
+                    //get the correct color from the model
+                    Color pieceColor = PLAYER1_COLOR;
+                    if(currentPiece.getTeam() == Team.BLACK){ // if piece belongs to player2 (assuming black is player 2)
+                        pieceColor = PLAYER2_COLOR; //use player2 color
+                    }
+                    //create the 3D piece with using the tye enum and color
+                    getSquareAt(row, col).putPieceOnSquare(currentPiece.getPieceType(), pieceColor);
 
-    @Override
-    public void initPieces() {
-        initializeBoard();
+                }
+            }
+
+        }
     }
 
     public SquareView3D getSquareAt(int row, int col){

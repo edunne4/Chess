@@ -18,6 +18,9 @@
  */
 package MVC.View.View2D;
 
+import ChessParts.ChessBoard;
+import ChessParts.ChessPieces.ChessPiece;
+import ChessParts.Team;
 import MVC.View.BoardView;
 import MVC.View.PieceEnum;
 import javafx.scene.paint.Color;
@@ -40,7 +43,7 @@ public class BoardView2D extends BoardView {
      * creates a board that is a tile pane and puts a SquareView object in each spot
      * @param size pixel width and height of the board
      */
-    public BoardView2D(int size){
+    public BoardView2D(int size, ChessBoard modelBoard){
         //the board will be a grid of squares
         super();
         this.setPrefSize(size,size);
@@ -51,7 +54,8 @@ public class BoardView2D extends BoardView {
             }
         }
 
-        initPieces();
+        initPiecesFromBoard(modelBoard);
+        //initPieces();
     }
 
     /**Creates a SquareView at the specified spot on the board
@@ -81,6 +85,29 @@ public class BoardView2D extends BoardView {
     void initBoard(){
         initWhitePieces();
         initBlackPieces();
+    }
+
+    @Override
+    public void initPiecesFromBoard(ChessBoard modelBoard) {
+        // loop through the entire board and create 2D pieces where necessary
+        for (int row = 0; row < SIDE_LENGTH; row++) {
+            for (int col = 0; col < SIDE_LENGTH; col++) {
+                //if the current square has a piece, make a 2D representation of it
+                if(!modelBoard.getSquareAt(row, col).isEmpty()){
+                    ChessPiece currentPiece = modelBoard.getSquareAt(row, col).getCurrentPiece();
+                    //get the correct color from the model
+                    Color pieceColor = PLAYER1_COLOR;
+                    if(currentPiece.getTeam() == Team.BLACK){ // if piece belongs to player2 (assuming black is player 2)
+                        pieceColor = PLAYER2_COLOR; //use player2 color
+                    }
+                    //create the 2D piece with using the tye enum and color
+                    PieceView2D piece2D = new PieceView2D(currentPiece.getPieceType(), pieceColor);
+                    //add that 2D piece to the correct square
+                    getSquareAt(row, col).addImageView(piece2D.getView());
+                }
+            }
+
+        }
     }
 
     /**

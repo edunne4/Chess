@@ -91,6 +91,7 @@ public class Controller {
         RadioMenuItem enable3DBtn = (RadioMenuItem)theView.getGameMenuBar().getViewGroup().getToggles().get(1);
         enable3DBtn.setOnAction(event -> {
             restartGameAndView();
+
         });
 
     }

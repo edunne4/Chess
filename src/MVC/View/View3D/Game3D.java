@@ -33,7 +33,7 @@ public class Game3D extends Application {
     @Override
     public void start(Stage stage) {
 
-        board = new BoardView3D();
+        //board = new BoardView3D();
 
         root = new Group();
 

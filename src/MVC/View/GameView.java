@@ -92,11 +92,11 @@ public class GameView {
 
         sideCoordAndBoardContainer.getChildren().add(makeSideBoardCoords());
 
-        //TODO - reset game model
-        this.gm.resetGame();
+        //TODO - dont reset game model
+        //this.gm.resetGame();
 
         if(is3D.get()) {
-            board = new BoardView3D();
+            board = new BoardView3D(gm.getBoard());
             //***********************************
             Group miniRoot = new Group();
 
@@ -116,7 +116,7 @@ public class GameView {
             sideCoordAndBoardContainer.getChildren().add(boardScene);
             //***********************************
         }else {
-            board = new BoardView2D(640);
+            board = new BoardView2D(640, gm.getBoard());
             //add the actual board in
             sideCoordAndBoardContainer.getChildren().add(board);
         }
