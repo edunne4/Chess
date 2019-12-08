@@ -20,6 +20,8 @@
 package MVC.View;
 
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
@@ -36,6 +38,7 @@ public class GameMenuBar extends MenuBar {
 
         super();
 
+        //create the game settings menu
         Menu view = new Menu("View (2D/3D)");
         viewGroup = new ToggleGroup();
         RadioMenuItem view2D = new RadioMenuItem("2D");
@@ -50,14 +53,35 @@ public class GameMenuBar extends MenuBar {
         createColorOptions(player2PieceColorMenu);
 
         Menu gameSettingsMenu = new Menu("Settings");
+        ImageView settingsImage = new ImageView(new Image(getClass().getResourceAsStream("menuIcons/settings.png")));
+        settingsImage.setFitWidth(25);
+        settingsImage.setFitHeight(25);
+        gameSettingsMenu.setGraphic(settingsImage);
         gameSettingsMenu.getItems().addAll(view,player1PieceColorMenu,player2PieceColorMenu);
 
+        //create the quit menu
         Menu quitMenu = new Menu("Quit Game");
+        ImageView quitMenuImage = new ImageView(new Image(getClass().getResourceAsStream("menuIcons/exit.png")));
+        quitMenuImage.setFitWidth(25);
+        quitMenuImage.setFitHeight(25);
+        quitMenu.setGraphic(quitMenuImage);
+
         MenuItem quitSaveGame = new MenuItem("Save and Quit");
         MenuItem quitGame = new MenuItem("Quit");
         quitMenu.getItems().addAll(quitSaveGame,quitGame);
 
-        this.getMenus().addAll(gameSettingsMenu,quitMenu);
+        //create the multiplayer menu
+        Menu multiplayer = new Menu("Multiplayer");
+
+        MenuItem hostGame = new MenuItem("Host a Game");
+        MenuItem joinGame = new MenuItem("Join a Game");
+        multiplayer.getItems().addAll(hostGame,joinGame);
+        ImageView multiplayerImage = new ImageView(new Image(getClass().getResourceAsStream("menuIcons/multiplayer.png")));
+        multiplayerImage.setFitWidth(25);
+        multiplayerImage.setFitHeight(25);
+        multiplayer.setGraphic(multiplayerImage);
+
+        this.getMenus().addAll(gameSettingsMenu,multiplayer,quitMenu);
 
     }
 
@@ -91,10 +115,7 @@ public class GameMenuBar extends MenuBar {
 
     }
 
-
     public ToggleGroup getViewGroup() {
         return viewGroup;
     }
-
-
 }

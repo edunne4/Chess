@@ -25,10 +25,12 @@ import ChessParts.Team;
 import MVC.Model.GameManager;
 import MVC.Model.RuleMaster;
 import MVC.View.GameView;
+import MVC.View.NetworkingPopUps.HostGamePopUp;
+import MVC.View.NetworkingPopUps.JoinGamePopUp;
 import MVC.View.SquareView;
 import javafx.beans.binding.Bindings;
 import javafx.scene.Node;
-import javafx.scene.control.RadioMenuItem;
+import javafx.scene.control.*;
 
 import java.util.List;
 
@@ -41,6 +43,7 @@ public class Controller {
 
 
     protected Square currentSquareSelected;
+    private String ipAddressToJoin;
 
 
     public Controller(GameView theView, GameManager theModel) {
@@ -75,10 +78,29 @@ public class Controller {
 
     private void setUpMenuBar() {
         setUp2Dvs3DMenuClickHandlers();
+        setupMultiplayerMenuClicksHandler();
         bindColorsToPieces();
     }
 
+    private void setupMultiplayerMenuClicksHandler() {
+
+        MenuItem hostGameBtn = theView.getGameMenuBar().getMenus().get(1).getItems().get(0);
+        hostGameBtn.setOnAction( event -> {
+            new HostGamePopUp();
+        });
+
+        MenuItem joinGameBtn = theView.getGameMenuBar().getMenus().get(1).getItems().get(1);
+        joinGameBtn.setOnAction( event -> {
+            JoinGamePopUp joinGamePopUp = new JoinGamePopUp();
+            ipAddressToJoin = joinGamePopUp.getAddressToJoin();
+            System.out.println("The user wants to join the game hosted at: " + ipAddressToJoin);
+        });
+
+    }
+
     private void setUp2Dvs3DMenuClickHandlers() {
+
+        //TODO
         //handle 2D button press
         //must be an event handler because the view must be reloaded
         RadioMenuItem enable2DBtn = (RadioMenuItem)theView.getGameMenuBar().getViewGroup().getToggles().get(0);
