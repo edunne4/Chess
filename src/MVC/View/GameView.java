@@ -15,7 +15,9 @@ import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -46,6 +48,7 @@ public class GameView {
     GameManager gm;
     Text inCheckTextBlack;
     Text inCheckTextWhite;
+    Button quitButton;
 
     private PerspectiveCamera camera;
     private String CAMERA = "Cam2";
@@ -305,7 +308,13 @@ public class GameView {
         VBox secondaryLayout = new VBox();
         secondaryLayout.getChildren().add(endGameText);
 
-        Scene secondScene = new Scene(secondaryLayout, 400, 100);
+        Button restartButton = new Button("Restart");
+        quitButton = new Button("Quit Game");
+        HBox buttonsBox = new HBox(10);
+        buttonsBox.getChildren().add(restartButton);
+        buttonsBox.getChildren().add(quitButton);
+        secondaryLayout.getChildren().add(buttonsBox);
+        Scene secondScene = new Scene(secondaryLayout, 400, 120);
 
         // New window (Stage)
         Stage endGameWindow = new Stage();
@@ -325,5 +334,9 @@ public class GameView {
 
     public GameMenuBar getGameMenuBar() {
         return gameMenuBar;
+    }
+
+    public Button getQuitButton(){
+        return quitButton;
     }
 }
