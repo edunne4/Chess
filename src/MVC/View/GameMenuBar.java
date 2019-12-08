@@ -71,6 +71,8 @@ public class GameMenuBar extends MenuBar {
         colorList.add(Color.BLUE);
         colorList.add(Color.PURPLE);
         colorList.add(Color.WHITE);
+        colorList.add(Color.BLACK);
+        colorList.add(Color.DARKRED);
 
 
         for (Color color : colorList) {
