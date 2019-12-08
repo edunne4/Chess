@@ -201,9 +201,9 @@ public class GameView {
         rightSideContainer.getChildren().add(inCheckTextWhite);
     }
 
-    private void changeCameraOnClick(SubScene scene) {
+    private void changeCameraOnClick(SubScene subScene) {
 
-        Transform cam1A = new Translate(0,1800,-2000);
+        Transform cam1A = new Translate(400,1600,-1400);
         Transform cam1B = new Rotate(40,Rotate.X_AXIS);
 
         Transform cam2A = new Translate(0,SquareView3D.SQUARE_SIZE*8,0);
@@ -214,7 +214,7 @@ public class GameView {
 
         camera.getTransforms().addAll(cam1A,cam1B); //set camera angle for view 1
 
-        scene.setOnKeyPressed(event -> {
+        subScene.setOnKeyPressed(event -> {
             System.out.println(CAMERA);
             if (event.getCode() == KeyCode.C) {
 
