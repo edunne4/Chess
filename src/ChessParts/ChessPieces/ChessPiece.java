@@ -22,10 +22,11 @@ import ChessParts.ChessBoard;
 import ChessParts.Square;
 import ChessParts.Team;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class ChessPiece {
+public abstract class ChessPiece implements Serializable {
     //Stores the team of the chess piece
     protected Team team;
     //All possible directions on a Chess Board
