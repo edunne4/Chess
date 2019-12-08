@@ -82,14 +82,14 @@ public class Controller {
 
         MenuItem hostGameBtn = theView.getGameMenuBar().getMenus().get(1).getItems().get(0);
         hostGameBtn.setOnAction( event -> {
-//            new HostGamePopUp();
-            System.out.println("Clicked on host a game");
+            new HostGamePopUp();
         });
 
         MenuItem joinGameBtn = theView.getGameMenuBar().getMenus().get(1).getItems().get(1);
         joinGameBtn.setOnAction( event -> {
             JoinGamePopUp joinGamePopUp = new JoinGamePopUp();
             ipAddressToJoin = joinGamePopUp.getAddressToJoin();
+            System.out.println("The user wants to join the game hosted at: " + ipAddressToJoin);
         });
 
     }

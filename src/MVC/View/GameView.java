@@ -50,8 +50,6 @@ public class GameView {
 
     public GameView(GameManager model) throws UnknownHostException {
 
-        new HostGamePopUp();
-
         this.gm = model;
         //make gameHBox which is a set of horizontal boxes
         gameHBox = new HBox();

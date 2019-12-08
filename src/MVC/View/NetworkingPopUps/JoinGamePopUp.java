@@ -22,19 +22,21 @@ package MVC.View.NetworkingPopUps;
 //Resource: https://alvinalexander.com/java/joptionpane-showinputdialog-examples
 
 
-import javax.swing.*;
+import javafx.scene.control.TextInputDialog;
+
+import java.util.Optional;
 
 public class JoinGamePopUp {
 
     String addressToJoin;
 
     public JoinGamePopUp() {
-        JFrame frame = new JFrame("Join a Game");
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setHeaderText("Join a Game");
+        dialog.setContentText("Please enter the IP address of the game you want to join");
 
-        addressToJoin = JOptionPane.showInputDialog(frame,
-                "What is the IP address of the game you want to join?",
-                "Join a Game",
-                JOptionPane.INFORMATION_MESSAGE);
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(IP -> addressToJoin = IP);
 
     }
 

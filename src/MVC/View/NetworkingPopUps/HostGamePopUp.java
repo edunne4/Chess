@@ -22,9 +22,13 @@ package MVC.View.NetworkingPopUps;
 //Resource: https://alvinalexander.com/java/joptionpane-showinputdialog-examples
 
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.Dialog;
+
 import javax.swing.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+
 
 //Resource: https://alvinalexander.com/java/joptionpane-showmessagedialog-examples-1
 
@@ -40,13 +44,13 @@ public class HostGamePopUp {
         }
     }
 
-    public HostGamePopUp()  {
+    public HostGamePopUp() {
 
-        JFrame frame = new JFrame("Host a Game");
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText("Host a Game");
+        alert.setContentText("This is your IP address: " + ip.getHostAddress());
 
-        JOptionPane.showMessageDialog(frame,
-                "Your IP address is: " + ip.getHostAddress(),
-                "Host a Game",
-                JOptionPane.INFORMATION_MESSAGE);
+        alert.showAndWait();
+
     }
 }
