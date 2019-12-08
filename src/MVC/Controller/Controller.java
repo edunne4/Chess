@@ -60,6 +60,9 @@ public class Controller {
         reloadGameViewAndResetBindings();
     }
 
+    /**
+     * Reloads the view of the game as well as re-binds all the event handlers and bindings using the new board game loaded
+     */
     private void reloadGameViewAndResetBindings() {
         theView.reloadGameView();
 
@@ -68,6 +71,9 @@ public class Controller {
         setUpMenuBar();
     }
 
+    /**
+     * Sets up event handlers for when squares in the view are clicked
+     */
     protected void makeSquaresClickable() {
 
         for (Node child : theView.getBoard().getChildren()){
@@ -76,6 +82,9 @@ public class Controller {
         }
     }
 
+    /**
+     * Set up menu bar bindings and event handlers
+     */
     private void setUpMenuBar() {
         setUp2Dvs3DMenuClickHandlers();
         setupMultiplayerMenuClicksHandler();
@@ -98,9 +107,10 @@ public class Controller {
 
     }
 
+    /**
+     * Sets up event handlers for when the 2D and 3D menu buttons are clicked
+     */
     private void setUp2Dvs3DMenuClickHandlers() {
-
-        //TODO
         //handle 2D button press
         //must be an event handler because the view must be reloaded
         RadioMenuItem enable2DBtn = (RadioMenuItem)theView.getGameMenuBar().getViewGroup().getToggles().get(0);
@@ -223,7 +233,7 @@ public class Controller {
     }
 
     /**
-     * change inChecktext if a player is in check
+     * change inCheckText if a player is in check
      */
     protected void displayIfInCheck(){
         RuleMaster rules = theModel.getRuleMaster();

@@ -29,9 +29,9 @@ import java.net.UnknownHostException;
 
 public class GameView {
 
-    //TODO - change this
     private SimpleBooleanProperty is3D = new SimpleBooleanProperty(false);
 
+    //components of scene graph
     private HBox gameHBox;
     private VBox root;
     VBox rightSideContainer;
@@ -49,7 +49,11 @@ public class GameView {
     private String CAMERA = "Cam2";
     private final GameMenuBar gameMenuBar;
 
-    public GameView(GameManager model) throws UnknownHostException {
+    /**
+     * Explicit constructor to create the main game view on which the chess game is displayed
+     * @param model - the model game that this view should represent visually
+     */
+    public GameView(GameManager model) {
 
         this.gm = model;
         //make gameHBox which is a set of horizontal boxes
@@ -91,6 +95,9 @@ public class GameView {
 
     }
 
+    /**
+     * Clear the current visualization of the game and reload a new one dependent whether or not is3D is true
+     */
     public void reloadGameView(){
         sideCoordAndBoardContainer.getChildren().clear();
 
@@ -99,7 +106,7 @@ public class GameView {
         //TODO - dont reset game model
         //this.gm.resetGame();
 
-        if(is3D.get()) {
+        if(is3D()) {
             board = new BoardView3D(gm.getBoard());
             //***********************************
             Group miniRoot = new Group();
@@ -185,7 +192,6 @@ public class GameView {
         return coords;
     }
 
-    //TODO change this up probably
     /**
      * grabs the piece image at the specified spot and puts it in its respective deadpiece holder depending on team
      * @param row the row of the square
@@ -193,7 +199,7 @@ public class GameView {
      * @param deadPieceHolder the correct team's dead piece holder
      */
     public void killPiece(int row, int col, FlowPane deadPieceHolder){
-        if(is3D.get()){
+        if(is3D()){
             SquareView3D oldLocationSquare = (SquareView3D)board.getSquareAt(row,col);
             ChessPiece3D pieceKilled = oldLocationSquare.removePieceFromSquare();
 
@@ -295,10 +301,6 @@ public class GameView {
     public SimpleBooleanProperty is3DProperty() {
         return is3D;
     }
-
-//    public void setIs3D(boolean is3D) {
-//        this.is3D.setValue(is3D);
-//    }
 
     public GameMenuBar getGameMenuBar() {
         return gameMenuBar;

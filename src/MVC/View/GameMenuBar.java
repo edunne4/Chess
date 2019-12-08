@@ -32,6 +32,9 @@ import java.util.List;
 public class GameMenuBar extends MenuBar {
 
     private final ToggleGroup viewGroup;
+    private ToggleGroup player1Colors;
+    private ToggleGroup player2Colors;
+
 
     //TODO - set selected RadioMenuButtons on game load.
     public GameMenuBar() {
@@ -57,7 +60,7 @@ public class GameMenuBar extends MenuBar {
         settingsImage.setFitWidth(25);
         settingsImage.setFitHeight(25);
         gameSettingsMenu.setGraphic(settingsImage);
-        gameSettingsMenu.getItems().addAll(view,player1PieceColorMenu,player2PieceColorMenu);
+        gameSettingsMenu.getItems().addAll(view, player1PieceColorMenu, player2PieceColorMenu);
 
         //create the quit menu
         Menu quitMenu = new Menu("Quit Game");
@@ -99,7 +102,7 @@ public class GameMenuBar extends MenuBar {
         colorList.add(Color.BLACK);
         colorList.add(Color.DARKRED);
 
-        ToggleGroup toggleGroup = new ToggleGroup();
+        ToggleGroup colorsGroup = new ToggleGroup();
 
         for (Color color : colorList) {
             RadioMenuItem menuItem = new RadioMenuItem(String.valueOf(color));
@@ -108,7 +111,7 @@ public class GameMenuBar extends MenuBar {
             menuItem.setGraphic(icon);
             icon.setStroke(Color.BLACK);
 
-            toggleGroup.getToggles().add(menuItem);
+            colorsGroup.getToggles().add(menuItem);
             menu.getItems().add(menuItem);
         }
 
@@ -117,5 +120,14 @@ public class GameMenuBar extends MenuBar {
 
     public ToggleGroup getViewGroup() {
         return viewGroup;
+    }
+
+
+    public ToggleGroup getPlayer1Colors() {
+        return player1Colors;
+    }
+
+    public ToggleGroup getPlayer2Colors() {
+        return player2Colors;
     }
 }
