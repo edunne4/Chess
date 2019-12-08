@@ -19,6 +19,7 @@
  */
 package MVC.View.View3D;
 
+import MVC.View.BoardView;
 import MVC.View.PieceEnum;
 import MVC.View.SquareView;
 import javafx.geometry.Pos;
@@ -136,9 +137,9 @@ public class SquareView3D extends SquareView {
     public void highlight() {
 
         if ((row + col) % 2 == 0) {
-            this.square.setMaterial(new PhongMaterial(Color.GREEN));
+            this.square.setMaterial(new PhongMaterial(BoardView.getSquare1Highlight()));
         } else {
-            this.square.setMaterial(new PhongMaterial(Color.LIGHTGREEN));
+            this.square.setMaterial(new PhongMaterial(BoardView.getSquare2Highlight()));
         }
 
         if (hasPiece) {

@@ -18,8 +18,12 @@
  */
 package MVC.View.View2D;
 
+import MVC.View.BoardView;
 import MVC.View.SquareView;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.paint.Color;
 
 public class SquareView2D extends SquareView {
 
@@ -31,9 +35,7 @@ public class SquareView2D extends SquareView {
      * @param col the square's column
      */
     SquareView2D(int row, int col) {
-        super(7-row, col); //this
-//        this.row = 7-row;
-//        this.col = col;
+        super(7-row, col);
     }
 
 
@@ -56,13 +58,15 @@ public class SquareView2D extends SquareView {
      * Highlights the selected square
      */
     public void highlight() {
-        String squareColor;
-        if ((row + col) % 2 == 0) {
-            squareColor = BoardView2D.DARK_HIGHLIGHT_HEX;
+//        String squareColor;
+        if ((row + col) % 2 != 0) {
+            setColor(BoardView.getSquare1Highlight());
+//            squareColor = BoardView.getSquare1Highlight().toString();
         } else {
-            squareColor = BoardView2D.LIGHT_HIGHLIGHT_HEX;
+            setColor(BoardView.getSquare2Highlight());
+//            squareColor = BoardView.getSquare2Color().toString();
         }
-        this.setStyle("-fx-background-color: " + squareColor);
+//        this.setStyle("-fx-background-color: " + squareColor);
     }
 
 
@@ -70,13 +74,13 @@ public class SquareView2D extends SquareView {
      * unHighlights the selected square
      */
     public void unHighlight(){
-        String squareColor;
-        if ((row + col) % 2 == 0) {
-            squareColor = BoardView2D.SQUARE1_COLOR;
+//        String squareColor;
+        if ((row + col) % 2 != 0) {
+            setColor(BoardView.getSquare1Color());
         } else {
-            squareColor = BoardView2D.SQUARE2_COLOR;
+            setColor(BoardView.getSquare2Color());
         }
-        this.setStyle("-fx-background-color: " + squareColor);
+//        this.setStyle("-fx-background-color: " + squareColor);
     }
 
     /**
@@ -85,6 +89,10 @@ public class SquareView2D extends SquareView {
      */
     public ImageView getPiece(){
         return (ImageView)this.getChildren().get(0);
+    }
+
+    public void setColor(Color color){
+        this.setBackground(new Background(new BackgroundFill(color, null, null)));
     }
 
 }

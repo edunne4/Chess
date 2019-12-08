@@ -16,11 +16,11 @@ import javafx.scene.paint.Color;
 
 public class BoardView3D extends BoardView {
 
-    private final Color PLAYER1_COLOR = Color.WHITE;
-    private final Color PLAYER2_COLOR = Color.RED;
-
-    private final Color SQUARE1_COLOR = Color.BLACK;
-    private final Color SQUARE2_COLOR = Color.WHITE;
+//    private final Color PLAYER1_COLOR = Color.WHITE;
+//    private final Color PLAYER2_COLOR = Color.RED;
+//
+//    private final Color SQUARE1_COLOR = Color.BLACK;
+//    private final Color SQUARE2_COLOR = Color.WHITE;
 
 
      public BoardView3D(ChessBoard modelBoard) {
@@ -50,10 +50,10 @@ public class BoardView3D extends BoardView {
             for (int col = 0; col < SIDE_LENGTH ; col++) {
                 SquareView3D square;
                 if ((col+row) % 2 == 0) {
-                    square = new SquareView3D(row, col, SQUARE2_COLOR);
+                    square = new SquareView3D(row, col, getSquare2Color());
                 }
                 else {
-                    square = new SquareView3D(row, col, SQUARE1_COLOR);
+                    square = new SquareView3D(row, col, getSquare1Color());
                 }
                 this.getChildren().add(square);
             }
@@ -92,34 +92,34 @@ public class BoardView3D extends BoardView {
         putPieceOnBoard(endRow,endCol,removedPiece.getPieceType(),removedPiece.getPieceColor());
     }
 
-    @Override
-    public void initPieces() {
-        //create the pieces for player1
-        putPieceOnBoard(0,0, PieceEnum.ROOK, PLAYER1_COLOR);
-        putPieceOnBoard(0,1,PieceEnum.KNIGHT, PLAYER1_COLOR);
-        putPieceOnBoard(0,2,PieceEnum.BISHOP, PLAYER1_COLOR);
-        putPieceOnBoard(0,3,PieceEnum.QUEEN, PLAYER1_COLOR);
-        putPieceOnBoard(0,4,PieceEnum.KING, PLAYER1_COLOR);
-        putPieceOnBoard(0,5,PieceEnum.BISHOP, PLAYER1_COLOR);
-        putPieceOnBoard(0,6,PieceEnum.KNIGHT, PLAYER1_COLOR);
-        putPieceOnBoard(0,7,PieceEnum.ROOK, PLAYER1_COLOR);
-        for (int i = 0; i < SIDE_LENGTH; i++) {
-            putPieceOnBoard(1,i,PieceEnum.PAWN, PLAYER1_COLOR);
-        }
-
-        //create the pieces for player 2
-        putPieceOnBoard(7,0,PieceEnum.ROOK, PLAYER2_COLOR);
-        putPieceOnBoard(7,1,PieceEnum.KNIGHT, PLAYER2_COLOR);
-        putPieceOnBoard(7,2,PieceEnum.BISHOP, PLAYER2_COLOR);
-        putPieceOnBoard(7,3,PieceEnum.QUEEN, PLAYER2_COLOR);
-        putPieceOnBoard(7,4,PieceEnum.KING, PLAYER2_COLOR);
-        putPieceOnBoard(7,5,PieceEnum.BISHOP, PLAYER2_COLOR);
-        putPieceOnBoard(7,6,PieceEnum.KNIGHT, PLAYER2_COLOR);
-        putPieceOnBoard(7,7,PieceEnum.ROOK, PLAYER2_COLOR);
-        for (int i = 0; i < SIDE_LENGTH; i++) {
-            putPieceOnBoard(6,i,PieceEnum.PAWN, PLAYER2_COLOR);
-        }
-    }
+//    @Override
+//    public void initPieces() {
+//        //create the pieces for player1
+//        putPieceOnBoard(0,0, PieceEnum.ROOK, PLAYER1_COLOR);
+//        putPieceOnBoard(0,1,PieceEnum.KNIGHT, PLAYER1_COLOR);
+//        putPieceOnBoard(0,2,PieceEnum.BISHOP, PLAYER1_COLOR);
+//        putPieceOnBoard(0,3,PieceEnum.QUEEN, PLAYER1_COLOR);
+//        putPieceOnBoard(0,4,PieceEnum.KING, PLAYER1_COLOR);
+//        putPieceOnBoard(0,5,PieceEnum.BISHOP, PLAYER1_COLOR);
+//        putPieceOnBoard(0,6,PieceEnum.KNIGHT, PLAYER1_COLOR);
+//        putPieceOnBoard(0,7,PieceEnum.ROOK, PLAYER1_COLOR);
+//        for (int i = 0; i < SIDE_LENGTH; i++) {
+//            putPieceOnBoard(1,i,PieceEnum.PAWN, PLAYER1_COLOR);
+//        }
+//
+//        //create the pieces for player 2
+//        putPieceOnBoard(7,0,PieceEnum.ROOK, PLAYER2_COLOR);
+//        putPieceOnBoard(7,1,PieceEnum.KNIGHT, PLAYER2_COLOR);
+//        putPieceOnBoard(7,2,PieceEnum.BISHOP, PLAYER2_COLOR);
+//        putPieceOnBoard(7,3,PieceEnum.QUEEN, PLAYER2_COLOR);
+//        putPieceOnBoard(7,4,PieceEnum.KING, PLAYER2_COLOR);
+//        putPieceOnBoard(7,5,PieceEnum.BISHOP, PLAYER2_COLOR);
+//        putPieceOnBoard(7,6,PieceEnum.KNIGHT, PLAYER2_COLOR);
+//        putPieceOnBoard(7,7,PieceEnum.ROOK, PLAYER2_COLOR);
+//        for (int i = 0; i < SIDE_LENGTH; i++) {
+//            putPieceOnBoard(6,i,PieceEnum.PAWN, PLAYER2_COLOR);
+//        }
+//    }
 
     @Override
     public void initPiecesFromBoard(ChessBoard modelBoard) {
@@ -130,9 +130,9 @@ public class BoardView3D extends BoardView {
                 if(!modelBoard.getSquareAt(row, col).isEmpty()){
                     ChessPiece currentPiece = modelBoard.getSquareAt(row, col).getCurrentPiece();
                     //get the correct color from the model
-                    Color pieceColor = PLAYER1_COLOR;
+                    Color pieceColor = getPlayer1Color();
                     if(currentPiece.getTeam() == Team.BLACK){ // if piece belongs to player2 (assuming black is player 2)
-                        pieceColor = PLAYER2_COLOR; //use player2 color
+                        pieceColor = getPlayer2Color(); //use player2 color
                     }
                     //create the 3D piece with using the tye enum and color
                     getSquareAt(row, col).putPieceOnSquare(currentPiece.getPieceType(), pieceColor);

@@ -54,10 +54,10 @@ public class Controller {
         theView.is3DProperty().bind(enable2DBtn.selectedProperty().not());
         //set default values for menus
         enable2DBtn.setSelected(true);
-        restartGameAndView();
+        reloadGameViewAndResetBindings();
     }
 
-    private void restartGameAndView() {
+    private void reloadGameViewAndResetBindings() {
         theView.reloadGameView();
 
         makeSquaresClickable();
@@ -74,23 +74,22 @@ public class Controller {
     }
 
     private void setUpMenuBar() {
-        setUp2Dvs3DMenuClicksHandler();
+        setUp2Dvs3DMenuClickHandlers();
         bindColorsToPieces();
     }
 
-    private void setUp2Dvs3DMenuClicksHandler() {
-        //TODO
+    private void setUp2Dvs3DMenuClickHandlers() {
         //handle 2D button press
         //must be an event handler because the view must be reloaded
         RadioMenuItem enable2DBtn = (RadioMenuItem)theView.getGameMenuBar().getViewGroup().getToggles().get(0);
         enable2DBtn.setOnAction(event -> {
-            restartGameAndView();
+            reloadGameViewAndResetBindings();
         });
 
         //handle 3D button press
         RadioMenuItem enable3DBtn = (RadioMenuItem)theView.getGameMenuBar().getViewGroup().getToggles().get(1);
         enable3DBtn.setOnAction(event -> {
-            restartGameAndView();
+            reloadGameViewAndResetBindings();
 
         });
 
@@ -98,10 +97,11 @@ public class Controller {
 
     private void bindColorsToPieces() {
         //TODO
+
     }
 
     /**
-     * Function to handle event for when a squareview is clicked
+     * Function to handle event for when a SquareView is clicked
      * @param squareSelected - the square that was clicked
      */
     protected Movement squareWasClicked(SquareView squareSelected){
