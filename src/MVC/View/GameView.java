@@ -1,5 +1,11 @@
 package MVC.View;
 
+import ChessParts.Team;
+import Model.GameManager;
+import View.View2D.BoardView2D;
+import View.View2D.SquareView2D;
+import View.View3D.BoardView3D;
+import View.View3D.SquareView3D;
 import MVC.Model.GameManager;
 import MVC.View.NetworkingPopUps.HostGamePopUp;
 import MVC.View.View2D.PieceView2D;
@@ -12,6 +18,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
+import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
@@ -23,6 +30,7 @@ import javafx.scene.transform.NonInvertibleTransformException;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Transform;
 import javafx.scene.transform.Translate;
+import javafx.stage.Stage;
 
 import java.net.UnknownHostException;
 
@@ -292,6 +300,25 @@ public class GameView {
 
     public FlowPane getDeadPieceHolderBlack() {
         return deadPieceHolderBlack;
+    }
+
+    public void createEndGameWindow(Team winner){
+        String s = winner.toString() + " wins!";
+
+        Text endGameText = new Text(s);
+        endGameText.setFont(new Font(72));
+
+        VBox secondaryLayout = new VBox();
+        secondaryLayout.getChildren().add(endGameText);
+
+        Scene secondScene = new Scene(secondaryLayout, 400, 100);
+
+        // New window (Stage)
+        Stage endGameWindow = new Stage();
+        endGameWindow.setTitle("Game Over!");
+        endGameWindow.setScene(secondScene);
+
+        endGameWindow.show();
     }
 
     public boolean is3D() {
