@@ -30,6 +30,7 @@ import MVC.View.NetworkingPopUps.HostGamePopUp;
 import MVC.View.NetworkingPopUps.JoinGamePopUp;
 import MVC.View.SquareView;
 import javafx.beans.binding.Bindings;
+import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 
@@ -59,6 +60,7 @@ public class Controller {
         //set default values for menus
         enable2DBtn.setSelected(true);
         reloadGameViewAndResetBindings();
+
     }
 
     private void reloadGameViewAndResetBindings() {
@@ -188,10 +190,10 @@ public class Controller {
                 //if there is a piece at the new location(thisSquare), kill it
                 if (killedPiece != null) {
                     if (killedPiece.getTeam() == Team.WHITE) {
-                        if(killedPiece instanceof King){theView.createEndGameWindow(Team.BLACK);}
+                        if(killedPiece instanceof King){theView.createEndGameWindow(Team.BLACK);theView.getQuitButton().setOnAction((ActionEvent e) -> {System.exit(0);});}
                         theView.killPiece(newSquare.getRow(), newSquare.getCol(), theView.getDeadPieceHolderWhite());
                     } else {
-                        if(killedPiece instanceof King){theView.createEndGameWindow(Team.WHITE);}
+                        if(killedPiece instanceof King){theView.createEndGameWindow(Team.WHITE);theView.getQuitButton().setOnAction((ActionEvent e) -> {System.exit(0);});}
                         theView.killPiece(newSquare.getRow(), newSquare.getCol(), theView.getDeadPieceHolderBlack());
                     }
                     //if its a king. the game's over.
