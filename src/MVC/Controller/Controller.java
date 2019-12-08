@@ -80,14 +80,14 @@ public class Controller {
         //must be an event handler because the view must be reloaded
         RadioMenuItem enable2DBtn = (RadioMenuItem)theView.getGameMenuBar().getViewGroup().getToggles().get(0);
         enable2DBtn.setOnAction(event -> {
-            theView.is3DProperty().setValue(false);
+            theView.setIs3D(false);
             restartGameAndView();
         });
 
         //handle 3D button press
         RadioMenuItem enable3DBtn = (RadioMenuItem)theView.getGameMenuBar().getViewGroup().getToggles().get(1);
         enable3DBtn.setOnAction(event -> {
-            theView.is3DProperty().setValue(true);
+            theView.setIs3D(true);
             restartGameAndView();
         });
 

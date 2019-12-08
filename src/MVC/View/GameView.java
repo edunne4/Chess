@@ -1,6 +1,8 @@
 package MVC.View;
 
 import MVC.Model.GameManager;
+import MVC.View.View2D.PieceView2D;
+import MVC.View.View3D.ChessPiece3D;
 import MVC.View.View3D.SquareView3D;
 import MVC.View.View2D.BoardView2D;
 import MVC.View.View2D.SquareView2D;
@@ -283,6 +285,10 @@ public class GameView {
 
     public boolean is3D() {
         return is3D;
+    }
+
+    public void setIs3D(boolean is3D) {
+        this.is3D = is3D;
     }
 
     public GameMenuBar getGameMenuBar() {
