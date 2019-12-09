@@ -265,6 +265,7 @@ public class Controller {
             Thread thread = new Thread(player);
             thread.start();
         }
+
     }
 
     protected void squareWasClickedNetwork(SquareView squareSelected) throws IOException, ClassNotFoundException {

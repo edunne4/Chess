@@ -25,6 +25,8 @@ import View.NetworkingPopUps.JoinGamePopUp;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioMenuItem;
 
+import java.io.IOException;
+
 public class MenuBarController {
 
     /** The view */
@@ -34,6 +36,7 @@ public class MenuBarController {
     /** The model */
     protected GameManager theModel;
 
+    /** Whether or not this controller is the host or client for a networking game **/
     protected boolean isHost;
 
     /**Ip address of host of game*/
@@ -71,6 +74,14 @@ public class MenuBarController {
             new HostGamePopUp();
             controller.isMultiplayer = true;
             isHost = true;
+            try {
+                controller.makeConnection();
+                controller.makeSquaresClickable();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         });
 
         MenuItem joinGameBtn = theView.getGameMenuBar().getMenus().get(1).getItems().get(1);
@@ -80,6 +91,14 @@ public class MenuBarController {
             ipAddressToJoin = joinGamePopUp.getAddressToJoin();
             isHost = false;
             System.out.println("The user wants to join the game hosted at: " + ipAddressToJoin);
+            try {
+                controller.makeConnection();
+                controller.makeSquaresClickable();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         });
 
     }
