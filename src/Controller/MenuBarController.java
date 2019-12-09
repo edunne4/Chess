@@ -71,6 +71,7 @@ public class MenuBarController {
             isHost = true;
             try {
                 controller.makeConnection();
+                controller.makeSquaresClickable();
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (ClassNotFoundException e) {
@@ -87,6 +88,7 @@ public class MenuBarController {
             System.out.println("The user wants to join the game hosted at: " + ipAddressToJoin);
             try {
                 controller.makeConnection();
+                controller.makeSquaresClickable();
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (ClassNotFoundException e) {
