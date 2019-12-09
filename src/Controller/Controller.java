@@ -251,16 +251,19 @@ public class Controller {
                 opponentsMove.getInitialSquare().getCol());
         SquareView squareViewClicked = theView.getBoard().getSquareAt(opponentsMove.getFinalSquare().getRow(), opponentsMove.getFinalSquare().getCol());
         squareWasClicked(squareViewClicked);
+        theView.getTurnText().setText("Your Turn...");
     }
 
     public void makeConnection() throws IOException, ClassNotFoundException {
         restartGame();
         if (MBC.isHost){
+            theView.getTurnText().setText("Waiting...");
             this.player = new HostPlayer(this);
             player.connect();
             Thread thread = new Thread(player);
             thread.start();
         } else {
+            theView.getTurnText().setText("Your Turn...");
             this.player = new ClientPlayer(MBC.getIpAddressToJoin(), this);
             player.connect();
             Thread thread = new Thread(player);
@@ -278,6 +281,7 @@ public class Controller {
     private void makeMove(Movement moveMade) throws IOException, ClassNotFoundException {
         if(moveMade != null){
             player.sendMove(moveMade);
+            theView.getTurnText().setText("Waiting...");
         }
     }
 }
