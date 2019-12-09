@@ -63,15 +63,15 @@ public class GameMenuBar extends MenuBar {
         gameSettingsMenu.getItems().addAll(view, player1PieceColorMenu, player2PieceColorMenu);
 
         //create the quit menu
-        Menu quitMenu = new Menu("Quit Game");
+        Menu quitMenu = new Menu("Quit/Restart Game");
         ImageView quitMenuImage = new ImageView(new Image(getClass().getResourceAsStream("menuIcons/exit.png")));
         quitMenuImage.setFitWidth(25);
         quitMenuImage.setFitHeight(25);
         quitMenu.setGraphic(quitMenuImage);
 
-        MenuItem quitSaveGame = new MenuItem("Save and Quit");
+        MenuItem restartGame = new MenuItem("Restart Game");
         MenuItem quitGame = new MenuItem("Quit");
-        quitMenu.getItems().addAll(quitSaveGame,quitGame);
+        quitMenu.getItems().addAll(restartGame,quitGame);
 
         //create the multiplayer menu
         Menu multiplayer = new Menu("Multiplayer");

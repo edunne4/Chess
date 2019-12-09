@@ -18,26 +18,34 @@
  */
 package Controller;
 
+import Model.GameManager;
 import View.GameView;
 import View.NetworkingPopUps.HostGamePopUp;
 import View.NetworkingPopUps.JoinGamePopUp;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioMenuItem;
 
+import java.io.IOException;
+
 public class MenuBarController {
 
     /** The view */
     protected GameView theView;
-    /** The model */
+    /** The controller */
     protected Controller controller;
+    /** The model */
+    protected GameManager theModel;
+
+    /** Whether or not this controller is the host or client for a networking game **/
+    protected boolean isHost;
 
     /**Ip address of host of game*/
     private String ipAddressToJoin;
 
-    public MenuBarController(GameView theView, Controller controller) {
+    public MenuBarController(GameView theView, Controller controller, GameManager theModel) {
         this.theView = theView;
         this.controller = controller;
-
+        this.theModel = theModel;
         RadioMenuItem enable2DBtn = (RadioMenuItem)theView.getGameMenuBar().getViewGroup().getToggles().get(0);
         //bind is3D to !2Dselected (or to 3DSelected, either one works)
         theView.is3DProperty().bind(enable2DBtn.selectedProperty().not());
@@ -55,6 +63,7 @@ public class MenuBarController {
         setUp2Dvs3DMenuClickHandlers();
         setupMultiplayerMenuClicksHandler();
         bindColorsToPieces();
+        setupSaveQuitRestartHandler();
     }
 
 
@@ -63,13 +72,47 @@ public class MenuBarController {
         MenuItem hostGameBtn = theView.getGameMenuBar().getMenus().get(1).getItems().get(0);
         hostGameBtn.setOnAction( event -> {
             new HostGamePopUp();
+            controller.isMultiplayer = true;
+            isHost = true;
+            try {
+                controller.makeConnection();
+                controller.makeSquaresClickable();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         });
 
         MenuItem joinGameBtn = theView.getGameMenuBar().getMenus().get(1).getItems().get(1);
         joinGameBtn.setOnAction( event -> {
             JoinGamePopUp joinGamePopUp = new JoinGamePopUp();
+            controller.isMultiplayer = true;
             ipAddressToJoin = joinGamePopUp.getAddressToJoin();
+            isHost = false;
             System.out.println("The user wants to join the game hosted at: " + ipAddressToJoin);
+            try {
+                controller.makeConnection();
+                controller.makeSquaresClickable();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        });
+
+    }
+
+    private void setupSaveQuitRestartHandler() {
+
+        MenuItem restartButton = theView.getGameMenuBar().getMenus().get(2).getItems().get(0);
+        restartButton.setOnAction( event -> {
+            controller.restartGame();
+        });
+
+        MenuItem quitButton = theView.getGameMenuBar().getMenus().get(2).getItems().get(1);
+        quitButton.setOnAction( event -> {
+            System.exit(0);
         });
 
     }
@@ -108,5 +151,7 @@ public class MenuBarController {
         controller.makeSquaresClickable();
     }
 
-
+    public String getIpAddressToJoin() {
+        return ipAddressToJoin;
+    }
 }

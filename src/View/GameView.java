@@ -16,6 +16,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.transform.NonInvertibleTransformException;
 import javafx.scene.transform.Rotate;
@@ -43,6 +44,7 @@ public class GameView {
     Text inCheckTextWhite;
     Button quitButton;
     HBox boardContainer;
+    Text turnText;
 
     private PerspectiveCamera camera;
     private String CAMERA = "Cam2";
@@ -59,7 +61,7 @@ public class GameView {
         this.gm = model;
         //make gameHBox which is a set of horizontal boxes
         gameHBox = new HBox(20);
-        gameHBox.setPadding(new Insets(30));
+        gameHBox.setPadding(new Insets(50));
         //root.setAlignment(Pos.CENTER);
         gameHBox.setMinSize(windowWidth,windowHeight);
         gameHBox.setBackground(makeBackground());
@@ -79,7 +81,11 @@ public class GameView {
         rightSideContainer = new VBox(5);
         createDeadPieceHolders();
         makeInCheckText();
+        turnText = new Text();
+        turnText.setFont(Font.font("Verdana", FontWeight.BOLD, 40));
+        rightSideContainer.getChildren().add(turnText);
         gameHBox.getChildren().add(rightSideContainer);
+
     }
 
     private Background makeBackground() {
@@ -150,8 +156,8 @@ public class GameView {
         deadPieceHolderBlack = new FlowPane();
         Text deadPieceHolderWhiteName = new Text();
         Text deadPieceHolderBlackName = new Text();
-        deadPieceHolderBlackName.setFont(new Font(20));
-        deadPieceHolderWhiteName.setFont(new Font(20));
+        deadPieceHolderBlackName.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+        deadPieceHolderWhiteName.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
         deadPieceHolderBlackName.setText("Captured Player Two Pieces:");
         deadPieceHolderWhiteName.setText("Captured Player One Pieces:");
 
@@ -186,8 +192,8 @@ public class GameView {
     private void makeInCheckText() {
         inCheckTextBlack = new Text();
         inCheckTextWhite = new Text();
-        inCheckTextBlack.setFont(new Font(40));
-        inCheckTextWhite.setFont(new Font(40));
+        inCheckTextBlack.setFont(Font.font(40));
+        inCheckTextWhite.setFont(Font.font(40));
         inCheckTextBlack.setFill(Color.RED);
         inCheckTextWhite.setFill(Color.RED);
         inCheckTextBlack.setText("");
@@ -247,6 +253,10 @@ public class GameView {
         return inCheckTextWhite;
     }
 
+    public Text getTurnText() {
+        return turnText;
+    }
+
     public BoardView getBoard() {
         return board;
     }
@@ -267,18 +277,19 @@ public class GameView {
         String s = winner.toString() + " wins!";
 
         Text endGameText = new Text(s);
-        endGameText.setFont(new Font(72));
+        endGameText.setFont(Font.font("Verdana", FontWeight.BOLD, 72));
 
         VBox secondaryLayout = new VBox();
         secondaryLayout.getChildren().add(endGameText);
 
         restartButton = new Button("Restart");
         quitButton = new Button("Quit Game");
-        HBox buttonsBox = new HBox(10);
+        HBox buttonsBox = new HBox(20);
+        buttonsBox.setPadding(new Insets(10,100,20,140));
         buttonsBox.getChildren().add(restartButton);
         buttonsBox.getChildren().add(quitButton);
         secondaryLayout.getChildren().add(buttonsBox);
-        Scene secondScene = new Scene(secondaryLayout, 400, 120);
+        Scene secondScene = new Scene(secondaryLayout, 450, 120);
 
         // New window (Stage)
         endGameWindow = new Stage();
