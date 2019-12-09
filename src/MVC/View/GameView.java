@@ -140,6 +140,10 @@ public class GameView {
             sideCoordAndBoardContainer.getChildren().add(board);
         }
 
+        if(this.gm.getBoard().getCapturedBlackPieces().isEmpty()){this.deadPieceHolderBlack.getChildren().clear();}
+        if(this.gm.getBoard().getCapturedWhitePieces().isEmpty()){this.deadPieceHolderWhite.getChildren().clear();}
+
+
     }
 
     /**Creates 2 flowpanes

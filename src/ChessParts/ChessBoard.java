@@ -213,4 +213,12 @@ public class ChessBoard {
         }
         return teamPiecesSquares;
     }
+
+    public List<ChessPiece> getCapturedWhitePieces() {
+        return capturedWhitePieces;
+    }
+
+    public List<ChessPiece> getCapturedBlackPieces() {
+        return capturedBlackPieces;
+    }
 }

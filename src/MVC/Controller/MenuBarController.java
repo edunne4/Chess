@@ -30,15 +30,14 @@ public class MenuBarController {
     /** The view */
     protected GameView theView;
     /** The model */
-    protected GameManager theModel;
+    protected Controller controller;
 
     /**Ip address of host of game*/
     private String ipAddressToJoin;
 
-    public MenuBarController(GameView theView, GameManager theModel) {
+    public MenuBarController(GameView theView, Controller controller) {
         this.theView = theView;
-        this.theModel = theModel;
-
+        this.controller = controller;
 
         RadioMenuItem enable2DBtn = (RadioMenuItem)theView.getGameMenuBar().getViewGroup().getToggles().get(0);
         //bind is3D to !2Dselected (or to 3DSelected, either one works)
@@ -107,6 +106,7 @@ public class MenuBarController {
     protected void reloadGameViewAndResetBindings() {
         theView.reloadGameView();
         setUpMenuBar();
+        controller.makeSquaresClickable();
     }
 
 

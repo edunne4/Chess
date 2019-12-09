@@ -59,7 +59,7 @@ public class Controller {
     public Controller(GameView theView, GameManager theModel) {
         this.theView = theView;
         this.theModel = theModel;
-        this.MBC = new MenuBarController(theView,theModel);
+        this.MBC = new MenuBarController(theView,this);
 
         //display text if the user is in check
         displayIfInCheck();
@@ -174,6 +174,7 @@ public class Controller {
                 theModel.resetGame();
                 MBC.reloadGameViewAndResetBindings();
                 theView.getEndGameWindow().close();
+                makeSquaresClickable();
             });
 
         }
