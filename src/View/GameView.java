@@ -1,5 +1,6 @@
 package View;
 
+import Model.ChessPieces.ChessPiece;
 import Model.Square;
 import Model.Team;
 import Model.GameManager;
@@ -11,10 +12,7 @@ import View.View2D.SquareView2D;
 import View.View3D.BoardView3D;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Insets;
-import javafx.scene.Group;
-import javafx.scene.PerspectiveCamera;
-import javafx.scene.Scene;
-import javafx.scene.SubScene;
+import javafx.scene.*;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
@@ -308,6 +306,20 @@ public class GameView {
                 }
             }
         }
+
+        deadPieceHolderWhite.getChildren().clear();
+        deadPieceHolderBlack.getChildren().clear();
+        for (ChessPiece piece : gm.getBoard().getCapturedWhitePieces()) {
+            deadPieceHolderWhite.getChildren().add(new PieceView2D(piece.getPieceType(), board.getPlayer1Color()).getView());
+        }
+        for (ChessPiece piece : gm.getBoard().getCapturedBlackPieces()) {
+            deadPieceHolderBlack.getChildren().add(new PieceView2D(piece.getPieceType(), board.getPlayer2Color()).getView());
+        }
+
+
+//        for (Node child: deadPieceHolderBlack.getChildren()) {
+//            PieceView deadPiece = (PieceView) child;
+//        }
     }
 
 
