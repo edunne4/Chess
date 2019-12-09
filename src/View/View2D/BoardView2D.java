@@ -66,25 +66,14 @@ public class BoardView2D extends BoardView {
         //make each square a SquareView
         SquareView2D square = new SquareView2D(row,col);
         //pick color of square
-        //String squareColor;
         if ((row + col) % 2 == 0) {
             //squareColor = getSquare1Color().toString();
             square.setColor(getSquare1Color());
         } else {
             square.setColor(getSquare2Color());
         }
-//        square.setColor();
-//        square.setStyle("-fx-background-color: " + squareColor);
         this.getChildren().add(square);
     }
-
-//    /**
-//     * initializes the board with all white and black chess pieces
-//     */
-//    void initBoard(){
-//        initWhitePieces();
-//        initBlackPieces();
-//    }
 
     @Override
     public void initPiecesFromBoard(ChessBoard modelBoard) {
@@ -108,61 +97,6 @@ public class BoardView2D extends BoardView {
 
         }
     }
-
-//    /**
-//     * initializes black pieces in correct spots on the board
-//     */
-//    private void initBlackPieces() {
-//        //placeholder to avoid errors
-//        PieceView2D piece = new PieceView2D("https://via.placeholder.com/60");
-//        //top side
-//        for (int i = 0; i < SIDE_LENGTH*2; i++) {
-//            //black rooks
-//            if(i == 0 || i == 7) {piece = new PieceView2D(PieceEnum.ROOK, PLAYER2_COLOR);}
-//            //queen
-//            if(i == 3){piece = new PieceView2D(PieceEnum.QUEEN, PLAYER2_COLOR);}
-//            //king
-//            if(i == 4){piece = new PieceView2D(PieceEnum.KING, PLAYER2_COLOR);}
-//            //black bishops
-//            if(i == 2 || i == 5) {piece = new PieceView2D(PieceEnum.BISHOP, PLAYER2_COLOR);}
-//            //knights
-//            if(i == 1 || i == 6) {piece = new PieceView2D(PieceEnum.KNIGHT, PLAYER2_COLOR);}
-//            //black pawns
-//            if(i >=8) {piece = new PieceView2D(PieceEnum.PAWN, PLAYER2_COLOR);}
-//
-//            SquareView2D square = (SquareView2D)this.getChildren().get(i);
-//            square.addImageView(piece.getView());
-//        }
-//    }
-
-//    /**
-//     * initializes white pieces in correct spots on the board
-//     */
-//    private void initWhitePieces()  {
-//        PieceView2D piece = new PieceView2D("https://via.placeholder.com/60");
-//        //bottom side
-//        for (int i = 0; i < SIDE_LENGTH*2; i++) {
-//
-//            //white pawns
-//            if(i < 8) { piece = new PieceView2D(PieceEnum.PAWN, PLAYER1_COLOR);}
-//            if(i == 8 || i ==15){piece = new PieceView2D(PieceEnum.ROOK, PLAYER1_COLOR);}
-//            //queen
-//            if(i == 11){piece = new PieceView2D(PieceEnum.QUEEN, PLAYER1_COLOR);}
-//            //king
-//            if(i == 12){piece = new PieceView2D(PieceEnum.KING, PLAYER1_COLOR);}
-//            //bishops
-//            if(i == 10 || i == 13) {piece = new PieceView2D(PieceEnum.BISHOP, PLAYER1_COLOR);}
-//            //knights
-//            if(i == 9 || i == 14) {piece = new PieceView2D(PieceEnum.KNIGHT, PLAYER1_COLOR);}
-//
-//            int offset = SIDE_LENGTH*SIDE_LENGTH - SIDE_LENGTH*2;
-//            SquareView2D square = (SquareView2D)this.getChildren().get(i + offset);
-//            square.addImageView(piece.getView());
-//
-//            }
-//            //white rooks
-//
-//        }
 
 
     /**
