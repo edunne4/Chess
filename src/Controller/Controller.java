@@ -168,10 +168,7 @@ public class Controller {
                 System.exit(0);
             });
             theView.getRestartButton().setOnAction((ActionEvent e) -> {
-                theModel.resetGame();
-                MBC.reloadGameViewAndResetBindings();
-                theView.getEndGameWindow().close();
-                makeSquaresClickable();
+                restartGame();
             });
 
         }
@@ -179,6 +176,13 @@ public class Controller {
         else {
           theView.killPiece(newSquare.getRow(), newSquare.getCol(), deadPieceHolder);
         }
+    }
+
+    private void restartGame() {
+        theModel.resetGame();
+        MBC.reloadGameViewAndResetBindings();
+        theView.getEndGameWindow().close();
+        makeSquaresClickable();
     }
 
 
