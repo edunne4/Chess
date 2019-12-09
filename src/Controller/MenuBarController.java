@@ -25,6 +25,8 @@ import View.NetworkingPopUps.JoinGamePopUp;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioMenuItem;
 
+import java.io.IOException;
+
 public class MenuBarController {
 
     /** The view */
@@ -33,6 +35,9 @@ public class MenuBarController {
     protected Controller controller;
     /** The model */
     protected GameManager theModel;
+
+    /** Whether or not this controller is the host or client for a networking game **/
+    protected boolean isHost;
 
     /**Ip address of host of game*/
     private String ipAddressToJoin;
@@ -67,13 +72,33 @@ public class MenuBarController {
         MenuItem hostGameBtn = theView.getGameMenuBar().getMenus().get(1).getItems().get(0);
         hostGameBtn.setOnAction( event -> {
             new HostGamePopUp();
+            controller.isMultiplayer = true;
+            isHost = true;
+            try {
+                controller.makeConnection();
+                controller.makeSquaresClickable();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         });
 
         MenuItem joinGameBtn = theView.getGameMenuBar().getMenus().get(1).getItems().get(1);
         joinGameBtn.setOnAction( event -> {
             JoinGamePopUp joinGamePopUp = new JoinGamePopUp();
+            controller.isMultiplayer = true;
             ipAddressToJoin = joinGamePopUp.getAddressToJoin();
+            isHost = false;
             System.out.println("The user wants to join the game hosted at: " + ipAddressToJoin);
+            try {
+                controller.makeConnection();
+                controller.makeSquaresClickable();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         });
 
     }
@@ -126,5 +151,7 @@ public class MenuBarController {
         controller.makeSquaresClickable();
     }
 
-
+    public String getIpAddressToJoin() {
+        return ipAddressToJoin;
+    }
 }

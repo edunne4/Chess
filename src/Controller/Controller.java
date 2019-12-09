@@ -25,6 +25,16 @@ import Model.Square;
 import Model.Team;
 import Model.GameManager;
 import Model.RuleMaster;
+import Networking.Player.ClientPlayer;
+import Networking.Player.HostPlayer;
+import Networking.Player.Player;
+import View.GameView;
+import View.NetworkingPopUps.HostGamePopUp;
+import View.NetworkingPopUps.JoinGamePopUp;
+import View.SquareView;
+import Model.*;
+import Model.ChessPieces.ChessPiece;
+import Model.ChessPieces.King;
 import View.GameView;
 import View.SquareView;
 import javafx.beans.binding.Bindings;
@@ -32,6 +42,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.layout.FlowPane;
 
+import java.io.IOException;
 import java.util.List;
 
 public class Controller {
@@ -46,6 +57,7 @@ public class Controller {
     /**The square the mouse most recently clicked*/
     protected Square currentSquareSelected;
 
+    protected boolean isMultiplayer;
 
     /**
      * Creates a chess game controller, allowing the user interaction with the view to be connected with the model
@@ -69,10 +81,24 @@ public class Controller {
      * Sets up event handlers for when squares in the view are clicked
      */
     protected void makeSquaresClickable() {
-
-        for (Node child : theView.getBoard().getChildren()){
-            SquareView squareView = (SquareView) child;
-            squareView.setOnMouseClicked(event -> squareWasClicked((SquareView) event.getSource()));
+        if (isMultiplayer){
+            for (Node child : theView.getBoard().getChildren()){
+                SquareView squareView = (SquareView) child;
+                squareView.setOnMouseClicked(event -> {
+                    try {
+                        squareWasClickedNetwork((SquareView) event.getSource());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                });
+            }
+        } else {
+            for (Node child : theView.getBoard().getChildren()) {
+                SquareView squareView = (SquareView) child;
+                squareView.setOnMouseClicked(event -> squareWasClicked((SquareView) event.getSource()));
+            }
         }
     }
 
@@ -216,4 +242,42 @@ public class Controller {
                 .otherwise(""));
     }
 
+    //**********************************************************************************
+
+    private Player player;
+
+    public void simulateClick(Movement opponentsMove) {
+        currentSquareSelected = theModel.getBoard().getSquareAt(opponentsMove.getInitialSquare().getRow(),
+                opponentsMove.getInitialSquare().getCol());
+        SquareView squareViewClicked = theView.getBoard().getSquareAt(opponentsMove.getFinalSquare().getRow(), opponentsMove.getFinalSquare().getCol());
+        squareWasClicked(squareViewClicked);
+    }
+
+    public void makeConnection() throws IOException, ClassNotFoundException {
+        if (MBC.isHost){
+            this.player = new HostPlayer(this);
+            player.connect();
+            Thread thread = new Thread(player);
+            thread.start();
+        } else {
+            this.player = new ClientPlayer(MBC.getIpAddressToJoin(), this);
+            player.connect();
+            Thread thread = new Thread(player);
+            thread.start();
+        }
+
+    }
+
+    protected void squareWasClickedNetwork(SquareView squareSelected) throws IOException, ClassNotFoundException {
+        if (theModel.getCurrentTurn() == player.getTeam()){
+            Movement moveMade = squareWasClicked(squareSelected);
+            makeMove(moveMade);
+        }
+    }
+
+    private void makeMove(Movement moveMade) throws IOException, ClassNotFoundException {
+        if(moveMade != null){
+            player.sendMove(moveMade);
+        }
+    }
 }
