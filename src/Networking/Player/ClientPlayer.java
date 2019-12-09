@@ -13,14 +13,14 @@
  * Class: ClientPlayer
  *
  * Description:
- *
+ * A Client player, that starts a client server and can receive movements from the host player.
  * ****************************************
  */
 package Networking.Player;
 
 import ChessParts.Movement;
 import ChessParts.Team;
-import MVC.Controller.NetController;
+import MVC.Controller.Controller;
 import Networking.Sockets.Client;
 import javafx.application.Platform;
 
@@ -30,10 +30,10 @@ public class ClientPlayer extends Player{
     private Client client;
     //TODO - extract these to parent class
     private boolean gameOver = false;
-    private NetController netController;
-    public ClientPlayer(String IPAddress, NetController netController) throws IOException {
+    private Controller Controller;
+    public ClientPlayer(String IPAddress, Controller Controller) throws IOException {
         super(Team.WHITE);
-        this.netController = netController;
+        this.Controller = Controller;
         this.client = new Client(IPAddress);
     }
 
@@ -63,7 +63,7 @@ public class ClientPlayer extends Player{
                 Movement move = client.readMovementFromServer();
                 Platform.runLater(
                         () -> {
-                            netController.simulateClick(move);
+                            Controller.simulateClick(move);
 
                         }
                 );

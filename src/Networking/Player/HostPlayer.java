@@ -20,7 +20,7 @@ package Networking.Player;
 
 import ChessParts.Movement;
 import ChessParts.Team;
-import MVC.Controller.NetController;
+import MVC.Controller.Controller;
 import Networking.Sockets.Server;
 import javafx.application.Platform;
 
@@ -29,11 +29,11 @@ import java.io.IOException;
 public class HostPlayer extends Player{
     private Server server;
     private boolean gameOver = false;
-    private NetController netController;
+    private Controller Controller;
 
-    public HostPlayer(NetController netController) throws IOException {
+    public HostPlayer(Controller Controller) throws IOException {
         super(Team.BLACK);
-        this.netController = netController;
+        this.Controller = Controller;
         this.server = new Server();
     }
 
@@ -65,7 +65,7 @@ public class HostPlayer extends Player{
                 Movement move = server.readMovementFromClient();
                 Platform.runLater(
                         () -> {
-                            netController.simulateClick(move);
+                            Controller.simulateClick(move);
 
                         }
                 );

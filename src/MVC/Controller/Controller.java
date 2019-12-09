@@ -29,11 +29,15 @@ import MVC.View.GameView;
 import MVC.View.NetworkingPopUps.HostGamePopUp;
 import MVC.View.NetworkingPopUps.JoinGamePopUp;
 import MVC.View.SquareView;
+import Networking.Player.ClientPlayer;
+import Networking.Player.HostPlayer;
+import Networking.Player.Player;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 
+import java.io.IOException;
 import java.util.List;
 
 public class Controller {
@@ -81,10 +85,24 @@ public class Controller {
      * Sets up event handlers for when squares in the view are clicked
      */
     protected void makeSquaresClickable() {
-
-        for (Node child : theView.getBoard().getChildren()){
-            SquareView squareView = (SquareView) child;
-            squareView.setOnMouseClicked(event -> squareWasClicked((SquareView) event.getSource()));
+        if (isNetworkingGame) {
+            for (Node child : theView.getBoard().getChildren()){
+                SquareView squareView = (SquareView) child;
+                squareView.setOnMouseClicked(event -> {
+                    try {
+                        squareWasClickedNetwork((SquareView) event.getSource());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                });
+            }
+        } else {
+            for (Node child : theView.getBoard().getChildren()) {
+                SquareView squareView = (SquareView) child;
+                squareView.setOnMouseClicked(event -> squareWasClicked((SquareView) event.getSource()));
+            }
         }
     }
 
@@ -102,6 +120,13 @@ public class Controller {
         MenuItem hostGameBtn = theView.getGameMenuBar().getMenus().get(1).getItems().get(0);
         hostGameBtn.setOnAction( event -> {
             new HostGamePopUp();
+            try {
+                makeConnection(true);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         });
 
         MenuItem joinGameBtn = theView.getGameMenuBar().getMenus().get(1).getItems().get(1);
@@ -109,6 +134,13 @@ public class Controller {
             JoinGamePopUp joinGamePopUp = new JoinGamePopUp();
             ipAddressToJoin = joinGamePopUp.getAddressToJoin();
             System.out.println("The user wants to join the game hosted at: " + ipAddressToJoin);
+            try {
+                makeConnection(false);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         });
 
     }
@@ -254,4 +286,43 @@ public class Controller {
                 .otherwise(""));
     }
 
+
+    //********************************************************************************************************
+
+    private Player player;
+
+
+    protected void squareWasClickedNetwork(SquareView squareSelected) throws IOException, ClassNotFoundException {
+        if (theModel.getCurrentTurn() == player.getTeam()){
+            Movement moveMade = squareWasClicked(squareSelected);
+            makeMove(moveMade);
+        }
+    }
+
+    private void makeMove(Movement moveMade) throws IOException, ClassNotFoundException {
+        if(moveMade != null){
+            player.sendMove(moveMade);
+        }
+    }
+
+    public void simulateClick(Movement opponentsMove) {
+        currentSquareSelected = theModel.getBoard().getSquareAt(opponentsMove.getInitialSquare().getRow(),
+                opponentsMove.getInitialSquare().getCol());
+        SquareView squareViewClicked = theView.getBoard().getSquareAt(opponentsMove.getFinalSquare().getRow(), opponentsMove.getFinalSquare().getCol());
+        squareWasClicked(squareViewClicked);
+    }
+
+    public void makeConnection(boolean isHost) throws IOException, ClassNotFoundException {
+        if (isHost){
+            this.player = new HostPlayer(this);
+            player.connect();
+            Thread thread = new Thread(player);
+            thread.start();
+        } else {
+            this.player = new ClientPlayer(ipAddressToJoin, this);
+            player.connect();
+            Thread thread = new Thread(player);
+            thread.start();
+        }
+    }
 }
