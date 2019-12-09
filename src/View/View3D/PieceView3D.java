@@ -19,7 +19,9 @@
  */
 package View.View3D;
 
+
 import View.PieceEnum;
+import View.PieceView;
 import com.interactivemesh.jfx.importer.ImportException;
 import com.interactivemesh.jfx.importer.stl.StlMeshImporter;
 import javafx.scene.paint.Color;
@@ -28,12 +30,13 @@ import javafx.scene.shape.DrawMode;
 import javafx.scene.shape.MeshView;
 import javafx.scene.shape.TriangleMesh;
 
-public class ChessPiece3D extends MeshView {
+public class PieceView3D extends PieceView {
 
+    private MeshView pieceMesh;
     private PieceEnum pieceType;
     private Color pieceColor;
     private int pieceScale;
-    private boolean isSelected;
+    //private boolean isSelected;
 
     private final int DEFAULT_SCALE = 2;
 
@@ -42,14 +45,14 @@ public class ChessPiece3D extends MeshView {
      * @param piece the STL file to be parsed and converted to a JavaFX MesView object
      * @param color the color of the MeshView in the viewport
      */
-    ChessPiece3D(PieceEnum piece, Color color) {
+    PieceView3D(PieceEnum piece, Color color) {
 
         super();
 
         this.pieceType = piece;
         this.pieceColor = color;
         this.pieceScale = DEFAULT_SCALE;
-        this.isSelected = false;
+        //this.isSelected = false;
 
         //create a StlMeshImporter object and try parsing with the filename
         StlMeshImporter stlImporter = new StlMeshImporter();
@@ -66,32 +69,33 @@ public class ChessPiece3D extends MeshView {
         TriangleMesh mesh = stlImporter.getImport();
         stlImporter.close();
 
-        this.setMesh(mesh);
+        pieceMesh = new MeshView();
+        pieceMesh.setMesh(mesh);
 
         //set the material, general properties, and scale of the mesh
-        this.setMaterial(new PhongMaterial(color));
-        this.setDrawMode(DrawMode.FILL);
-        this.setVisible(true);
+        pieceMesh.setMaterial(new PhongMaterial(color));
+        pieceMesh.setDrawMode(DrawMode.FILL);
+        pieceMesh.setVisible(true);
 
         //scale the pieces appropriately
-        this.setScaleX(pieceScale);
-        this.setScaleY(pieceScale);
-        this.setScaleZ(pieceScale);
+        pieceMesh.setScaleX(pieceScale);
+        pieceMesh.setScaleY(pieceScale);
+        pieceMesh.setScaleZ(pieceScale);
     }
 
     public void selectPiece() {
-        this.isSelected = true;
-        this.setMaterial(new PhongMaterial(pieceColor.deriveColor(0.5,1,1,1.0)));
+        //this.isSelected = true;
+        pieceMesh.setMaterial(new PhongMaterial(pieceColor.deriveColor(0.5,1,1,1.0)));
     }
 
     public void deselectPiece() {
-        this.isSelected = false;
-        this.setMaterial(new PhongMaterial(pieceColor));
+        //this.isSelected = false;
+        pieceMesh.setMaterial(new PhongMaterial(pieceColor));
     }
 
-    public boolean isSelected() {
-        return isSelected;
-    }
+//    public boolean isSelected() {
+//        return isSelected;
+//    }
 
     public PieceEnum getPieceType() {
         return pieceType;
@@ -105,5 +109,13 @@ public class ChessPiece3D extends MeshView {
         this.pieceScale = pieceScale;
     }
 
+    @Override
+    public void setColor(Color newColor){
+        this.pieceColor = newColor;
+        pieceMesh.setMaterial(new PhongMaterial(newColor));
+    }
 
+    public MeshView getPieceMesh() {
+        return pieceMesh;
+    }
 }

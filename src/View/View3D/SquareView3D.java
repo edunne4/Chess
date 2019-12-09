@@ -22,6 +22,8 @@ package View.View3D;
 import View.BoardView;
 import View.PieceEnum;
 import View.SquareView;
+import View.View3D.PieceView3D;
+
 import javafx.geometry.Pos;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
@@ -40,7 +42,7 @@ public class SquareView3D extends SquareView {
     //private boolean isSelected;
     private boolean hasPiece;
     private Color color;
-    private ChessPiece3D piece;
+    private PieceView3D piece;
     private Box square;
 
 
@@ -68,8 +70,8 @@ public class SquareView3D extends SquareView {
 
     public void putPieceOnSquare(PieceEnum pieceType, Color color) {
         if (!this.hasPiece) {
-            piece = new ChessPiece3D(pieceType, color);
-            this.getChildren().add(piece);
+            piece = new PieceView3D(pieceType, color);
+            this.getChildren().add(piece.getPieceMesh());
             this.hasPiece = true;
         }
         else {
@@ -78,10 +80,10 @@ public class SquareView3D extends SquareView {
 
     }
 
-    public ChessPiece3D removePieceFromSquare() {
+    public PieceView3D removePieceFromSquare() {
         if (this.hasPiece) {
-            ChessPiece3D pieceToRemove = this.piece;
-            this.getChildren().remove(pieceToRemove);
+            PieceView3D pieceToRemove = this.piece;
+            this.getChildren().remove(pieceToRemove.getPieceMesh());
             this.piece = null;
             this.hasPiece = false;
             return pieceToRemove;

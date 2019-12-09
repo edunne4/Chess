@@ -19,6 +19,7 @@
 package View.View2D;
 
 import View.PieceEnum;
+import View.PieceView;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -31,9 +32,10 @@ import java.io.IOException;
 import java.net.URL;
 
 
-public class PieceView2D {
+public class PieceView2D extends PieceView {
 
     ImageView view;
+    PieceEnum pieceType;
 
     /**
      * Creates an ImageView object from a file or url that will fit onto the squareview
@@ -42,35 +44,23 @@ public class PieceView2D {
      */
     public PieceView2D(PieceEnum piece, Color color)  {
 
-        BufferedImage bufferedImage;
-        try {
-            bufferedImage = ImageIO.read(new URL(piece.getFileName2D()));
-            BufferedImage coloredImage = colorImage(bufferedImage,color);
-            Image image = SwingFXUtils.toFXImage(coloredImage, null);
-            view = new ImageView(image);
+        this.pieceType = piece;
 
-            //these are temporary
-            view.setFitHeight(80);
-            view.setFitWidth(80);
-
-        } catch (IOException e) {
-            System.err.println("Error with creating the buffered image");
-            e.printStackTrace();
-        }
+        setColor(color);
 
     }
 
-    public PieceView2D(String imageFileName){
-        // load the image
-
-        Image image = new Image(imageFileName,60,60,false,false);
-
-        //make the imageview
-        view = new ImageView(image);
-        //these are temporary
-        view.setFitHeight(80);
-        view.setFitWidth(80);
-    }
+//    private PieceView2D(String imageFileName){
+//        // load the image
+//
+//        Image image = new Image(imageFileName,60,60,false,false);
+//
+//        //make the imageview
+//        view = new ImageView(image);
+//        //these are temporary
+//        view.setFitHeight(80);
+//        view.setFitWidth(80);
+//    }
 
     private static BufferedImage colorImage(BufferedImage image, Color color) {
         int width = image.getWidth();
@@ -99,5 +89,24 @@ public class PieceView2D {
      */
     public ImageView getView(){
         return view;
+    }
+
+    @Override
+    public void setColor(Color newColor) {
+        BufferedImage bufferedImage;
+        try {
+            bufferedImage = ImageIO.read(new URL(this.pieceType.getFileName2D()));
+            BufferedImage coloredImage = colorImage(bufferedImage,newColor);
+            Image image = SwingFXUtils.toFXImage(coloredImage, null);
+            view = new ImageView(image);
+
+            //these are temporary
+            view.setFitHeight(80);
+            view.setFitWidth(80);
+
+        } catch (IOException e) {
+            System.err.println("Error with creating the buffered image");
+            e.printStackTrace();
+        }
     }
 }
