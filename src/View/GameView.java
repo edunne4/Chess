@@ -3,7 +3,7 @@ package View;
 import Model.Team;
 import Model.GameManager;
 import View.View2D.PieceView2D;
-import View.View3D.ChessPiece3D;
+import View.View3D.PieceView3D;
 import View.View3D.SquareView3D;
 import View.View2D.BoardView2D;
 import View.View2D.SquareView2D;
@@ -208,7 +208,7 @@ public class GameView {
     public void killPiece(int row, int col, FlowPane deadPieceHolder){
         if(is3D()){
             SquareView3D oldLocationSquare = (SquareView3D)board.getSquareAt(row,col);
-            ChessPiece3D pieceKilled = oldLocationSquare.removePieceFromSquare();
+            PieceView3D pieceKilled = oldLocationSquare.removePieceFromSquare();
 
             deadPieceHolder.getChildren().add(new PieceView2D(pieceKilled.getPieceType(), pieceKilled.getPieceColor()).getView());
         } else {
