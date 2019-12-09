@@ -178,10 +178,10 @@ public class Controller {
         }
     }
 
-    private void restartGame() {
+    protected void restartGame() {
         theModel.resetGame();
         MBC.reloadGameViewAndResetBindings();
-        theView.getEndGameWindow().close();
+        if(theView.getEndGameWindow() != null) theView.getEndGameWindow().close();
         makeSquaresClickable();
     }
 

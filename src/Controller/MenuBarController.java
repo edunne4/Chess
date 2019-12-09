@@ -80,15 +80,13 @@ public class MenuBarController {
 
     private void setupSaveQuitRestartHandler() {
 
-        MenuItem restartButton = theView.getGameMenuBar().getMenus().get(2).getItems().get(1);
+        MenuItem restartButton = theView.getGameMenuBar().getMenus().get(2).getItems().get(0);
         restartButton.setOnAction( event -> {
-            theModel.resetGame();
-            reloadGameViewAndResetBindings();
-            //do we need to make squares clickable here?
+            controller.restartGame();
         });
 
-        MenuItem quitButton = theView.getGameMenuBar().getMenus().get(2).getItems().get(0);
-        restartButton.setOnAction( event -> {
+        MenuItem quitButton = theView.getGameMenuBar().getMenus().get(2).getItems().get(1);
+        quitButton.setOnAction( event -> {
             System.exit(0);
         });
 

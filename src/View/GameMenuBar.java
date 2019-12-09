@@ -63,7 +63,7 @@ public class GameMenuBar extends MenuBar {
         gameSettingsMenu.getItems().addAll(view, player1PieceColorMenu, player2PieceColorMenu);
 
         //create the quit menu
-        Menu quitMenu = new Menu("Quit Game");
+        Menu quitMenu = new Menu("Quit/Restart Game");
         ImageView quitMenuImage = new ImageView(new Image(getClass().getResourceAsStream("menuIcons/exit.png")));
         quitMenuImage.setFitWidth(25);
         quitMenuImage.setFitHeight(25);
