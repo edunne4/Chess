@@ -45,6 +45,9 @@ public class Controller {
 
 
     protected Square currentSquareSelected;
+
+    private boolean isNetworkingGame;
+
     private String ipAddressToJoin;
 
 
