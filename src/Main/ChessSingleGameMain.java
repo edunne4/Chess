@@ -13,9 +13,7 @@ public class ChessSingleGameMain extends Application {
 
     private GameManager theModel;
     private GameView theView;
-    //private BoardView3D theView;
     private Controller theController;
-    //private Controller3D theController;
 
     public static void main(String[] args) {
         launch(args);

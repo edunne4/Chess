@@ -36,6 +36,7 @@ import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.layout.FlowPane;
 
 import java.io.IOException;
 import java.util.List;
@@ -47,14 +48,20 @@ public class Controller {
     /** The model */
     protected GameManager theModel;
 
+    protected MenuBarController MBC;
 
     protected Square currentSquareSelected;
 
     private boolean isNetworkingGame;
-
     private String ipAddressToJoin;
 
 
+    /**
+     * Creates a chess game controller, allowing the user interaction with the view to be connected with the model
+     *
+     * @param theView the GameView that will display a GUI using javafx
+     * @param theModel the GameManager that runs the game by making moves
+     */
     public Controller(GameView theView, GameManager theModel) {
         this.theView = theView;
         this.theModel = theModel;
@@ -235,8 +242,7 @@ public class Controller {
                 //if there is a piece at the new location(thisSquare), kill it
                 if (killedPiece != null) {
                     if (killedPiece.getTeam() == Team.WHITE) {
-                        if(killedPiece instanceof King){theView.createEndGameWindow(Team.BLACK);theView.getQuitButton().setOnAction((ActionEvent e) -> {System.exit(0);});}
-                        theView.killPiece(newSquare.getRow(), newSquare.getCol(), theView.getDeadPieceHolderWhite());
+                        killPiece(newSquare, killedPiece, Team.BLACK, theView.getDeadPieceHolderWhite());
                     } else {
                         if(killedPiece instanceof King){theView.createEndGameWindow(Team.WHITE);theView.getQuitButton().setOnAction((ActionEvent e) -> {System.exit(0);});}
                         theView.killPiece(newSquare.getRow(), newSquare.getCol(), theView.getDeadPieceHolderBlack());

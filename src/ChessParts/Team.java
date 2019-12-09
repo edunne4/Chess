@@ -1,5 +1,8 @@
 package ChessParts;
 
+/**
+ * An enum used to differentiate players by team. White always goes first.
+ */
 public enum Team {
     BLACK("Black"),
     WHITE("White");
@@ -12,5 +15,10 @@ public enum Team {
     @Override
     public String toString() {
         return stringRepresentation;
+    }
+
+    public Team getOtherTeam(){
+        if(this == BLACK){return WHITE;}
+        else{return BLACK;}
     }
 }

@@ -9,6 +9,7 @@ import MVC.View.View3D.SquareView3D;
 import MVC.View.View2D.BoardView2D;
 import MVC.View.View2D.SquareView2D;
 import MVC.View.View3D.BoardView3D;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
@@ -53,6 +54,8 @@ public class GameView {
     private PerspectiveCamera camera;
     private String CAMERA = "Cam2";
     private final GameMenuBar gameMenuBar;
+    private Button restartButton;
+    private Stage endGameWindow;
 
     /**
      * Explicit constructor to create the main game view on which the chess game is displayed
@@ -308,7 +311,7 @@ public class GameView {
         VBox secondaryLayout = new VBox();
         secondaryLayout.getChildren().add(endGameText);
 
-        Button restartButton = new Button("Restart");
+        restartButton = new Button("Restart");
         quitButton = new Button("Quit Game");
         HBox buttonsBox = new HBox(10);
         buttonsBox.getChildren().add(restartButton);
@@ -317,10 +320,10 @@ public class GameView {
         Scene secondScene = new Scene(secondaryLayout, 400, 120);
 
         // New window (Stage)
-        Stage endGameWindow = new Stage();
+        endGameWindow = new Stage();
         endGameWindow.setTitle("Game Over!");
         endGameWindow.setScene(secondScene);
-
+        endGameWindow.sizeToScene();
         endGameWindow.show();
     }
 
@@ -338,5 +341,13 @@ public class GameView {
 
     public Button getQuitButton(){
         return quitButton;
+    }
+
+    public Button getRestartButton() {
+        return restartButton;
+    }
+
+    public Stage getEndGameWindow() {
+        return endGameWindow;
     }
 }

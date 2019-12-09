@@ -48,13 +48,20 @@ public abstract class ChessPiece implements Serializable {
      */
     public abstract List<Square> getLegalMoves(Square currentSquare, ChessBoard board);
 
-
+    /**
+     * Checks whether the squares in a certain direction can be moved to by a piece
+     *
+     * @param currentPos the Square the piece is currently on
+     * @param board the board that the piece is on
+     * @param rowDirec whether the direction is up(1) down(-1) or neither(0) from current pos
+     * @param colDirec whether the direction is right(1) left(-1) or neither(0) from current pos
+     * @param distance the number of squares to check in the given direction
+     * @return a list containing squares the piece could move to in that direction
+     */
     protected List<Square> checkDirection(Square currentPos, ChessBoard board, int rowDirec, int colDirec, int distance){
         List<Square> adjacentSquares = new ArrayList<>();
         int col = currentPos.getCol();
         int row = currentPos.getRow();
-
-
         for (int i = 1; i < distance; i++) {
             Square nextSquare = board.getSquareAt(row + i*rowDirec, col + i*colDirec);
 
@@ -78,8 +85,6 @@ public abstract class ChessPiece implements Serializable {
                 }
             }
         }
-
-
         return adjacentSquares;
     }
 
