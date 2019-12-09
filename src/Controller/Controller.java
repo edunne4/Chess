@@ -205,10 +205,10 @@ public class Controller {
     }
 
     protected void restartGame() {
-        theModel.resetGame();
-        MBC.reloadGameViewAndResetBindings();
-        if(theView.getEndGameWindow() != null) theView.getEndGameWindow().close();
-        makeSquaresClickable();
+            theModel.resetGame();
+            MBC.reloadGameViewAndResetBindings();
+            if (theView.getEndGameWindow() != null) theView.getEndGameWindow().close();
+            makeSquaresClickable();
     }
 
 
@@ -254,20 +254,18 @@ public class Controller {
     }
 
     public void makeConnection() throws IOException, ClassNotFoundException {
+        restartGame();
         if (MBC.isHost){
             this.player = new HostPlayer(this);
-            restartGame();
             player.connect();
             Thread thread = new Thread(player);
             thread.start();
         } else {
             this.player = new ClientPlayer(MBC.getIpAddressToJoin(), this);
-            restartGame();
             player.connect();
             Thread thread = new Thread(player);
             thread.start();
         }
-
     }
 
     protected void squareWasClickedNetwork(SquareView squareSelected) throws IOException, ClassNotFoundException {
