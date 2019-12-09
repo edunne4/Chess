@@ -66,12 +66,12 @@ public class BoardView3D extends BoardView {
 //        createPieceOnBoard(endingCol,endingRow,removedPiece.getPieceType(),removedPiece.getPieceColor());
 //    }
 
-    public ChessPiece3D removePieceOnBoard(int row, int col) {
+    public PieceView3D removePieceOnBoard(int row, int col) {
         //get the square we are looking to remove a piece from
         SquareView3D squareOnBoard = this.getSquareAt(row, col);
 
         //remove the piece
-        ChessPiece3D removedPiece = squareOnBoard.removePieceFromSquare();
+        PieceView3D removedPiece = squareOnBoard.removePieceFromSquare();
 
         return removedPiece;
 
@@ -88,7 +88,7 @@ public class BoardView3D extends BoardView {
 
     @Override
     public void movePiece(int startRow, int startCol, int endRow, int endCol) {
-        ChessPiece3D removedPiece = removePieceOnBoard(startRow,startCol);
+        PieceView3D removedPiece = removePieceOnBoard(startRow,startCol);
         putPieceOnBoard(endRow,endCol,removedPiece.getPieceType(),removedPiece.getPieceColor());
     }
 
