@@ -45,6 +45,8 @@ public class MenuBarController {
         theView.is3DProperty().bind(enable2DBtn.selectedProperty().not());
         //set default values for menus
         enable2DBtn.setSelected(true);
+        theView.getGameMenuBar().getPlayer1Colors().getToggles().get(6).setSelected(true);
+        theView.getGameMenuBar().getPlayer2Colors().getToggles().get(7).setSelected(true);
 
         reloadGameViewAndResetBindings();
 
@@ -97,9 +99,9 @@ public class MenuBarController {
     }
 
     private void colorClickHandlers() {
-        //TODO
+
         //set up player 1 colors
-        for (Toggle colorOption : controller.theView.getGameMenuBar().getPlayer1Colors().getToggles()) {
+        for (Toggle colorOption : theView.getGameMenuBar().getPlayer1Colors().getToggles()) {
             MenuItem colorButton = (MenuItem)colorOption;
 
             colorButton.setOnAction(event -> {
@@ -110,7 +112,7 @@ public class MenuBarController {
         }
 
         //set up player to colors
-        for (Toggle colorOption : controller.theView.getGameMenuBar().getPlayer2Colors().getToggles()) {
+        for (Toggle colorOption : theView.getGameMenuBar().getPlayer2Colors().getToggles()) {
             MenuItem colorButton = (MenuItem)colorOption;
 
             colorButton.setOnAction(event -> {
