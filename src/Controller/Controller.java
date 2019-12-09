@@ -256,11 +256,13 @@ public class Controller {
     public void makeConnection() throws IOException, ClassNotFoundException {
         if (MBC.isHost){
             this.player = new HostPlayer(this);
+            restartGame();
             player.connect();
             Thread thread = new Thread(player);
             thread.start();
         } else {
             this.player = new ClientPlayer(MBC.getIpAddressToJoin(), this);
+            restartGame();
             player.connect();
             Thread thread = new Thread(player);
             thread.start();
