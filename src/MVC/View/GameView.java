@@ -1,7 +1,6 @@
 package MVC.View;
 
 import ChessParts.Team;
-
 import MVC.Model.GameManager;
 import MVC.View.NetworkingPopUps.HostGamePopUp;
 import MVC.View.View2D.PieceView2D;
@@ -31,7 +30,6 @@ import javafx.scene.transform.Transform;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 
-import java.net.UnknownHostException;
 
 
 public class GameView {
