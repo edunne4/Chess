@@ -9,8 +9,8 @@
  * Time: 11:34 AM
  *
  * Project: csci205finalproject
- * Package: MVC.Controller.Controller
- * Class: MVC.Controller.Controller
+ * Package: Controller.Controller
+ * Class: Controller.Controller
  *
  * Description:
  *
@@ -68,7 +68,7 @@ public class Controller {
     public Controller(GameView theView, GameManager theModel) {
         this.theView = theView;
         this.theModel = theModel;
-        this.MBC = new MenuBarController(theView,this);
+        this.MBC = new MenuBarController(theView,this,theModel);
 
         //display text if the user is in check
         displayIfInCheck();
@@ -194,9 +194,7 @@ public class Controller {
                 System.exit(0);
             });
             theView.getRestartButton().setOnAction((ActionEvent e) -> {
-                theModel.resetGame();
-                MBC.reloadGameViewAndResetBindings();
-                theView.getEndGameWindow().close();
+                restartGame();
             });
 
         }
@@ -204,6 +202,13 @@ public class Controller {
         else {
           theView.killPiece(newSquare.getRow(), newSquare.getCol(), deadPieceHolder);
         }
+    }
+
+    private void restartGame() {
+        theModel.resetGame();
+        MBC.reloadGameViewAndResetBindings();
+        theView.getEndGameWindow().close();
+        makeSquaresClickable();
     }
 
 
