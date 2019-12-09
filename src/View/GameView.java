@@ -2,12 +2,8 @@ package View;
 
 import Model.Team;
 import Model.GameManager;
-import View.View2D.PieceView2D;
-import View.View3D.PieceView3D;
-import View.View3D.SquareView3D;
-import View.View2D.BoardView2D;
-import View.View2D.SquareView2D;
-import View.View3D.BoardView3D;
+import View.View2D.*;
+import View.View3D.*;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
@@ -124,7 +120,7 @@ public class GameView {
 
             boardContainer.getChildren().add(boardScene);
             //***********************************
-        }else {
+        } else {
             board = new BoardView2D(640, gm.getBoard());
             //add the actual board in
             boardContainer.getChildren().add(board);
@@ -164,8 +160,6 @@ public class GameView {
         rightSideContainer.getChildren().add(deadPieceHolderBlackName);
         rightSideContainer.getChildren().add(deadPieceHolderBlack);
     }
-
-
 
     /**
      * grabs the piece image at the specified spot and puts it in its respective deadpiece holder depending on team

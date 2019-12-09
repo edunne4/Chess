@@ -115,11 +115,6 @@ public class BoardView2D extends BoardView {
         oldLocationSquare.getChildren().clear();
     }
 
-//    @Override
-//    public void initPieces() {
-//        initBoard();
-//    }
-
 
     /**
      * Grabs the SquareView at the specified spot in the board
