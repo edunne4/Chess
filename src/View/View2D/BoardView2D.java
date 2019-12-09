@@ -22,6 +22,8 @@ import Model.ChessBoard;
 import Model.ChessPieces.ChessPiece;
 import Model.Team;
 import View.BoardView;
+import View.PieceEnum;
+import View.View3D.SquareView3D;
 import javafx.scene.paint.Color;
 
 /**
@@ -66,125 +68,42 @@ public class BoardView2D extends BoardView {
         //make each square a SquareView
         SquareView2D square = new SquareView2D(row,col);
         //pick color of square
-        //String squareColor;
         if ((row + col) % 2 == 0) {
-            //squareColor = getSquare1Color().toString();
             square.setColor(getSquare1Color());
         } else {
             square.setColor(getSquare2Color());
         }
-//        square.setColor();
-//        square.setStyle("-fx-background-color: " + squareColor);
         this.getChildren().add(square);
     }
 
+
+
+
 //    /**
-//     * initializes the board with all white and black chess pieces
+//     * Moves a piece's image from one squareView to a new squareview on the baord
+//     *
+//     * @param startRow the row of the old square
+//     * @param startCol the column of the old square
+//     * @param endRow the row of the new square
+//     * @param endCol the column of the new square
 //     */
-//    void initBoard(){
-//        initWhitePieces();
-//        initBlackPieces();
+//    @Override
+//    public void movePiece(int startRow,int startCol,int endRow,int endCol){
+////        SquareView2D oldLocationSquare = this.getSquareAt(oldRow,oldCol);
+////        SquareView2D newLocationSquare = this.getSquareAt(newRow,newCol);
+////
+////        newLocationSquare.addImageView(oldLocationSquare.getPiece());
+////        oldLocationSquare.getChildren().clear();
+//        PieceView2D removedPiece = removePieceFromBoard(startRow,startCol);
+//        putPieceOnBoard(endRow,endCol,removedPiece.getPieceType(),removedPiece.getPieceColor());
+//
 //    }
 
     @Override
-    public void initPiecesFromBoard(ChessBoard modelBoard) {
-        // loop through the entire board and create 2D pieces where necessary
-        for (int row = 0; row < SIDE_LENGTH; row++) {
-            for (int col = 0; col < SIDE_LENGTH; col++) {
-                //if the current square has a piece, make a 2D representation of it
-                if(!modelBoard.getSquareAt(row, col).isEmpty()){
-                    ChessPiece currentPiece = modelBoard.getSquareAt(row, col).getCurrentPiece();
-                    //get the correct color from the model
-                    Color pieceColor = getPlayer1Color();
-                    if(currentPiece.getTeam() == Team.BLACK){ // if piece belongs to player2 (assuming black is player 2)
-                        pieceColor = getPlayer2Color(); //use player2 color
-                    }
-                    //create the 2D piece with using the tye enum and color
-                    PieceView2D piece2D = new PieceView2D(currentPiece.getPieceType(), pieceColor);
-                    //add that 2D piece to the correct square
-                    getSquareAt(row, col).addImageView(piece2D.getView());
-                }
-            }
-
-        }
+    public PieceView2D removePieceFromBoard(int row, int col) {
+        return this.getSquareAt(row, col).removePiece();
     }
 
-//    /**
-//     * initializes black pieces in correct spots on the board
-//     */
-//    private void initBlackPieces() {
-//        //placeholder to avoid errors
-//        PieceView2D piece = new PieceView2D("https://via.placeholder.com/60");
-//        //top side
-//        for (int i = 0; i < SIDE_LENGTH*2; i++) {
-//            //black rooks
-//            if(i == 0 || i == 7) {piece = new PieceView2D(PieceEnum.ROOK, PLAYER2_COLOR);}
-//            //queen
-//            if(i == 3){piece = new PieceView2D(PieceEnum.QUEEN, PLAYER2_COLOR);}
-//            //king
-//            if(i == 4){piece = new PieceView2D(PieceEnum.KING, PLAYER2_COLOR);}
-//            //black bishops
-//            if(i == 2 || i == 5) {piece = new PieceView2D(PieceEnum.BISHOP, PLAYER2_COLOR);}
-//            //knights
-//            if(i == 1 || i == 6) {piece = new PieceView2D(PieceEnum.KNIGHT, PLAYER2_COLOR);}
-//            //black pawns
-//            if(i >=8) {piece = new PieceView2D(PieceEnum.PAWN, PLAYER2_COLOR);}
-//
-//            SquareView2D square = (SquareView2D)this.getChildren().get(i);
-//            square.addImageView(piece.getView());
-//        }
-//    }
-
-//    /**
-//     * initializes white pieces in correct spots on the board
-//     */
-//    private void initWhitePieces()  {
-//        PieceView2D piece = new PieceView2D("https://via.placeholder.com/60");
-//        //bottom side
-//        for (int i = 0; i < SIDE_LENGTH*2; i++) {
-//
-//            //white pawns
-//            if(i < 8) { piece = new PieceView2D(PieceEnum.PAWN, PLAYER1_COLOR);}
-//            if(i == 8 || i ==15){piece = new PieceView2D(PieceEnum.ROOK, PLAYER1_COLOR);}
-//            //queen
-//            if(i == 11){piece = new PieceView2D(PieceEnum.QUEEN, PLAYER1_COLOR);}
-//            //king
-//            if(i == 12){piece = new PieceView2D(PieceEnum.KING, PLAYER1_COLOR);}
-//            //bishops
-//            if(i == 10 || i == 13) {piece = new PieceView2D(PieceEnum.BISHOP, PLAYER1_COLOR);}
-//            //knights
-//            if(i == 9 || i == 14) {piece = new PieceView2D(PieceEnum.KNIGHT, PLAYER1_COLOR);}
-//
-//            int offset = SIDE_LENGTH*SIDE_LENGTH - SIDE_LENGTH*2;
-//            SquareView2D square = (SquareView2D)this.getChildren().get(i + offset);
-//            square.addImageView(piece.getView());
-//
-//            }
-//            //white rooks
-//
-//        }
-
-
-    /**
-     * Moves a piece's image from one squareView to a new squareview on the baord
-     *
-     * @param oldRow the row of the old square
-     * @param oldCol the column of the old square
-     * @param newRow the row of the new square
-     * @param newCol the column of the new square
-     */
-    public void movePiece(int oldRow,int oldCol,int newRow,int newCol){
-        SquareView2D oldLocationSquare = this.getSquareAt(oldRow,oldCol);
-        SquareView2D newLocationSquare = this.getSquareAt(newRow,newCol);
-
-        newLocationSquare.addImageView(oldLocationSquare.getPiece());
-        oldLocationSquare.getChildren().clear();
-    }
-
-//    @Override
-//    public void initPieces() {
-//        initBoard();
-//    }
 
 
     /**
@@ -194,6 +113,7 @@ public class BoardView2D extends BoardView {
      * @param col the square's column
      * @return the SquareView
      */
+    @Override
     public SquareView2D getSquareAt(int row, int col) {
         return (SquareView2D)this.getChildren().get((7-row) * SIDE_LENGTH + col);
     }

@@ -1,5 +1,6 @@
 package View;
 
+import Model.Square;
 import Model.Team;
 import Model.GameManager;
 import View.View2D.PieceView2D;
@@ -176,7 +177,7 @@ public class GameView {
     public void killPiece(int row, int col, FlowPane deadPieceHolder){
         if(is3D()){
             SquareView3D oldLocationSquare = (SquareView3D)board.getSquareAt(row,col);
-            PieceView3D pieceKilled = oldLocationSquare.removePieceFromSquare();
+            PieceView3D pieceKilled = oldLocationSquare.removePiece();
 
             deadPieceHolder.getChildren().add(new PieceView2D(pieceKilled.getPieceType(), pieceKilled.getPieceColor()).getView());
         } else {
@@ -293,6 +294,22 @@ public class GameView {
         endGameWindow.sizeToScene();
         endGameWindow.show();
     }
+
+
+    public void refreshPieceColors(){
+        for (int row = 0; row < BoardView.SIDE_LENGTH ; row++) {
+            for (int col = 0; col < BoardView.SIDE_LENGTH; col++) {
+                if(!gm.getBoard().getSquareAt(row, col).isEmpty()){ //if square not empty,
+                    if(gm.getBoard().getSquareAt(row, col).getCurrentPiece().getTeam() == Team.WHITE){ //if it's a player one piece
+                        board.getSquareAt(row, col).setPieceColor(board.getPlayer1Color());
+                    }else{
+                        board.getSquareAt(row, col).setPieceColor(board.getPlayer2Color());
+                    }
+                }
+            }
+        }
+    }
+
 
     public boolean is3D() {
         return is3D.get();

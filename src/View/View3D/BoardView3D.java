@@ -40,9 +40,6 @@ public class BoardView3D extends BoardView {
 
          //setup the board based on the state of the board passed in
          initPiecesFromBoard(modelBoard);
-
-
-
      }
 
     private void initializeBoardSquares() {
@@ -66,83 +63,20 @@ public class BoardView3D extends BoardView {
 //        createPieceOnBoard(endingCol,endingRow,removedPiece.getPieceType(),removedPiece.getPieceColor());
 //    }
 
-    public PieceView3D removePieceOnBoard(int row, int col) {
-        //get the square we are looking to remove a piece from
-        SquareView3D squareOnBoard = this.getSquareAt(row, col);
-
-        //remove the piece
-        PieceView3D removedPiece = squareOnBoard.removePieceFromSquare();
-
-        return removedPiece;
-
-    }
-
-    public void putPieceOnBoard(int row, int col, PieceEnum pieceType, Color color) {
-        //get the square we are looking to add a piece to
-        SquareView3D squareOnBoard = (SquareView3D) this.getSquareAt(row, col);
-
-        //add the piece
-        squareOnBoard.putPieceOnSquare(pieceType,color);
-
-    }
-
     @Override
-    public void movePiece(int startRow, int startCol, int endRow, int endCol) {
-        PieceView3D removedPiece = removePieceOnBoard(startRow,startCol);
-        putPieceOnBoard(endRow,endCol,removedPiece.getPieceType(),removedPiece.getPieceColor());
+    public PieceView3D removePieceFromBoard(int row, int col) {
+        return this.getSquareAt(row, col).removePiece();
     }
+
 
 //    @Override
-//    public void initPieces() {
-//        //create the pieces for player1
-//        putPieceOnBoard(0,0, PieceEnum.ROOK, PLAYER1_COLOR);
-//        putPieceOnBoard(0,1,PieceEnum.KNIGHT, PLAYER1_COLOR);
-//        putPieceOnBoard(0,2,PieceEnum.BISHOP, PLAYER1_COLOR);
-//        putPieceOnBoard(0,3,PieceEnum.QUEEN, PLAYER1_COLOR);
-//        putPieceOnBoard(0,4,PieceEnum.KING, PLAYER1_COLOR);
-//        putPieceOnBoard(0,5,PieceEnum.BISHOP, PLAYER1_COLOR);
-//        putPieceOnBoard(0,6,PieceEnum.KNIGHT, PLAYER1_COLOR);
-//        putPieceOnBoard(0,7,PieceEnum.ROOK, PLAYER1_COLOR);
-//        for (int i = 0; i < SIDE_LENGTH; i++) {
-//            putPieceOnBoard(1,i,PieceEnum.PAWN, PLAYER1_COLOR);
-//        }
-//
-//        //create the pieces for player 2
-//        putPieceOnBoard(7,0,PieceEnum.ROOK, PLAYER2_COLOR);
-//        putPieceOnBoard(7,1,PieceEnum.KNIGHT, PLAYER2_COLOR);
-//        putPieceOnBoard(7,2,PieceEnum.BISHOP, PLAYER2_COLOR);
-//        putPieceOnBoard(7,3,PieceEnum.QUEEN, PLAYER2_COLOR);
-//        putPieceOnBoard(7,4,PieceEnum.KING, PLAYER2_COLOR);
-//        putPieceOnBoard(7,5,PieceEnum.BISHOP, PLAYER2_COLOR);
-//        putPieceOnBoard(7,6,PieceEnum.KNIGHT, PLAYER2_COLOR);
-//        putPieceOnBoard(7,7,PieceEnum.ROOK, PLAYER2_COLOR);
-//        for (int i = 0; i < SIDE_LENGTH; i++) {
-//            putPieceOnBoard(6,i,PieceEnum.PAWN, PLAYER2_COLOR);
-//        }
+//    public void movePiece(int startRow, int startCol, int endRow, int endCol) {
+//        PieceView3D removedPiece = removePieceFromBoard(startRow,startCol);
+//        putPieceOnBoard(endRow,endCol,removedPiece.getPieceType(),removedPiece.getPieceColor());
 //    }
 
+
     @Override
-    public void initPiecesFromBoard(ChessBoard modelBoard) {
-        // loop through the entire board and create 2D pieces where necessary
-        for (int row = 0; row < SIDE_LENGTH; row++) {
-            for (int col = 0; col < SIDE_LENGTH; col++) {
-                //if the current square has a piece, make a 2D representation of it
-                if(!modelBoard.getSquareAt(row, col).isEmpty()){
-                    ChessPiece currentPiece = modelBoard.getSquareAt(row, col).getCurrentPiece();
-                    //get the correct color from the model
-                    Color pieceColor = getPlayer1Color();
-                    if(currentPiece.getTeam() == Team.BLACK){ // if piece belongs to player2 (assuming black is player 2)
-                        pieceColor = getPlayer2Color(); //use player2 color
-                    }
-                    //create the 3D piece with using the tye enum and color
-                    getSquareAt(row, col).putPieceOnSquare(currentPiece.getPieceType(), pieceColor);
-
-                }
-            }
-
-        }
-    }
-
     public SquareView3D getSquareAt(int row, int col){
         return (SquareView3D)this.getChildren().get((7-row) * SIDE_LENGTH + col);
     }

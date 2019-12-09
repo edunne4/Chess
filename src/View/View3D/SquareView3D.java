@@ -22,7 +22,6 @@ package View.View3D;
 import View.BoardView;
 import View.PieceEnum;
 import View.SquareView;
-import View.View3D.PieceView3D;
 
 import javafx.geometry.Pos;
 import javafx.scene.paint.Color;
@@ -42,7 +41,7 @@ public class SquareView3D extends SquareView {
     //private boolean isSelected;
     private boolean hasPiece;
     private Color color;
-    private PieceView3D piece;
+    private PieceView3D piece3D;
     private Box square;
 
 
@@ -55,7 +54,7 @@ public class SquareView3D extends SquareView {
 //        this.col = col;
         this.setAlignment(Pos.CENTER);
         this.color = color;
-        this.piece = null;
+        this.piece3D = null;
 
         this.square = new Box(SQUARE_SIZE, SQUARE_SIZE,SQUARE_DEPTH);
         square.setMaterial(new PhongMaterial(color));
@@ -68,10 +67,11 @@ public class SquareView3D extends SquareView {
         //changeColor();
     }
 
-    public void putPieceOnSquare(PieceEnum pieceType, Color color) {
+    @Override
+    public void putPiece(PieceEnum pieceType, Color color) {
         if (!this.hasPiece) {
-            piece = new PieceView3D(pieceType, color);
-            this.getChildren().add(piece.getPieceMesh());
+            piece3D = new PieceView3D(pieceType, color);
+            this.getChildren().add(piece3D.getPieceMesh());
             this.hasPiece = true;
         }
         else {
@@ -80,11 +80,12 @@ public class SquareView3D extends SquareView {
 
     }
 
-    public PieceView3D removePieceFromSquare() {
+    @Override
+    public PieceView3D removePiece() {
         if (this.hasPiece) {
-            PieceView3D pieceToRemove = this.piece;
+            PieceView3D pieceToRemove = this.piece3D;
             this.getChildren().remove(pieceToRemove.getPieceMesh());
-            this.piece = null;
+            this.piece3D = null;
             this.hasPiece = false;
             return pieceToRemove;
         }
@@ -136,6 +137,14 @@ public class SquareView3D extends SquareView {
 //        //TODO - fix code so that the color of the piece will change as well
 //    }
 
+    @Override
+    public void setPieceColor(Color newColor) {
+        if(hasPiece){
+            piece3D.setColor(newColor);
+        }
+    }
+
+    @Override
     public void highlight() {
 
         if ((row + col) % 2 == 0) {
@@ -145,15 +154,16 @@ public class SquareView3D extends SquareView {
         }
 
         if (hasPiece) {
-            this.piece.selectPiece();
+            this.piece3D.selectPiece();
         }
     }
 
+    @Override
     public void unHighlight(){
         this.square.setMaterial(new PhongMaterial(color));
 
         if (hasPiece) {
-            this.piece.deselectPiece();
+            this.piece3D.deselectPiece();
         }
     }
 

@@ -19,15 +19,18 @@
 package View.View2D;
 
 import View.BoardView;
+import View.PieceEnum;
+import View.PieceView;
 import View.SquareView;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.paint.Color;
 
+
 public class SquareView2D extends SquareView {
 
-    //private StackPane pane;
+    private PieceView2D piece2D;
 
     /**Creates a StackPane object for a square that stores the square's location on the board
      *
@@ -36,6 +39,22 @@ public class SquareView2D extends SquareView {
      */
     SquareView2D(int row, int col) {
         super(7-row, col);
+    }
+
+    @Override
+    public void putPiece(PieceEnum pieceType, Color color) {
+        piece2D = new PieceView2D(pieceType, color);
+        this.getChildren().add(piece2D.getView());
+    }
+
+
+    @Override
+    public PieceView2D removePiece() {
+        PieceView2D pieceToRemove = piece2D;
+        this.getChildren().clear();
+        this.piece2D = null;
+
+        return pieceToRemove;
     }
 
 
@@ -57,30 +76,25 @@ public class SquareView2D extends SquareView {
     /**
      * Highlights the selected square
      */
+    @Override
     public void highlight() {
-//        String squareColor;
         if ((row + col) % 2 != 0) {
             setColor(BoardView.getSquare1Highlight());
-//            squareColor = BoardView.getSquare1Highlight().toString();
         } else {
             setColor(BoardView.getSquare2Highlight());
-//            squareColor = BoardView.getSquare2Color().toString();
         }
-//        this.setStyle("-fx-background-color: " + squareColor);
     }
-
 
     /**
      * unHighlights the selected square
      */
+    @Override
     public void unHighlight(){
-//        String squareColor;
         if ((row + col) % 2 != 0) {
             setColor(BoardView.getSquare1Color());
         } else {
             setColor(BoardView.getSquare2Color());
         }
-//        this.setStyle("-fx-background-color: " + squareColor);
     }
 
     /**
@@ -93,6 +107,14 @@ public class SquareView2D extends SquareView {
 
     public void setColor(Color color){
         this.setBackground(new Background(new BackgroundFill(color, null, null)));
+    }
+
+    @Override
+    public void setPieceColor(Color newColor) {
+        if(piece2D != null){
+            this.getChildren().clear();
+            putPiece(piece2D.getPieceType(), newColor);
+        }
     }
 
 }

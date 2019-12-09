@@ -23,6 +23,8 @@ import View.NetworkingPopUps.HostGamePopUp;
 import View.NetworkingPopUps.JoinGamePopUp;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioMenuItem;
+import javafx.scene.control.Toggle;
+import javafx.scene.paint.Color;
 
 public class MenuBarController {
 
@@ -54,7 +56,7 @@ public class MenuBarController {
     protected void setUpMenuBar() {
         setUp2Dvs3DMenuClickHandlers();
         setupMultiplayerMenuClicksHandler();
-        bindColorsToPieces();
+        colorClickHandlers();
     }
 
 
@@ -94,8 +96,29 @@ public class MenuBarController {
 
     }
 
-    private void bindColorsToPieces() {
+    private void colorClickHandlers() {
         //TODO
+        //set up player 1 colors
+        for (Toggle colorOption : controller.theView.getGameMenuBar().getPlayer1Colors().getToggles()) {
+            MenuItem colorButton = (MenuItem)colorOption;
+
+            colorButton.setOnAction(event -> {
+                Color newColor = Color.web(colorButton.getText());
+                theView.getBoard().setPlayer1Color(newColor);
+                theView.refreshPieceColors();
+            });
+        }
+
+        //set up player to colors
+        for (Toggle colorOption : controller.theView.getGameMenuBar().getPlayer2Colors().getToggles()) {
+            MenuItem colorButton = (MenuItem)colorOption;
+
+            colorButton.setOnAction(event -> {
+                Color newColor = Color.web(colorButton.getText());
+                theView.getBoard().setPlayer2Color(newColor);
+                theView.refreshPieceColors();
+            });
+        }
 
     }
 
@@ -107,6 +130,7 @@ public class MenuBarController {
         setUpMenuBar();
         controller.makeSquaresClickable();
     }
+
 
 
 }
