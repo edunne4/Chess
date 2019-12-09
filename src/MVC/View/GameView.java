@@ -84,8 +84,6 @@ public class GameView {
         VBox boardCoordContainer = new VBox();
         sideCoordAndBoardContainer = new HBox();
 
-        reloadGameView();
-
         boardCoordContainer.getChildren().add(sideCoordAndBoardContainer);
         //put this whole shabang in the root, an HBox
         gameHBox.getChildren().add(boardCoordContainer);
@@ -100,6 +98,7 @@ public class GameView {
         gameMenuBar = new GameMenuBar();
         root = new VBox();
         root.getChildren().addAll(gameMenuBar,gameHBox);
+        reloadGameView();
 
     }
 
