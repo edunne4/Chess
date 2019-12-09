@@ -30,10 +30,10 @@ public class ClientPlayer extends Player{
     private Client client;
     //TODO - extract these to parent class
     private boolean gameOver = false;
-    private Controller Controller;
-    public ClientPlayer(String IPAddress, Controller Controller) throws IOException {
+    private NetController netController;
+    public ClientPlayer(String IPAddress, NetController netController) throws IOException {
         super(Team.WHITE);
-        this.Controller = Controller;
+        this.netController = netController;
         this.client = new Client(IPAddress);
     }
 

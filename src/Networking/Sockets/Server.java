@@ -19,8 +19,8 @@
  */
 package Networking.Sockets;
 
-import ChessParts.Movement;
-import MVC.Controller.NetController;
+import Model.Movement;
+import Controller.NetController;
 
 import java.io.*;
 import java.net.InetAddress;

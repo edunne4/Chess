@@ -9,7 +9,7 @@ package Networking.Player;/* *****************************************
  * Time: 9:00 PM
  *
  * Project: CSCI205FinalProject
- * Package: ChessParts
+ * Package: Model.ChessParts
  * Class: Networking.Player.Player
  *
  * Description:
@@ -17,8 +17,8 @@ package Networking.Player;/* *****************************************
  * ****************************************
  */
 
-import ChessParts.Movement;
-import ChessParts.Team;
+import Model.Movement;
+import Model.Team;
 
 import java.io.IOException;
 

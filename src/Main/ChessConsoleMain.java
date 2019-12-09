@@ -17,9 +17,9 @@ package Main;/* *****************************************
  * ****************************************
  */
 
-import ChessParts.ChessPieces.ChessPiece;
-import ChessParts.Square;
-import MVC.Model.GameManager;
+import Model.ChessPieces.ChessPiece;
+import Model.Square;
+import Model.GameManager;
 
 import java.util.List;
 import java.util.Scanner;
