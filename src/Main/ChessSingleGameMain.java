@@ -34,7 +34,7 @@ public class ChessSingleGameMain extends Application {
         //GameMenu gameMenuBar = new GameMenu();
 
         Scene scene = new Scene(theView.getRoot());
-        primaryStage.setTitle("Chess");
+        primaryStage.setTitle("Brian Queen's Chess");
         primaryStage.setScene(scene);
         primaryStage.sizeToScene();
         primaryStage.show();

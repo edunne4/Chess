@@ -209,6 +209,9 @@ public class Controller {
             MBC.reloadGameViewAndResetBindings();
             if (theView.getEndGameWindow() != null) theView.getEndGameWindow().close();
             makeSquaresClickable();
+            theModel.getRuleMaster().isCheckedBlackProperty().setValue(false);
+            theModel.getRuleMaster().isCheckedWhiteProperty().setValue(false);
+            displayIfInCheck();
     }
 
 
