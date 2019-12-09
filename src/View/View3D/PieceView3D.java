@@ -93,8 +93,6 @@ public class PieceView3D extends PieceView {
 //    }
 
 
-
-
     public void setPieceScale(int pieceScale) {
         this.pieceScale = pieceScale;
     }

@@ -29,14 +29,6 @@ import javafx.scene.paint.Color;
  */
 public class BoardView2D extends BoardView {
 
-//    static final String SQUARE1_COLOR = "#949085";
-//    static final String SQUARE2_COLOR = "#ede8da";
-//    static final String LIGHT_HIGHLIGHT_HEX = "#b2edb3";
-//    static final String DARK_HIGHLIGHT_HEX = "#7bbd7b";
-
-//    private Color PLAYER1_COLOR = Color.GREEN;
-//    private Color PLAYER2_COLOR = Color.RED;
-
 
     /**
      * creates a board that is a tile pane and puts a SquareView object in each spot

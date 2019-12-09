@@ -57,24 +57,10 @@ public class BoardView3D extends BoardView {
         }
     }
 
-
-//    public void movePieceOnBoard(int startingCol,int startingRow,int endingCol,int endingRow) {
-//        ChessPiece3D removedPiece = removePieceOnBoard(startingCol,startingRow);
-//        createPieceOnBoard(endingCol,endingRow,removedPiece.getPieceType(),removedPiece.getPieceColor());
-//    }
-
     @Override
     public PieceView3D removePieceFromBoard(int row, int col) {
         return this.getSquareAt(row, col).removePiece();
     }
-
-
-//    @Override
-//    public void movePiece(int startRow, int startCol, int endRow, int endCol) {
-//        PieceView3D removedPiece = removePieceFromBoard(startRow,startCol);
-//        putPieceOnBoard(endRow,endCol,removedPiece.getPieceType(),removedPiece.getPieceColor());
-//    }
-
 
     @Override
     public SquareView3D getSquareAt(int row, int col){

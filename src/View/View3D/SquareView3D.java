@@ -38,20 +38,13 @@ public class SquareView3D extends SquareView {
     private static double SELECTED_BRIGHTNESS_FACTOR = 1.0;
     private static double SELECTED_OPACITY_FACTOR = 0.3;
 
-    //private boolean isSelected;
     private boolean hasPiece;
     private Color color;
     private PieceView3D piece3D;
     private Box square;
 
-
-//    private int row;
-//    private int col;
-
     SquareView3D(int row, int col, Color color) {
         super(7-row, col);
-//        this.row = row;
-//        this.col = col;
         this.setAlignment(Pos.CENTER);
         this.color = color;
         this.piece3D = null;
@@ -61,7 +54,6 @@ public class SquareView3D extends SquareView {
 
         this.getChildren().addAll(square);
 
-        //this.isSelected = false;
         this.hasPiece = false;
 
         //changeColor();
@@ -94,48 +86,6 @@ public class SquareView3D extends SquareView {
             return null;
         }
     }
-
-
-//    public boolean isSelected() {
-//        return isSelected;
-//    }
-//
-//    public void changeColor() {
-//        //highlight the piece when it is selected
-//
-//        this.setOnMouseClicked(event -> {
-//            System.out.println("Click!");
-//            if (this.isSelected()) {
-//                deselect();
-//            }
-//            else {
-//                select();
-//            }
-//        });
-//
-//    }
-
-//    public void select() {
-//        this.isSelected = true;
-//        this.square.setMaterial(new PhongMaterial(Color.GREEN));
-//
-//        if (hasPiece) {
-//            this.piece.selectPiece();
-//        }
-//
-//        //TODO - fix code so that the color of the piece will change as well
-//    }
-
-//    public void deselect() {
-//        this.isSelected = false;
-//        this.square.setMaterial(new PhongMaterial(color));
-//
-//        if (hasPiece) {
-//            this.piece.deselectPiece();
-//        }
-//
-//        //TODO - fix code so that the color of the piece will change as well
-//    }
 
     @Override
     public void setPieceColor(Color newColor) {
