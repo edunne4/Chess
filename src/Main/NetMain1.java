@@ -1,8 +1,8 @@
 package Main;
 
-import MVC.Controller.NetController;
-import MVC.Model.GameManager;
-import MVC.View.GameView;
+import Controller.NetController;
+import Model.GameManager;
+import View.GameView;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;

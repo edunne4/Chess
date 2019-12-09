@@ -18,9 +18,9 @@
  */
 package Networking.Player;
 
-import ChessParts.Movement;
-import ChessParts.Team;
-import MVC.Controller.NetController;
+import Model.Movement;
+import Model.Team;
+import Controller.NetController;
 import Networking.Sockets.Server;
 import javafx.application.Platform;
 

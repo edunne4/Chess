@@ -19,7 +19,7 @@
  */
 package Networking.Sockets;
 
-import ChessParts.Movement;
+import Model.Movement;
 
 import java.io.*;
 import java.net.Socket;

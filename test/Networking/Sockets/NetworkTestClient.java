@@ -18,9 +18,8 @@
  */
 package Networking.Sockets;
 
-import ChessParts.Movement;
-import ChessParts.Square;
-import Networking.Sockets.Client;
+import Model.Movement;
+import Model.Square;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
