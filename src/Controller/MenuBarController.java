@@ -33,6 +33,7 @@ public class MenuBarController {
     /** The model */
     protected Controller controller;
 
+    /** Whether or not this controller is the host or client for a networking game **/
     protected boolean isHost;
 
     /**Ip address of host of game*/
