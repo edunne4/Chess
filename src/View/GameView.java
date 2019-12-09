@@ -37,9 +37,8 @@ public class GameView {
     private HBox gameHBox;
     private VBox root;
     VBox rightSideContainer;
-    private HBox sideCoordAndBoardContainer;
     private int windowHeight = 750;
-    private int windowWidth = 900;
+    private int windowWidth = 950;
     BoardView board;
     private FlowPane deadPieceHolderWhite;
     private FlowPane deadPieceHolderBlack;
@@ -47,6 +46,7 @@ public class GameView {
     Text inCheckTextBlack;
     Text inCheckTextWhite;
     Button quitButton;
+    HBox boardContainer;
 
     private PerspectiveCamera camera;
     private String CAMERA = "Cam2";
@@ -62,50 +62,44 @@ public class GameView {
 
         this.gm = model;
         //make gameHBox which is a set of horizontal boxes
-        gameHBox = new HBox();
-
+        gameHBox = new HBox(20);
+        gameHBox.setPadding(new Insets(30));
         //root.setAlignment(Pos.CENTER);
         gameHBox.setMinSize(windowWidth,windowHeight);
-
-
-        //***************************************************************
-        //Background stuff
-        //TODO - find a different background texture
-        String imageLink = "https://images.freecreatives.com/wp-content/uploads/2016/01/Free-Photoshop-Purity-Wood-Texture.jpg";//"https://images.freecreatives.com/wp-content/uploads/2016/01/High-Quality-Oak-Seamless-Wood-Texture.jpg";//"https://tr.rbxcdn.com/7324f5e7134f93c9c9e41e30c4d5bb0a/420/420/Decal/Png";
-        BackgroundImage bgImage = new BackgroundImage(new Image(imageLink), BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-        Background background = new Background(bgImage);
-        gameHBox.setBackground(background);
-        //***************************************************************
-
-        //add side coords to view
-        VBox boardCoordContainer = new VBox();
-        sideCoordAndBoardContainer = new HBox();
-
-        boardCoordContainer.getChildren().add(sideCoordAndBoardContainer);
-        //put this whole shabang in the root, an HBox
-        gameHBox.getChildren().add(boardCoordContainer);
-
-
-        rightSideContainer = new VBox();
-        createDeadPieceHolders();
-        makeInCheckText();
-        gameHBox.getChildren().add(rightSideContainer);
+        gameHBox.setBackground(makeBackground());
+        boardContainer = new HBox();
+        makeGameView();
+        gameHBox.getChildren().add(boardContainer);
+        makeRightSideContainer();
 
         //make the menu bar and add the menu bar and the gameHBox to the root
         gameMenuBar = new GameMenuBar();
         root = new VBox();
         root.getChildren().addAll(gameMenuBar,gameHBox);
-        reloadGameView();
+
+    }
+
+    private void makeRightSideContainer() {
+        rightSideContainer = new VBox(5);
+        createDeadPieceHolders();
+        makeInCheckText();
+        gameHBox.getChildren().add(rightSideContainer);
+    }
+
+    private Background makeBackground() {
+        //TODO - find a different background texture
+        String imageLink = "https://images.freecreatives.com/wp-content/uploads/2016/01/Free-Photoshop-Purity-Wood-Texture.jpg";//"https://images.freecreatives.com/wp-content/uploads/2016/01/High-Quality-Oak-Seamless-Wood-Texture.jpg";//"https://tr.rbxcdn.com/7324f5e7134f93c9c9e41e30c4d5bb0a/420/420/Decal/Png";
+        BackgroundImage bgImage = new BackgroundImage(new Image(imageLink), BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        return new Background(bgImage);
 
     }
 
     /**
      * Clear the current visualization of the game and reload a new one dependent whether or not is3D is true
      */
-    public void reloadGameView(){
-        sideCoordAndBoardContainer.getChildren().clear();
+    public void makeGameView(){
+        boardContainer.getChildren().clear();
 
-        sideCoordAndBoardContainer.getChildren().add(makeSideBoardCoords());
 
         //TODO - dont reset game model
         //this.gm.resetGame();
@@ -128,16 +122,24 @@ public class GameView {
             miniRoot.getChildren().add(board);
             changeCameraOnClick(boardScene);
 
-            sideCoordAndBoardContainer.getChildren().add(boardScene);
+            boardContainer.getChildren().add(boardScene);
             //***********************************
         }else {
             board = new BoardView2D(640, gm.getBoard());
             //add the actual board in
-            sideCoordAndBoardContainer.getChildren().add(board);
+            boardContainer.getChildren().add(board);
         }
 
-        if(this.gm.getBoard().getCapturedBlackPieces().isEmpty()){this.deadPieceHolderBlack.getChildren().clear();}
-        if(this.gm.getBoard().getCapturedWhitePieces().isEmpty()){this.deadPieceHolderWhite.getChildren().clear();}
+        //if there are no captured pieces, make sure the dead piece holders in view are empty
+        if (deadPieceHolderBlack != null) {
+            if (gm.getBoard().getCapturedWhitePieces().isEmpty()) {
+                deadPieceHolderWhite.getChildren().clear();
+            }
+            if (gm.getBoard().getCapturedBlackPieces().isEmpty()) {
+                deadPieceHolderBlack.getChildren().clear();
+            }
+        }
+
 
     }
 
@@ -163,41 +165,7 @@ public class GameView {
         rightSideContainer.getChildren().add(deadPieceHolderBlack);
     }
 
-    /**
-     * makes the side board coords
-     * @return a Vbox containing the coords
-     */
-    public VBox makeSideBoardCoords(){
-        VBox sideBoardCoords = new VBox(56);
-        sideBoardCoords.setPadding(new Insets(10));
-        for (int i = 0; i < 8; i++) {
-            Text coord = new Text();
-            coord.setFont(new Font(20));
-            coord.setText(String.valueOf(i));
-            sideBoardCoords.getChildren().add(coord);
-        }
-        return sideBoardCoords;
-    }
 
-
-    /**
-     * makes the top board coords
-     * @return a Hbox containing the coords
-     */
-    public HBox makeTopBoardCoords(){
-        HBox coords = new HBox(67);
-        coords.setPadding(new Insets(10));
-        Region spacer = new Region();
-        spacer.setPrefWidth(0);
-        coords.getChildren().add(spacer);
-        for (int i = 0; i < 8; i++) {
-            Text coord = new Text();
-            coord.setFont(new Font(20));
-            coord.setText(String.valueOf(i));
-            coords.getChildren().add(coord);
-        }
-        return coords;
-    }
 
     /**
      * grabs the piece image at the specified spot and puts it in its respective deadpiece holder depending on team
