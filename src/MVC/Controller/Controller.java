@@ -33,6 +33,7 @@ import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.layout.FlowPane;
 
 import java.util.List;
 
@@ -43,36 +44,29 @@ public class Controller {
     /** The model */
     protected GameManager theModel;
 
+    protected MenuBarController MBC;
 
+    /**The square the mouse most recently clicked*/
     protected Square currentSquareSelected;
-    private String ipAddressToJoin;
 
 
+    /**
+     * Creates a chess game controller, allowing the user interaction with the view to be connected with the model
+     *
+     * @param theView the GameView that will display a GUI using javafx
+     * @param theModel the GameManager that runs the game by making moves
+     */
     public Controller(GameView theView, GameManager theModel) {
         this.theView = theView;
         this.theModel = theModel;
+        this.MBC = new MenuBarController(theView,theModel);
 
-
-
-        RadioMenuItem enable2DBtn = (RadioMenuItem)theView.getGameMenuBar().getViewGroup().getToggles().get(0);
-        //bind is3D to !2Dselected (or to 3DSelected, either one works)
-        theView.is3DProperty().bind(enable2DBtn.selectedProperty().not());
-        //set default values for menus
-        enable2DBtn.setSelected(true);
-        reloadGameViewAndResetBindings();
-
-    }
-
-    /**
-     * Reloads the view of the game as well as re-binds all the event handlers and bindings using the new board game loaded
-     */
-    private void reloadGameViewAndResetBindings() {
-        theView.reloadGameView();
-
-        makeSquaresClickable();
+        //display text if the user is in check
         displayIfInCheck();
-        setUpMenuBar();
+        //enable the controller to know when a user has clicked a square on the board.
+        makeSquaresClickable();
     }
+
 
     /**
      * Sets up event handlers for when squares in the view are clicked
@@ -83,56 +77,6 @@ public class Controller {
             SquareView squareView = (SquareView) child;
             squareView.setOnMouseClicked(event -> squareWasClicked((SquareView) event.getSource()));
         }
-    }
-
-    /**
-     * Set up menu bar bindings and event handlers
-     */
-    private void setUpMenuBar() {
-        setUp2Dvs3DMenuClickHandlers();
-        setupMultiplayerMenuClicksHandler();
-        bindColorsToPieces();
-    }
-
-    private void setupMultiplayerMenuClicksHandler() {
-
-        MenuItem hostGameBtn = theView.getGameMenuBar().getMenus().get(1).getItems().get(0);
-        hostGameBtn.setOnAction( event -> {
-            new HostGamePopUp();
-        });
-
-        MenuItem joinGameBtn = theView.getGameMenuBar().getMenus().get(1).getItems().get(1);
-        joinGameBtn.setOnAction( event -> {
-            JoinGamePopUp joinGamePopUp = new JoinGamePopUp();
-            ipAddressToJoin = joinGamePopUp.getAddressToJoin();
-            System.out.println("The user wants to join the game hosted at: " + ipAddressToJoin);
-        });
-
-    }
-
-    /**
-     * Sets up event handlers for when the 2D and 3D menu buttons are clicked
-     */
-    private void setUp2Dvs3DMenuClickHandlers() {
-        //handle 2D button press
-        //must be an event handler because the view must be reloaded
-        RadioMenuItem enable2DBtn = (RadioMenuItem)theView.getGameMenuBar().getViewGroup().getToggles().get(0);
-        enable2DBtn.setOnAction(event -> {
-            reloadGameViewAndResetBindings();
-        });
-
-        //handle 3D button press
-        RadioMenuItem enable3DBtn = (RadioMenuItem)theView.getGameMenuBar().getViewGroup().getToggles().get(1);
-        enable3DBtn.setOnAction(event -> {
-            reloadGameViewAndResetBindings();
-
-        });
-
-    }
-
-    private void bindColorsToPieces() {
-        //TODO
-
     }
 
     /**
@@ -200,11 +144,10 @@ public class Controller {
                 //if there is a piece at the new location(thisSquare), kill it
                 if (killedPiece != null) {
                     if (killedPiece.getTeam() == Team.WHITE) {
-                        if(killedPiece instanceof King){theView.createEndGameWindow(Team.BLACK);theView.getQuitButton().setOnAction((ActionEvent e) -> {System.exit(0);});}
-                        theView.killPiece(newSquare.getRow(), newSquare.getCol(), theView.getDeadPieceHolderWhite());
+                        killPiece(newSquare, killedPiece, Team.BLACK, theView.getDeadPieceHolderWhite());
                     } else {
-                        if(killedPiece instanceof King){theView.createEndGameWindow(Team.WHITE);theView.getQuitButton().setOnAction((ActionEvent e) -> {System.exit(0);});}
-                        theView.killPiece(newSquare.getRow(), newSquare.getCol(), theView.getDeadPieceHolderBlack());
+                        //if king is killed go to end game screen where White won
+                        killPiece(newSquare, killedPiece, Team.WHITE, theView.getDeadPieceHolderBlack());
                     }
                     //if its a king. the game's over.
                 }
@@ -218,6 +161,26 @@ public class Controller {
             currentSquareSelected = null;
         }
         return move;
+    }
+
+    private void killPiece(Square newSquare, ChessPiece killedPiece, Team team, FlowPane deadPieceHolder) {
+        //if king is killed, go to end game screen where Black won
+        if (killedPiece instanceof King) { ;
+            theView.createEndGameWindow(team);
+            theView.getQuitButton().setOnAction((ActionEvent e) -> {
+                System.exit(0);
+            });
+            theView.getRestartButton().setOnAction((ActionEvent e) -> {
+                theModel.resetGame();
+                MBC.reloadGameViewAndResetBindings();
+                theView.getEndGameWindow().close();
+            });
+
+        }
+        //put piece in captured pieces
+        else {
+          theView.killPiece(newSquare.getRow(), newSquare.getCol(), deadPieceHolder);
+        }
     }
 
 

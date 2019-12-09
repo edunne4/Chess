@@ -28,6 +28,12 @@ public class Movement implements Serializable {
     //The square that we want to move it to
     private Square finalSquare;
 
+    /**
+     * Constructs a Movement object, used to send movements over a network
+     *
+     * @param initialSquare the Square that a piece is being moved from
+     * @param finalSquare the Square that the piece is being moved to
+     */
     public Movement(Square initialSquare, Square finalSquare) {
         this.initialSquare = initialSquare;
         this.finalSquare = finalSquare;

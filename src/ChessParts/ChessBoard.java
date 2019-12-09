@@ -115,6 +115,13 @@ public class ChessBoard {
         }
     }
 
+    /**
+     * Gets the squares at the specified location using classic chess coordinate system. (e.g. d4)
+     *
+     * @param chessPos the string containing the coordinate
+     * @return the square at the desired location
+     * @throws IllegalArgumentException if the string is not a valid position
+     */
     public Square getSquareAt(String chessPos) throws IllegalArgumentException{
 
         if(!isStringPosValid(chessPos)){
@@ -169,6 +176,11 @@ public class ChessBoard {
         return true;
     }
 
+    /**
+     * Puts the piece that was captured into the list of captured pieces for the piece's team
+     *
+     * @param pieceKilled the piece that has been captured
+     */
     public void capturePiece(ChessPiece pieceKilled) {
         if(pieceKilled.getTeam() == Team.WHITE){
             capturedWhitePieces.add(pieceKilled);
