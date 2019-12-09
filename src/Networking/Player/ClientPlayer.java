@@ -18,9 +18,9 @@
  */
 package Networking.Player;
 
-import ChessParts.Movement;
-import ChessParts.Team;
-import MVC.Controller.Controller;
+import Model.Movement;
+import Model.Team;
+import Controller.Controller;
 import Networking.Sockets.Client;
 import javafx.application.Platform;
 
@@ -30,10 +30,10 @@ public class ClientPlayer extends Player{
     private Client client;
     //TODO - extract these to parent class
     private boolean gameOver = false;
-    private NetController netController;
-    public ClientPlayer(String IPAddress, NetController netController) throws IOException {
+    private Controller Controller;
+    public ClientPlayer(String IPAddress, Controller Controller) throws IOException {
         super(Team.WHITE);
-        this.netController = netController;
+        this.Controller = Controller;
         this.client = new Client(IPAddress);
     }
 

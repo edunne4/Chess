@@ -31,6 +31,8 @@ public class MenuBarController {
     /** The model */
     protected Controller controller;
 
+    protected boolean isHost;
+
     /**Ip address of host of game*/
     private String ipAddressToJoin;
 
@@ -63,12 +65,16 @@ public class MenuBarController {
         MenuItem hostGameBtn = theView.getGameMenuBar().getMenus().get(1).getItems().get(0);
         hostGameBtn.setOnAction( event -> {
             new HostGamePopUp();
+            controller.isMultiplayer = true;
+            isHost = true;
         });
 
         MenuItem joinGameBtn = theView.getGameMenuBar().getMenus().get(1).getItems().get(1);
         joinGameBtn.setOnAction( event -> {
             JoinGamePopUp joinGamePopUp = new JoinGamePopUp();
+            controller.isMultiplayer = true;
             ipAddressToJoin = joinGamePopUp.getAddressToJoin();
+            isHost = false;
             System.out.println("The user wants to join the game hosted at: " + ipAddressToJoin);
         });
 
@@ -108,5 +114,7 @@ public class MenuBarController {
         controller.makeSquaresClickable();
     }
 
-
+    public String getIpAddressToJoin() {
+        return ipAddressToJoin;
+    }
 }
