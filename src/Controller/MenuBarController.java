@@ -18,6 +18,7 @@
  */
 package Controller;
 
+import Model.GameManager;
 import View.GameView;
 import View.NetworkingPopUps.HostGamePopUp;
 import View.NetworkingPopUps.JoinGamePopUp;
@@ -28,16 +29,18 @@ public class MenuBarController {
 
     /** The view */
     protected GameView theView;
-    /** The model */
+    /** The controller */
     protected Controller controller;
+    /** The model */
+    protected GameManager theModel;
 
     /**Ip address of host of game*/
     private String ipAddressToJoin;
 
-    public MenuBarController(GameView theView, Controller controller) {
+    public MenuBarController(GameView theView, Controller controller, GameManager theModel) {
         this.theView = theView;
         this.controller = controller;
-
+        this.theModel = theModel;
         RadioMenuItem enable2DBtn = (RadioMenuItem)theView.getGameMenuBar().getViewGroup().getToggles().get(0);
         //bind is3D to !2Dselected (or to 3DSelected, either one works)
         theView.is3DProperty().bind(enable2DBtn.selectedProperty().not());
@@ -55,6 +58,7 @@ public class MenuBarController {
         setUp2Dvs3DMenuClickHandlers();
         setupMultiplayerMenuClicksHandler();
         bindColorsToPieces();
+        setupSaveQuitRestartHandler();
     }
 
 
@@ -70,6 +74,22 @@ public class MenuBarController {
             JoinGamePopUp joinGamePopUp = new JoinGamePopUp();
             ipAddressToJoin = joinGamePopUp.getAddressToJoin();
             System.out.println("The user wants to join the game hosted at: " + ipAddressToJoin);
+        });
+
+    }
+
+    private void setupSaveQuitRestartHandler() {
+
+        MenuItem restartButton = theView.getGameMenuBar().getMenus().get(2).getItems().get(1);
+        restartButton.setOnAction( event -> {
+            theModel.resetGame();
+            reloadGameViewAndResetBindings();
+            //do we need to make squares clickable here?
+        });
+
+        MenuItem quitButton = theView.getGameMenuBar().getMenus().get(2).getItems().get(0);
+        restartButton.setOnAction( event -> {
+            System.exit(0);
         });
 
     }

@@ -56,7 +56,7 @@ public class Controller {
     public Controller(GameView theView, GameManager theModel) {
         this.theView = theView;
         this.theModel = theModel;
-        this.MBC = new MenuBarController(theView,this);
+        this.MBC = new MenuBarController(theView,this,theModel);
 
         //display text if the user is in check
         displayIfInCheck();
