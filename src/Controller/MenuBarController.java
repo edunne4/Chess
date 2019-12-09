@@ -103,7 +103,7 @@ public class MenuBarController {
      * Reloads the view of the game as well as re-binds all the event handlers and bindings using the new board game loaded
      */
     protected void reloadGameViewAndResetBindings() {
-        theView.reloadGameView();
+        theView.makeGameView();
         setUpMenuBar();
         controller.makeSquaresClickable();
     }
