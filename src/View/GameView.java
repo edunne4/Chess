@@ -48,6 +48,7 @@ public class GameView {
     Text inCheckTextWhite;
     Button quitButton;
     HBox boardContainer;
+    Text turnText;
 
     private PerspectiveCamera camera;
     private String CAMERA = "Cam2";
@@ -84,7 +85,11 @@ public class GameView {
         rightSideContainer = new VBox(5);
         createDeadPieceHolders();
         makeInCheckText();
+        turnText = new Text();
+        turnText.setFont(Font.font("Verdana", FontWeight.BOLD, 40));
+        rightSideContainer.getChildren().add(turnText);
         gameHBox.getChildren().add(rightSideContainer);
+
     }
 
     private Background makeBackground() {
@@ -252,6 +257,10 @@ public class GameView {
 
     public Text getInCheckTextWhite() {
         return inCheckTextWhite;
+    }
+
+    public Text getTurnText() {
+        return turnText;
     }
 
     public BoardView getBoard() {
