@@ -35,16 +35,10 @@ import java.net.URL;
 public class PieceView2D extends PieceView {
 
     ImageView view;
-    PieceEnum pieceType;
 
-    /**
-     * Creates an ImageView object from a file or url that will fit onto the squareview
-     *
-     * @param piece the filename or url
-     */
-    public PieceView2D(PieceEnum piece, Color color)  {
 
-        this.pieceType = piece;
+    public PieceView2D(PieceEnum pieceType, Color color)  {
+        super(pieceType, color);
 
         setColor(color);
 

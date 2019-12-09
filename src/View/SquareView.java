@@ -19,8 +19,11 @@
 package View;
 
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 
 public abstract class SquareView extends StackPane {
+
+    //protected PieceView currentPiece;
 
     protected int row;
     protected int col;
@@ -31,6 +34,12 @@ public abstract class SquareView extends StackPane {
         this.row = row;
         this.col = col;
     }
+
+    public abstract void putPiece(PieceEnum pieceType, Color color);
+
+    public abstract PieceView removePiece();
+
+    public abstract void setPieceColor(Color newColor);
 
     public abstract void highlight();
 

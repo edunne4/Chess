@@ -24,6 +24,8 @@ import View.NetworkingPopUps.HostGamePopUp;
 import View.NetworkingPopUps.JoinGamePopUp;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioMenuItem;
+import javafx.scene.control.Toggle;
+import javafx.scene.paint.Color;
 
 import java.io.IOException;
 
@@ -51,6 +53,8 @@ public class MenuBarController {
         theView.is3DProperty().bind(enable2DBtn.selectedProperty().not());
         //set default values for menus
         enable2DBtn.setSelected(true);
+        theView.getGameMenuBar().getPlayer1Colors().getToggles().get(6).setSelected(true);
+        theView.getGameMenuBar().getPlayer2Colors().getToggles().get(7).setSelected(true);
 
         reloadGameViewAndResetBindings();
 
@@ -62,7 +66,7 @@ public class MenuBarController {
     protected void setUpMenuBar() {
         setUp2Dvs3DMenuClickHandlers();
         setupMultiplayerMenuClicksHandler();
-        bindColorsToPieces();
+        colorClickHandlers();
         setupSaveQuitRestartHandler();
     }
 
@@ -137,8 +141,29 @@ public class MenuBarController {
 
     }
 
-    private void bindColorsToPieces() {
-        //TODO
+    private void colorClickHandlers() {
+
+        //set up player 1 colors
+        for (Toggle colorOption : theView.getGameMenuBar().getPlayer1Colors().getToggles()) {
+            MenuItem colorButton = (MenuItem)colorOption;
+
+            colorButton.setOnAction(event -> {
+                Color newColor = Color.web(colorButton.getText());
+                theView.getBoard().setPlayer1Color(newColor);
+                theView.refreshPieceColors();
+            });
+        }
+
+        //set up player to colors
+        for (Toggle colorOption : theView.getGameMenuBar().getPlayer2Colors().getToggles()) {
+            MenuItem colorButton = (MenuItem)colorOption;
+
+            colorButton.setOnAction(event -> {
+                Color newColor = Color.web(colorButton.getText());
+                theView.getBoard().setPlayer2Color(newColor);
+                theView.refreshPieceColors();
+            });
+        }
 
     }
 
@@ -154,4 +179,5 @@ public class MenuBarController {
     public String getIpAddressToJoin() {
         return ipAddressToJoin;
     }
+
 }

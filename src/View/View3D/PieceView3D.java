@@ -33,8 +33,6 @@ import javafx.scene.shape.TriangleMesh;
 public class PieceView3D extends PieceView {
 
     private MeshView pieceMesh;
-    private PieceEnum pieceType;
-    private Color pieceColor;
     private int pieceScale;
     //private boolean isSelected;
 
@@ -47,10 +45,7 @@ public class PieceView3D extends PieceView {
      */
     PieceView3D(PieceEnum piece, Color color) {
 
-        super();
-
-        this.pieceType = piece;
-        this.pieceColor = color;
+        super(piece, color);
         this.pieceScale = DEFAULT_SCALE;
         //this.isSelected = false;
 
@@ -97,13 +92,8 @@ public class PieceView3D extends PieceView {
 //        return isSelected;
 //    }
 
-    public PieceEnum getPieceType() {
-        return pieceType;
-    }
 
-    public Color getPieceColor() {
-        return pieceColor;
-    }
+
 
     public void setPieceScale(int pieceScale) {
         this.pieceScale = pieceScale;

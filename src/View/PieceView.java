@@ -22,6 +22,22 @@ import javafx.scene.paint.Color;
 
 public abstract class PieceView {
 
+    protected PieceEnum pieceType;
+    protected Color pieceColor;
+
+    public PieceView(PieceEnum pieceType, Color pieceColor) {
+        this.pieceType = pieceType;
+        this.pieceColor = pieceColor;
+    }
+
     public abstract void setColor(Color newColor);
+
+    public Color getPieceColor() {
+        return pieceColor;
+    }
+
+    public PieceEnum getPieceType() {
+        return pieceType;
+    }
 
 }

@@ -50,10 +50,10 @@ public class GameMenuBar extends MenuBar {
         viewGroup.getToggles().addAll(view2D,view3D);
 
         Menu player1PieceColorMenu = new Menu("Player 1 Piece Color");
-        createColorOptions(player1PieceColorMenu);
+        player1Colors = createColorOptions(player1PieceColorMenu);
 
         Menu player2PieceColorMenu = new Menu("Player 2 Piece Color");
-        createColorOptions(player2PieceColorMenu);
+        player2Colors = createColorOptions(player2PieceColorMenu);
 
         Menu gameSettingsMenu = new Menu("Settings");
         ImageView settingsImage = new ImageView(new Image(getClass().getResourceAsStream("menuIcons/settings.png")));
@@ -88,7 +88,7 @@ public class GameMenuBar extends MenuBar {
 
     }
 
-    private void createColorOptions(Menu menu) {
+    private ToggleGroup createColorOptions(Menu menu) {
         int iconSize = 10;
         List<Color> colorList = new ArrayList<>();
 
@@ -115,7 +115,7 @@ public class GameMenuBar extends MenuBar {
             menu.getItems().add(menuItem);
         }
 
-
+        return colorsGroup;
     }
 
     public ToggleGroup getViewGroup() {
