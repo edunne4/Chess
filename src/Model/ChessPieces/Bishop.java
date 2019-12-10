@@ -3,17 +3,17 @@
  * Fall 2019
  * Instructor: Prof. Brian King
  *
- * Name: YOUR NAME
- * Section: YOUR SECTION
+ * Name: James Campbell
+ * Section: 11 am
  * Date: 11/10/19
  * Time: 12:11 PM
  *
  * Project: CSCI205FinalProject
- * Package: Model.ChessParts
+ * Package: Model.ChessPieces
  * Class: Bishop
  *
  * Description:
- *
+ * A bishop chess piece representation
  * ****************************************
  */
 package Model.ChessPieces;
@@ -56,31 +56,6 @@ public class Bishop extends ChessPiece{
 
         return legalMoves;
     }
-
-//    private List<Square> checkDiagonal(Square currentPos, ChessBoard board, int rowDirection, int colDirection){
-//        List<Square> diagSquares = new ArrayList<>();
-//        int col = currentPos.getCol();
-//        int row = currentPos.getRow();
-//        for (int i = 1; i < DIRECTIONS; i++) {
-//            Square diagSquare = board.getSquareAt(row + i*rowDirection, col + i*colDirection);
-//            //check if it's not null
-//            if (diagSquare == null){
-//                break;
-//            }
-//            //check if there's a piece there
-//            if(!diagSquare.isEmpty()){
-//                //if it is on the other team, include that space
-//                if(diagSquare.getCurrentPiece().getTeam() != this.team){
-//                    diagSquares.add(diagSquare);
-//                }
-//                break;
-//            }
-//            diagSquares.add(diagSquare);
-//        }
-//
-//        return diagSquares;
-//    }
-
     @Override
     public String toString() {
         return "B" + team.toString().substring(0,1);

@@ -13,7 +13,8 @@
  * Class: Square
  *
  * Description:
- *
+ * A square class that can hold a chess piece, and has a specific row and column,
+ * that corresponds to a position in the arrayList in the board.
  * ****************************************
  */
 package Model;
