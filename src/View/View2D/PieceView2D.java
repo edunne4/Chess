@@ -85,6 +85,10 @@ public class PieceView2D extends PieceView {
         return view;
     }
 
+    /** Override method to set the color of a 2D piece by creating a new image and coloring it and setting it as the view.
+     *
+     * @param newColor the color to color the new piece image
+     */
     @Override
     public void setColor(Color newColor) {
         BufferedImage bufferedImage;
