@@ -1,4 +1,4 @@
-package Model.ChessParts;
+package Model;
 
 import Model.ChessBoard;
 import org.junit.jupiter.api.AfterEach;
