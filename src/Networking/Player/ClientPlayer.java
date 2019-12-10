@@ -14,6 +14,7 @@
  *
  * Description:
  * A Client player, that starts a client server and can receive movements from the host player.
+ * Client is the white team.
  * ****************************************
  */
 package Networking.Player;
@@ -28,22 +29,14 @@ import java.io.IOException;
 
 public class ClientPlayer extends Player{
     private Client client;
-    //TODO - extract these to parent class
     private boolean gameOver = false;
-    private Controller Controller;
-    public ClientPlayer(String IPAddress, Controller Controller) throws IOException {
-        super(Team.WHITE);
-        this.Controller = Controller;
+    public ClientPlayer(String IPAddress, Controller controller) throws IOException {
+        super(Team.WHITE, controller);
         this.client = new Client(IPAddress);
     }
 
 
-    @Override
-    public Movement waitForMove() throws IOException, ClassNotFoundException {
-        Movement moveMade = client.readMovementFromServer();
-        System.out.println(moveMade);
-        return moveMade;
-    }
+
 
     @Override
     public void sendMove(Movement moveMade) throws IOException {
@@ -56,6 +49,15 @@ public class ClientPlayer extends Player{
         client.connect();
     }
 
+    /**
+     * A new thread can be made so that our program can run what it needs to on the javaFX
+     * side of things, meanwhile the server will always be listening to the socket output stream
+     * for a movement object. At which point it will simulate a click to the controller using the simulateClick method,
+     * Which means the other player made a click and we have that data and now need the controller to simulate it.
+     * The lambda function is there because originally we got an error from there being two threads, this one and the javaFx
+     * one trying to send information to each other. I found this lambda function solution online using the Platform.runLater
+     * which is used to update a GUI thread from a non GUI thread, it puts it in a queue and will update it as soon as possible
+     */
     @Override
     public void run() {
         while(!gameOver){
@@ -63,7 +65,7 @@ public class ClientPlayer extends Player{
                 Movement move = client.readMovementFromServer();
                 Platform.runLater(
                         () -> {
-                            Controller.simulateClick(move);
+                            controller.simulateClick(move);
 
                         }
                 );
@@ -74,4 +76,11 @@ public class ClientPlayer extends Player{
             }
         }
     }
+
+    //    @Override
+//    public Movement waitForMove() throws IOException, ClassNotFoundException {
+//        Movement moveMade = client.readMovementFromServer();
+//        System.out.println(moveMade);
+//        return moveMade;
+//    }
 }

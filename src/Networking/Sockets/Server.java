@@ -13,8 +13,9 @@
  * Class: Server
  *
  * Description:
- * A server class that can read and write objects to a client
- * https://stackoverflow.com/questions/30878881/how-i-can-send-a-object-from-server-to-client-in-java
+ *  A Server class took object reading and writing from stack overflow, will connect to a server
+ * socket and then create an Object Input Stream and Object Output Stream to read and write from the client socket.
+ * This is how we will handle sending back and forth information from the client to the server.
  * ****************************************
  */
 package Networking.Sockets;
