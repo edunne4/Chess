@@ -13,7 +13,7 @@
  * Class: Controller.Controller
  *
  * Description:
- *
+ * The Controller for the MVC
  * ****************************************
  */
 package Controller;
@@ -56,7 +56,7 @@ public class Controller {
 
     /**The square the mouse most recently clicked*/
     protected Square currentSquareSelected;
-
+    //Boolean that says whether or not this is a multiplayer game
     protected boolean isMultiplayer;
 
     /**
@@ -204,6 +204,9 @@ public class Controller {
         }
     }
 
+    /**
+     * Restarts the game, puts all the pieces to their starting spots and resets the model and view.
+     */
     protected void restartGame() {
             theModel.resetGame();
             MBC.reloadGameViewAndResetBindings();
@@ -246,9 +249,18 @@ public class Controller {
     }
 
     //**********************************************************************************
-
+    //A Player Object that will be initialized based off whether or not they want to host or join.
     private Player player;
 
+    /**
+     * When a Movement is read by the Player from the other Player, it will call this method and pass in the
+     * Movement object that was received. Which holds the initial position of the square and the final position.
+     * Because the opponent was able to make this move, and they have the same board, we do not have to bother checking,
+     * all we have to do is set the currentSquareClicked to the initial square from the opponent, and
+     * pass into squareWasClicked the final position of the piece on this square. After this it is now this players,
+     * turn so we show them that in the GUI by setting the TurnText
+     * @param opponentsMove, the moved the player received while listening to the opponent Player
+     */
     public void simulateClick(Movement opponentsMove) {
         currentSquareSelected = theModel.getBoard().getSquareAt(opponentsMove.getInitialSquare().getRow(),
                 opponentsMove.getInitialSquare().getCol());
@@ -257,6 +269,14 @@ public class Controller {
         theView.getTurnText().setText("Your Turn...");
     }
 
+    /**
+     * Starts by restarting the game so both users start at the same point, then if they chose to be the
+     * host it instantiates a HostPlayer and connects them to the client and starts the thread to listen for
+     * moves. If it is a client it takes in the IP address from the MBC and instantiates a client and starts
+     * that thread.
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public void makeConnection() throws IOException, ClassNotFoundException {
         restartGame();
         if (MBC.isHost){
@@ -274,6 +294,13 @@ public class Controller {
         }
     }
 
+    /**
+     * Checks to make sure that when a square was clicked it is the Users turn,
+     * if not nothing happens, if it is then it uses the square was Clicked method.
+     * @param squareSelected, the square that was clicked
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     protected void squareWasClickedNetwork(SquareView squareSelected) throws IOException, ClassNotFoundException {
         if (theModel.getCurrentTurn() == player.getTeam()){
             Movement moveMade = squareWasClicked(squareSelected);
@@ -281,6 +308,13 @@ public class Controller {
         }
     }
 
+    /**
+     * Sends the move that is made to the other player using a movement object, than tells the
+     * user that it is waiting for a move to be made using the Turn Text.
+     * @param moveMade
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     private void makeMove(Movement moveMade) throws IOException, ClassNotFoundException {
         if(moveMade != null){
             player.sendMove(moveMade);
