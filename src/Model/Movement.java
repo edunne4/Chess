@@ -13,7 +13,8 @@
  * Class: Movement
  *
  * Description:
- * A movement object to pass back and forth between a server and client
+ * A movement object to pass back and forth between a server and client,
+ * holds an initial square and a final square.
  * ****************************************
  */
 package Model;

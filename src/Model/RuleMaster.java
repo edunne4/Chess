@@ -13,7 +13,9 @@
  * Class: RuleMaster
  *
  * Description:
- *
+ * A class made to hold the rules for chess,
+ * this is mostly for figuring out if the king is in check or not,
+ * and if a piece is allowed to capture the king
  * ****************************************
  */
 package Model;
@@ -25,6 +27,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import java.util.ArrayList;
 
 public class RuleMaster {
+
     //Variable that holds if the White King is in Check
     private SimpleBooleanProperty isCheckedWhite = new SimpleBooleanProperty(false);
     //Variable that holds if the Black King is in Check
@@ -36,31 +39,23 @@ public class RuleMaster {
     private ArrayList<Square> squaresThatHaveWhitePiecesThatAreCheckingBlackKing = new ArrayList<>();
 
 
-    //The number of turns that have been made
-    private int turnCount = 0;
-
-
-
-
     public boolean isIsCheckedBlack() {
         return isCheckedBlack.get();
     }
-
-    public SimpleBooleanProperty isCheckedBlackProperty() {
-        return isCheckedBlack;
-    }
-
     public boolean isIsCheckedWhite() {
         return isCheckedWhite.get();
     }
-
+    //Simple boolean properties that hold whether or not a black king or white king is in check, respectively
+    public SimpleBooleanProperty isCheckedBlackProperty() {
+        return isCheckedBlack;
+    }
     public SimpleBooleanProperty isCheckedWhiteProperty() {
         return isCheckedWhite;
     }
 
     /**
      * Capture king function, you can only capture a king in chess if the king has
-     * already been checked, so therefore it will only return true if the king
+     * already been checked, so therefore it will only return true if the king is checked
      * @param king
      * @return
      */
@@ -79,14 +74,6 @@ public class RuleMaster {
         }
         return false;
     }
-
-    /**
-     * Increments the turn count by one
-     */
-    public void increment(){
-        this.turnCount += 1;
-    }
-
 
     /**
      * Uses methods in the board class to get all the squares of the team that might be

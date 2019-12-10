@@ -33,7 +33,7 @@ public abstract class ChessPiece implements Serializable {
     //All possible directions on a Chess Board
     protected static final int MAX_DISTANCE = 8;
     protected PieceEnum pieceType;
-
+    //Holds whether or not the chess piece has moved, most useful for the pawn
     protected boolean hasMoved = false;
     public ChessPiece(Team team) {
         this.team = team;
