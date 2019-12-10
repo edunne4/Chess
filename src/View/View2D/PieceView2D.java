@@ -31,12 +31,18 @@ import java.awt.image.WritableRaster;
 import java.io.IOException;
 import java.net.URL;
 
-
+/**
+ * 2D representation of a chess piece
+ */
 public class PieceView2D extends PieceView {
 
     ImageView view;
 
-
+    /**
+     * Constructor that sets the piece type and the color by creating a new imageview to represent the piece
+     * @param pieceType - the piece type that should be represented
+     * @param color - the color the image should be
+     */
     public PieceView2D(PieceEnum pieceType, Color color)  {
         super(pieceType, color);
 
@@ -44,18 +50,12 @@ public class PieceView2D extends PieceView {
 
     }
 
-//    private PieceView2D(String imageFileName){
-//        // load the image
-//
-//        Image image = new Image(imageFileName,60,60,false,false);
-//
-//        //make the imageview
-//        view = new ImageView(image);
-//        //these are temporary
-//        view.setFitHeight(80);
-//        view.setFitWidth(80);
-//    }
-
+    /**
+     * Color a given image a specific color
+     * @param image The image to color
+     * @param color the color to make the image
+     * @return the colored image
+     */
     private static BufferedImage colorImage(BufferedImage image, Color color) {
         int width = image.getWidth();
         int height = image.getHeight();
