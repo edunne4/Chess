@@ -188,7 +188,7 @@ public class Controller {
 
     private void killPiece(Square newSquare, ChessPiece killedPiece, Team team, FlowPane deadPieceHolder) {
         //if king is killed, go to end game screen where Black won
-        if (killedPiece instanceof King) { ;
+        if (killedPiece instanceof King) {
             theView.createEndGameWindow(team);
             theView.getQuitButton().setOnAction((ActionEvent e) -> {
                 System.exit(0);

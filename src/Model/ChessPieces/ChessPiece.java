@@ -96,10 +96,7 @@ public abstract class ChessPiece implements Serializable {
     public boolean checkSquare(Square square){
         if (!square.isEmpty()){
             ChessPiece piece = square.getCurrentPiece();
-            if (piece.team == this.team){
-                return false;
-            }
-            return true;
+            return piece.team != this.team;
         }
         return true;
     }

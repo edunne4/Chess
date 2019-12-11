@@ -8,7 +8,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 
-public class ChessSingleGameMain extends Application {
+public class ChessGameMain extends Application {
 
 
     private GameManager theModel;
@@ -24,14 +24,11 @@ public class ChessSingleGameMain extends Application {
         super.init();
         theModel = new GameManager();
         theView  = new GameView(theModel);
+        theController = new Controller(theView,theModel);
     }
 
     @Override
     public void start(Stage primaryStage) {
-        theController = new Controller(theView,theModel);
-
-        //MenuBar menuBar = new MenuBar();
-        //GameMenu gameMenuBar = new GameMenu();
 
         Scene scene = new Scene(theView.getRoot());
         primaryStage.setTitle("Brian Queen's Chess");

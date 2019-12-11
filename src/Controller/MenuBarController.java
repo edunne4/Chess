@@ -19,6 +19,7 @@
 package Controller;
 
 import Model.GameManager;
+import View.BoardView;
 import View.GameView;
 import View.NetworkingPopUps.HostGamePopUp;
 import View.NetworkingPopUps.JoinGamePopUp;
@@ -149,7 +150,7 @@ public class MenuBarController {
 
             colorButton.setOnAction(event -> {
                 Color newColor = Color.web(colorButton.getText());
-                theView.getBoard().setPlayer1Color(newColor);
+                BoardView.setPlayer1Color(newColor);
                 theView.refreshPieceColors();
             });
         }
@@ -160,7 +161,7 @@ public class MenuBarController {
 
             colorButton.setOnAction(event -> {
                 Color newColor = Color.web(colorButton.getText());
-                theView.getBoard().setPlayer2Color(newColor);
+                BoardView.setPlayer2Color(newColor);
                 theView.refreshPieceColors();
             });
         }

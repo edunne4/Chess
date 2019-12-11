@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ResourceBundle;
 
 /**
@@ -206,11 +207,7 @@ public class ViewerController implements Initializable {
                     }
                     if (supportedFile != null) {
                         if (supportedFile.getAbsolutePath().indexOf('%') != -1) {
-                            try {
-                                supportedFile = new File(URLDecoder.decode(supportedFile.getAbsolutePath(), "utf-8"));
-                            } catch (UnsupportedEncodingException e) {
-                                e.printStackTrace();
-                            }
+                            supportedFile = new File(URLDecoder.decode(supportedFile.getAbsolutePath(), StandardCharsets.UTF_8));
                         }
                         load(supportedFile);
                     }

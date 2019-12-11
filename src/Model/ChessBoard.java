@@ -128,7 +128,7 @@ public class ChessBoard {
             throw new IllegalArgumentException("That is not a real chess position");
         }
         char letter = chessPos.charAt(0);
-        int col = (int)(letter - 97);
+        int col = letter - 97;
         int row = Character.getNumericValue(chessPos.charAt(1)) - 1;
         return getSquareAt(row, col);
     }
@@ -144,11 +144,8 @@ public class ChessBoard {
         }
         //check number in bounds of board
         char num = potentialPos.charAt(1);
-        if (num < '1' || num > '8'){
-            return false;
-        }
+        return num >= '1' && num <= '8';
         //otherwise it's fine
-        return true;
     }
 
     /**
@@ -170,10 +167,7 @@ public class ChessBoard {
     }
 
     public boolean posIsInBoard(int row, int col){
-        if(row<0 || row >= BOARD_HEIGHT || col < 0 || col >= BOARD_WIDTH){
-            return false;
-        }
-        return true;
+        return row >= 0 && row < BOARD_HEIGHT && col >= 0 && col < BOARD_WIDTH;
     }
 
     /**

@@ -82,7 +82,7 @@ public class Server{
         //Get IP address of the Server
         InetAddress inetAddress = InetAddress.getLocalHost();
         //Get String representation of the internet address
-        this.IPAddress = inetAddress.getHostAddress();
+        IPAddress = inetAddress.getHostAddress();
     }
 
     /**

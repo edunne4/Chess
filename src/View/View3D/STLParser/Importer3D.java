@@ -40,7 +40,7 @@ public final class Importer3D {
         if (dot <= 0) {
             throw new IOException("Unknown 3D file format, url missing extension [" + fileUrl + "]");
         }
-        final String extension = fileUrl.substring(dot + 1, fileUrl.length()).toLowerCase();
+        final String extension = fileUrl.substring(dot + 1).toLowerCase();
 
         switch (extension) {
         case "3ds":

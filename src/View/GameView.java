@@ -304,9 +304,9 @@ public class GameView {
             for (int col = 0; col < BoardView.SIDE_LENGTH; col++) {
                 if(!gm.getBoard().getSquareAt(row, col).isEmpty()){ //if square not empty,
                     if(gm.getBoard().getSquareAt(row, col).getCurrentPiece().getTeam() == Team.WHITE){ //if it's a player one piece
-                        board.getSquareAt(row, col).setPieceColor(board.getPlayer1Color());
+                        board.getSquareAt(row, col).setPieceColor(BoardView.getPlayer1Color());
                     }else{
-                        board.getSquareAt(row, col).setPieceColor(board.getPlayer2Color());
+                        board.getSquareAt(row, col).setPieceColor(BoardView.getPlayer2Color());
                     }
                 }
             }
@@ -315,10 +315,10 @@ public class GameView {
         deadPieceHolderWhite.getChildren().clear();
         deadPieceHolderBlack.getChildren().clear();
         for (ChessPiece piece : gm.getBoard().getCapturedWhitePieces()) {
-            deadPieceHolderWhite.getChildren().add(new PieceView2D(piece.getPieceType(), board.getPlayer1Color()).getView());
+            deadPieceHolderWhite.getChildren().add(new PieceView2D(piece.getPieceType(), BoardView.getPlayer1Color()).getView());
         }
         for (ChessPiece piece : gm.getBoard().getCapturedBlackPieces()) {
-            deadPieceHolderBlack.getChildren().add(new PieceView2D(piece.getPieceType(), board.getPlayer2Color()).getView());
+            deadPieceHolderBlack.getChildren().add(new PieceView2D(piece.getPieceType(), BoardView.getPlayer2Color()).getView());
         }
 
 
