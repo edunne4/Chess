@@ -49,6 +49,9 @@ Screenshot of 2D gameplay.
 ![Chess Game 3D](/design/screenshot3D.png)
 Screenshot of 3D gameplay. Player 2 changed their piece color to green via the "Settings Menu".
 
+##Citations:
 
+http://net-informations.com/java/net/multithreaded.htm
 
+2D pieces are from [Wikimedia Commons](https://commons.wikimedia.org/wiki/Category:SVG_chess_pieces)
 
