@@ -84,6 +84,11 @@ public class GameManager {
         return pieceKilled;
     }
 
+    /**
+     * Override method to take a Movement object instead of 2 Square objects
+     * @param move the movement that should be made on the board containing the start location and end location of a move
+     * @return the piece that was killed/captured by the movement
+     */
     public ChessPiece movePiece(Movement move){
         return movePiece(move.getInitialSquare(), move.getFinalSquare());
     }

@@ -166,6 +166,12 @@ public class ChessBoard {
         return strRep;
     }
 
+    /**
+     * Check if the position of the row and col is in the board
+     * @param row row
+     * @param col col
+     * @return whether or not the position is in the board
+     */
     public boolean posIsInBoard(int row, int col){
         return row >= 0 && row < BOARD_HEIGHT && col >= 0 && col < BOARD_WIDTH;
     }
