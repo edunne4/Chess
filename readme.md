@@ -13,8 +13,9 @@ Each piece has specific allowable moves. They are as follows:
 * The Knight can move one square along any rank or file and then at an angle (in the shape of an "L").
 * Pawns can move forward one square, if that square is unoccupied. If it has not yet moved, the pawn can be moved two squares forward. Pawns may capture an enemy piece on either of the two spaces diagonally adjacent to the space in front of them.
 
-![Chess Game 2D](/design/screenshot2D.png)
-![Chess Game 3D](/design/screenshot3D.png)
+![Chess Game 2D](/design/screenshot2D.png | width=100)
+![Chess Game 3D](/design/screenshot3D.png | width=100)
+
 ## Chess Implementation
 This project is a GUI representation of the game described above. In its most basic form, this game can be payed by two players at the same computer. The bottom team always starts and the player can begin by simply choosing a piece to move. Gameplay continues with alternating turns between the bottom and the top team. 
 
@@ -29,8 +30,8 @@ To run the source code, please use your package manager of choice. If you would 
 This project was completed by Ryan Bailis, James Campbell, Ethan Dunne, and Jake Schaeffer. All work is their own. Citations and references are provided in file headers as appropriate. 
 
 ## Libraries and Resources
-[JavaFX] (https://openjfx.io) 
-[Interactive Mesh] (http://www.interactivemesh.org/models/jfx3dimporter.html)
+[JavaFX](https://openjfx.io) 
+[Interactive Mesh](http://www.interactivemesh.org/models/jfx3dimporter.html)
 
 All other resources are documented in file headers as appropriate.
 
