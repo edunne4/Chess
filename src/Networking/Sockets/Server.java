@@ -21,7 +21,6 @@
 package Networking.Sockets;
 
 import Model.Movement;
-import Controller.NetController;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -44,8 +43,7 @@ public class Server{
     public boolean isConnected = false;
     //IP Address
     private static String IPAddress;
-    //Network Controller
-    private NetController netController;
+
 
 
     /**
