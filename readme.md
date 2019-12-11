@@ -2,7 +2,7 @@
 #### A customizable, 3D, multi-player chess game for anyone aged 3 to 103.
 
 
-## Chess Rules:
+## Chess Rules
 In the game of chess, two players attempt to strategically capture each other's king. This can be done by a player who places the threat of capture on their opponent using one or more of their game pieces. If a king is in check, then the player must make a move that eliminates the threat of capture and cannot leave the king in check. Checkmate happens when a king is placed in check and there is no legal move to escape. Checkmate ends the game and the side whose delivered the checkmate wins the game.
 
 Each game piece has specific set of allowable moves. They are as follows:
