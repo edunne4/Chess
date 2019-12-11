@@ -34,7 +34,7 @@ This project was completed by Ryan Bailis, James Campbell, Ethan Dunne, and Jake
 All other resources are documented in file headers as appropriate.
 
 ## Contributing
-The MasterMind Model developers are not accepting outside contributors at this time.
+The developers are not accepting outside contributors at this time.
 
 ## Project Details
 This project was developed as part of a class assignment. CSCI205, Software Engineering & Design at [Bucknell University](https://bucknell.edu) is a course focused on exposing students to real-world Java development, class design, and the principles of software engineering.
