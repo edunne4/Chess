@@ -27,6 +27,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Abstract representation of a chess piece in a game of chess.
+ */
 public abstract class ChessPiece implements Serializable {
     //Stores the team of the chess piece
     protected Team team;
