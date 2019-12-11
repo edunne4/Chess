@@ -10,7 +10,7 @@ Each piece has specific allowable moves. They are as follows:
 * The Queen can move any number of vacant squares diagonally, horizontally, or vertically.
 * The Rook can move any number of vacant squares vertically or horizontally.
 * The Bishop can move any number of vacant squares in any diagonal direction.
-* The Knight can move one square along any rank or file and then at an angle. The knight´s movement can also be viewed as an “L”.
+* The Knight can move one square along any rank or file and then at an angle (in the shape of an "L").
 * Pawns can move forward one square, if that square is unoccupied. If it has not yet moved, the pawn can be moved two squares forward. Pawns may capture an enemy piece on either of the two spaces diagonally adjacent to the space in front of them.
 
 ##Chess Implementation
