@@ -27,9 +27,9 @@ To run the source code, please use your package manager of choice. If you would 
 This project was completed by Ryan Bailis, James Campbell, Ethan Dunne, and Jake Schaeffer. All work is their own. Citations and references are provided in file headers as appropriate. 
 
 ## Libraries and Resources
-[JavaFX](https://openjfx.io) 
-[Interactive Mesh](http://www.interactivemesh.org/models/jfx3dimporter.html)
-[Official Chess Rules](http://www.uschess.org/content/view/7324/)
+* [JavaFX](https://openjfx.io) 
+* [Interactive Mesh](http://www.interactivemesh.org/models/jfx3dimporter.html)
+* [Official Chess Rules](http://www.uschess.org/content/view/7324/)
 
 All other resources are documented in file headers as appropriate.
 
