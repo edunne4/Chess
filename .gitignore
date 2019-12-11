@@ -28,7 +28,7 @@
 *.iws
 
 # IntelliJ output directory
-#out/
+out/
 
 # NetBeans specific, updated for 8.2
 nbproject/private
